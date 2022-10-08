@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>125a663f-82cf-4ca0-b1da-506e18c63a40</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Include="..\..\Identity\ZeroFramework.IdentityServer.API\Infrastructure\Swagger\CamelCaseNamingOperationFilter.cs" Link="Infrastructure\Swagger\CamelCaseNamingOperationFilter.cs" />
+	  <Compile Include="..\..\Identity\ZeroFramework.IdentityServer.API\Infrastructure\Swagger\SecurityRequirementsOperationFilter.cs" Link="Infrastructure\Swagger\SecurityRequirementsOperationFilter.cs" />
+	  <Compile Include="..\ZeroFramework.DeviceCenter.Infrastructure\EntityFrameworks\DeviceCenterDesignTimeDbContextFactory.cs" Link="Infrastructure\Migration\DeviceCenterDesignTimeDbContextFactory.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="..\..\Identity\ZeroFramework.IdentityServer.API\Infrastructure\Swagger\Index.html" Link="Infrastructure\Swagger\Index.html" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FluentValidation.AspNetCore" Version="11.2.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.8">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ZeroFramework.DeviceCenter.Application\ZeroFramework.DeviceCenter.Application.csproj" />
+		<ProjectReference Include="..\ZeroFramework.DeviceCenter.Infrastructure\ZeroFramework.DeviceCenter.Infrastructure.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Infrastructure\Migration\" />
+	  <Folder Include="Infrastructure\Swagger\" />
+	</ItemGroup>
+	
+</Project>

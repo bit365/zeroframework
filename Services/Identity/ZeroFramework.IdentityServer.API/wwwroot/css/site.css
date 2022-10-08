@@ -1,0 +1,36 @@
+﻿
+body.account-page {
+    background-color: #d6e2ee;
+    font-size: 14px;
+}
+
+.account-page .card {
+    min-width: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media (max-width: 600px) {
+    .account-page .card {
+        min-width: 90%;
+    }
+}
+
+.account-page .btn-social {
+    width: 2rem;
+    height: 2rem;
+}
+
+    .account-page .btn-social i {
+        line-height: 2rem;
+    }
+
+.account-page .validation-summary-errors ul {
+    padding-left: 20px;
+}
+
+input-group-lg > .custom-select, .input-group-lg > .form-control, .input-group-lg > .input-group-append > .btn, .input-group-lg > .input-group-append > .input-group-text, .input-group-lg > .input-group-prepend > .btn, .input-group-lg > .input-group-prepend > .input-group-text, .btn-group-lg > .btn, .btn-lg {
+    font-size: 14px;
+}

@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<UserSecretsId>72170c38-a5d2-4a59-8469-91980a5f575a</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="Infrastructure\Swagger\Index.html" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="..\..\DeviceCenter\ZeroFramework.DeviceCenter.Application\Services\Generics\QueryableOrderByExtensions.cs" Link="Extensions\QueryableOrderByExtensions.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Certificates\idsrvtest.pfx" />
+		<EmbeddedResource Include="Infrastructure\Swagger\Index.html" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.1.4" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.1.4" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.8" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.8">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.8" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+		<PackageReference Include="FluentValidation.AspNetCore" Version="11.2.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+	</ItemGroup>
+</Project>

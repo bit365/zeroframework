@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.0" />
+		<PackageReference Include="Dapper" Version="2.0.123" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="6.0.8" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
+		<PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\BuildingBlocks\EventBus\ZeroFramework.EventBus.RabbitMQ\ZeroFramework.EventBus.RabbitMQ.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\EventBus\ZeroFramework.EventBus\ZeroFramework.EventBus.csproj" />
+		<ProjectReference Include="..\ZeroFramework.DeviceCenter.Domain\ZeroFramework.DeviceCenter.Domain.csproj" />
+		<ProjectReference Include="..\ZeroFramework.DeviceCenter.Infrastructure\ZeroFramework.DeviceCenter.Infrastructure.csproj" />
+	</ItemGroup>
+</Project>

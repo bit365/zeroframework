@@ -1,0 +1,33 @@
+﻿@using System.Diagnostics
+
+@{
+    ViewData["Title"] = "HomePage";
+    var version = FileVersionInfo.GetVersionInfo(typeof(Duende.IdentityServer.Hosting.IdentityServerMiddleware).Assembly.Location).ProductVersion?.Split('+').First();
+}
+<div class="jumbotron mt-3">
+    <h1 class="display-4">Hello, world!</h1>
+    <p class="lead"> Welcome to IdentityServer <small class="text-muted">(version @version)</small></p>
+    <hr class="my-4">
+    <p>
+        It uses utility classes for typography and spacing to space content out within the larger container.IdentityServer publishes a discovery document where you can find metadata and links to all the endpoints, key material, etc.
+    </p>
+    <a class="btn btn-primary btn-lg" href="~/.well-known/openid-configuration" role="button">Configuration</a>
+</div>
+@foreach (var identity in User.Identities)
+{
+    <section class="card mt-3">
+        <div class="card-header">
+            <h4>
+                @identity.Name
+            </h4>
+        </div>
+        <div class="card-body">
+            <ul>
+                @foreach (var claim in identity.Claims)
+                {
+                    <li><b>@claim.Type</b> : @claim.Value</li>
+                }
+            </ul>
+        </div>
+    </section>
+}

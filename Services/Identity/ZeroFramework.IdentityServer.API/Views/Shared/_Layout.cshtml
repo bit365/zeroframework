@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNetCore.Hosting
+@using Microsoft.AspNetCore.Mvc.ViewEngines
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IWebHostEnvironment Environment
+@inject ICompositeViewEngine Engine
+@inject IViewLocalizer Localizer
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]-@Localizer[Environment.ApplicationName]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+            <a class="navbar-brand" href="~/">
+                <img src="https://www.xcode.me/img/logo-white.svg" width="30" height="30" class="d-inline-block align-top" loading="lazy">
+                @Localizer[Environment.ApplicationName]
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#my-navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="my-navbar">
+                @{
+                    var result = Engine.FindView(ViewContext, "_LoginPartial", isMainPage: false);
+                }
+                @if (result.Success)
+                {
+                    await Html.RenderPartialAsync("_LoginPartial");
+                }
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="footer border-top pl-3 text-muted">
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

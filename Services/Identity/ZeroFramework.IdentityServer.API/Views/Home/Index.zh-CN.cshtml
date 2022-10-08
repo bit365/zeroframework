@@ -1,0 +1,33 @@
+﻿@using System.Diagnostics
+
+@{
+    ViewData["Title"] = "首页";
+    var version = FileVersionInfo.GetVersionInfo(typeof(Duende.IdentityServer.Hosting.IdentityServerMiddleware).Assembly.Location).ProductVersion?.Split('+').First();
+}
+<div class="jumbotron mt-3">
+    <h1 class="display-4">您好, 世界！</h1>
+    <p class="lead"> 欢迎使用零度认证授权中心 <small class="text-muted">(version @version)</small></p>
+    <hr class="my-4">
+    <p>
+        免费的开源的 OpenID Connect 和 OAuth 2.0 认证授权框架，整合基于令牌的身份验证，单点登录和 API 访问控制，支持集成到应用程序中所需的所有协议实现和可扩展性，您可以在此获取身份认证与授权的元数据配置信息。
+    </p>
+    <a class="btn btn-primary btn-lg" href="~/.well-known/openid-configuration" role="button">配置信息</a>
+</div>
+@foreach (var identity in User.Identities)
+{
+    <section class="card mt-3">
+        <div class="card-header">
+            <h4>
+                @identity.Name
+            </h4>
+        </div>
+        <div class="card-body">
+            <ul>
+                @foreach (var claim in identity.Claims)
+                {
+                    <li><b>@claim.Type</b> : @claim.Value</li>
+                }
+            </ul>
+        </div>
+    </section>
+}

@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Permission:MonitoringFactorManager" xml:space="preserve">
+    <value>Factor Manager</value>
+  </data>
+  <data name="Permission:MonitoringFactorManager.MonitoringFactors.Creeate" xml:space="preserve">
+    <value>Factor Create</value>
+  </data>
+  <data name="Permission:MonitoringFactorManager.MonitoringFactors.Delete" xml:space="preserve">
+    <value>Factor Delete</value>
+  </data>
+  <data name="Permission:MonitoringFactorManager.MonitoringFactors.Edit" xml:space="preserve">
+    <value>Factor Edit</value>
+  </data>
+  <data name="Permission:MonitoringFactorManager.MonitoringFactors" xml:space="preserve">
+    <value>Factor List</value>
+  </data>
+  <data name="Permission:PermissionManager" xml:space="preserve">
+    <value>Permission Manager</value>
+  </data>
+  <data name="Permission:PermissionManager.Permissions.Edit" xml:space="preserve">
+    <value>Permission Edit</value>
+  </data>
+  <data name="Permission:PermissionManager.Permissions.Get" xml:space="preserve">
+    <value>Permission Get</value>
+  </data>
+  <data name="Permission:PermissionManager.Permissions" xml:space="preserve">
+    <value>Permission List</value>
+  </data>
+  <data name="Permission:ProductManager" xml:space="preserve">
+    <value>Product Manager</value>
+  </data>
+  <data name="Permission:ProductManager.MeasurementUnits.Creeate" xml:space="preserve">
+    <value>Measurement Unit Create</value>
+  </data>
+  <data name="Permission:ProductManager.MeasurementUnits.Delete" xml:space="preserve">
+    <value>Measurement Unit Delete</value>
+  </data>
+  <data name="Permission:ProductManager.MeasurementUnits.Edit" xml:space="preserve">
+    <value>Measurement Unit Edit</value>
+  </data>
+  <data name="Permission:ProductManager.Products.Creeate" xml:space="preserve">
+    <value>Product Create</value>
+  </data>
+  <data name="Permission:ProductManager.Products.Delete" xml:space="preserve">
+    <value>Product Delete</value>
+  </data>
+  <data name="Permission:ProductManager.Products.Edit" xml:space="preserve">
+    <value>Product Edit</value>
+  </data>
+  <data name="Permission:ProductManager.MeasurementUnits" xml:space="preserve">
+    <value>Measurement Unit List</value>
+  </data>
+  <data name="Permission:ProductManager.Products" xml:space="preserve">
+    <value>Product List</value>
+  </data>
+  <data name="Permission:ProjectManager" xml:space="preserve">
+    <value>Project Manager</value>
+  </data>
+  <data name="Permission:ProjectManager.Projects.Creeate" xml:space="preserve">
+    <value>Project Create</value>
+  </data>
+  <data name="Permission:ProjectManager.Projects.Delete" xml:space="preserve">
+    <value>Project Delete</value>
+  </data>
+  <data name="Permission:ProjectManager.Projects.Edit" xml:space="preserve">
+    <value>Project Edit</value>
+  </data>
+  <data name="Permission:ProjectManager.Projects" xml:space="preserve">
+    <value>Project List</value>
+  </data>
+  <data name="Permission:ResourceGroupManager" xml:space="preserve">
+    <value>Resource Group Manager</value>
+  </data>
+  <data name="Permission:ResourceGroupManager.ResourceGroups.Creeate" xml:space="preserve">
+    <value>Resource Group Create</value>
+  </data>
+  <data name="Permission:ResourceGroupManager.ResourceGroups.Delete" xml:space="preserve">
+    <value>Resource Group Delete</value>
+  </data>
+  <data name="Permission:ResourceGroupManager.ResourceGroups.Edit" xml:space="preserve">
+    <value>Resource Group Edit</value>
+  </data>
+  <data name="Permission:ResourceGroupManager.ResourceGroups" xml:space="preserve">
+    <value>Resource Group List</value>
+  </data>
+  <data name="Permission:TenantManager" xml:space="preserve">
+    <value>Tenant Manager</value>
+  </data>
+  <data name="Permission:TenantManager.Tenants.ConnectionString" xml:space="preserve">
+    <value>Connection String Manager</value>
+  </data>
+  <data name="Permission:TenantManager.Tenants.Creeate" xml:space="preserve">
+    <value>Tenant Create</value>
+  </data>
+  <data name="Permission:TenantManager.Tenants.Delete" xml:space="preserve">
+    <value>Tenant Delete</value>
+  </data>
+  <data name="Permission:TenantManager.Tenants.Edit" xml:space="preserve">
+    <value>Tenant Edit</value>
+  </data>
+  <data name="Permission:TenantManager.Tenants" xml:space="preserve">
+    <value>Tenant List</value>
+  </data>
+  <data name="Permission:DeviceManager.Devices" xml:space="preserve">
+    <value>Device List</value>
+  </data>
+  <data name="Permission:DeviceManager.Devices.Creeate" xml:space="preserve">
+    <value>Device Create</value>
+  </data>
+  <data name="Permission:DeviceManager.Devices.Delete" xml:space="preserve">
+    <value>Device Delete</value>
+  </data>
+  <data name="Permission:DeviceManager.Devices.Edit" xml:space="preserve">
+    <value>Device Edit</value>
+  </data>
+  <data name="Permission:DeviceManager" xml:space="preserve">
+    <value>Device Manager</value>
+  </data>
+  <data name="Permission:DeviceGroupManager" xml:space="preserve">
+    <value>Device Group Manager</value>
+  </data>
+  <data name="Permission:DeviceGroupManager.DeviceGroups" xml:space="preserve">
+    <value>Device Group List</value>
+  </data>
+  <data name="Permission:DeviceGroupManager.DeviceGroups.Creeate" xml:space="preserve">
+    <value>Device Group Create</value>
+  </data>
+  <data name="Permission:DeviceGroupManager.DeviceGroups.Delete" xml:space="preserve">
+    <value>Device Group Delete</value>
+  </data>
+  <data name="Permission:DeviceGroupManager.DeviceGroups.Edit" xml:space="preserve">
+    <value>Device Group Edit</value>
+  </data>
+  <data name="Permission:MeasurementManager" xml:space="preserve">
+    <value>Measurement Manager</value>
+  </data>
+  <data name="Permission:MeasurementManager.Measurements" xml:space="preserve">
+    <value>Data Query</value>
+  </data>
+  <data name="Permission:MeasurementManager.Measurements.DevicePropertyHistoryValues" xml:space="preserve">
+    <value>History Data</value>
+  </data>
+  <data name="Permission:MeasurementManager.Measurements.DevicePropertyReports" xml:space="preserve">
+    <value>Data Report</value>
+  </data>
+  <data name="Permission:MeasurementManager.Measurements.DevicePropertyValues" xml:space="preserve">
+    <value>Real-Time Data</value>
+  </data>
+  <data name="Permission:MeasurementManager.Measurements.SetDevicePropertyValues" xml:space="preserve">
+    <value>Data Upload</value>
+  </data>
+</root>

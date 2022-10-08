@@ -1,0 +1,18 @@
+﻿@model ZeroFramework.IdentityServer.API.Models.Accounts.LogoutViewModel
+@{
+    ViewData["Title"] = "Logout";
+}
+<section class="card mt-3">
+    <div class="card-header">
+        <h4>Logout</h4>
+    </div>
+    <div class="col-sm-6 card-body">
+        <p>Would you like to logout of IdentityServer?</p>
+        <form asp-action="Logout">
+            <input type="hidden" name="logoutId" value="@Model.LogoutId" />
+            <div class="form-group">
+                <button class="btn btn-primary">Yes</button>
+            </div>
+        </form>
+    </div>
+</section>

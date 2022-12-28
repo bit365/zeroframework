@@ -232,7 +232,7 @@ export default (props: any) => {
                 </QueryFilter>
 
                 <div style={{ width: '100%', height: innerHeight - 200 }} className={styles.mapview} >
-                    <Map amapkey='19ed8bc82963863993bbb3e23ac83123' version='1.4.15' mapStyle='amap://styles/macaron' zoom={5} loading={<LoadingOutlined />} >
+                    <Map amapkey='keykeykeykeykeykeykeykey' version='1.4.15' mapStyle='amap://styles/macaron' zoom={5} loading={<LoadingOutlined />} >
                         <InfoWindow
                             visible={infoWindowState.visible}
                             position={infoWindowState.position}

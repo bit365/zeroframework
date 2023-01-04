@@ -194,7 +194,7 @@ namespace ZeroFramework.IdentityServer.API.Controllers
                     DisplayName = "Administraotr",
                 };
 
-                identityResult = await _userManager.CreateAsync(tenantAdminUser, tenantModel.AdminPassword);
+                identityResult = await _userManager.CreateAsync(tenantAdminUser, tenantModel.AdminPassword!);
 
                 if (identityResult.Succeeded)
                 {

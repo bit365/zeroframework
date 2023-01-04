@@ -39,7 +39,7 @@ namespace ZeroFramework.IdentityServer.API.Controllers
 
             if (!string.IsNullOrWhiteSpace(keyword))
             {
-                userQuery = _userManager.Users.Where(u => u.UserName.Contains(keyword) || u.PhoneNumber.Contains(keyword) || (u.DisplayName != null && u.DisplayName.Contains(keyword)));
+                userQuery = _userManager.Users.Where(u => u.UserName!.Contains(keyword) || u.PhoneNumber!.Contains(keyword) || (u.DisplayName != null && u.DisplayName.Contains(keyword)));
             }
 
             int totalCount = await userQuery.CountAsync();
@@ -56,7 +56,7 @@ namespace ZeroFramework.IdentityServer.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserGetResponseModel>> GetUser(int id)
         {
-            ApplicationUser user = await _userManager.FindByIdAsync(id.ToString());
+            ApplicationUser? user = await _userManager.FindByIdAsync(id.ToString());
 
             if (user is null)
             {
@@ -82,8 +82,8 @@ namespace ZeroFramework.IdentityServer.API.Controllers
                 return ValidationProblem(ModelState);
             }
 
-            var token = await _userManager.GenerateChangePhoneNumberTokenAsync(user, user.PhoneNumber);
-            identityResult = await _userManager.ChangePhoneNumberAsync(user, user.PhoneNumber, token);
+            var token = await _userManager.GenerateChangePhoneNumberTokenAsync(user, user.PhoneNumber!);
+            identityResult = await _userManager.ChangePhoneNumberAsync(user, user.PhoneNumber!, token);
 
             if (!identityResult.Succeeded)
             {
@@ -100,7 +100,12 @@ namespace ZeroFramework.IdentityServer.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, UserUpdateRequestModel userModel)
         {
-            ApplicationUser user = await _userManager.FindByIdAsync(id.ToString());
+            ApplicationUser? user = await _userManager.FindByIdAsync(id.ToString());
+
+            if (user is null)
+            {
+                return NotFound();
+            }
 
             _mapper.Map(userModel, user);
 
@@ -123,7 +128,7 @@ namespace ZeroFramework.IdentityServer.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            ApplicationUser user = await _userManager.FindByIdAsync(id.ToString());
+            ApplicationUser? user = await _userManager.FindByIdAsync(id.ToString());
 
             if (user is null)
             {

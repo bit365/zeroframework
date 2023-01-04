@@ -34,7 +34,7 @@ namespace ZeroFramework.DeviceCenter.API
                     return api.ActionDescriptor.Id;
                 });
 
-                string identityServer = Configuration.GetValue<string>("IdentityServer:AuthorizationUrl");
+                string? identityServer = Configuration.GetValue<string>("IdentityServer:AuthorizationUrl");
 
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {

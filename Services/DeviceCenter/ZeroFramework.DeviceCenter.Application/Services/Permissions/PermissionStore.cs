@@ -61,17 +61,17 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
         {
             var cacheKey = string.Format(CacheKeyFormat, providerName, providerKey, operationName, resourceGroupId);
 
-            _logger.LogDebug($"PermissionStore.GetCacheItemAsync: {cacheKey}");
+            _logger.LogDebug("PermissionStore.GetCacheItemAsync: {cacheKey}", cacheKey);
 
-            string cacheItem = await _distributedCache.GetStringAsync(cacheKey);
+            string? cacheItem = await _distributedCache.GetStringAsync(cacheKey);
 
             if (cacheItem is not null)
             {
-                _logger.LogDebug($"Found in the cache: {cacheKey}");
+                _logger.LogDebug("Found in the cache: {cacheKey}", cacheKey);
                 return Convert.ToBoolean(cacheItem);
             }
 
-            _logger.LogDebug($"Not found in the cache: {cacheKey}");
+            _logger.LogDebug("Not found in the cache: {cacheKey}", cacheKey);
 
             return await SetCacheItemsAsync(providerName, providerKey, operationName, resourceGroupId);
         }
@@ -80,13 +80,13 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
         {
             var permissions = _permissionDefinitionManager.GetPermissions();
 
-            _logger.LogDebug($"Getting all granted permissions from the repository for this provider name,key: {providerName},{providerKey}");
+            _logger.LogDebug("Getting all granted permissions from the repository for this provider name,key: {providerName},{providerKey}", providerName, providerKey);
 
             var permissionGrants = await _permissionGrantRepository.GetListAsync(providerName, providerKey, resourceGroupId);
 
             var grantedPermissionsHashSet = new HashSet<string>(permissionGrants.Select(p => p.OperationName));
 
-            _logger.LogDebug($"Setting the cache items. Count: {permissions.Count}");
+            _logger.LogDebug("Setting the cache items. Count: {permissionsCount}", permissions.Count);
 
             var cacheItems = new List<(string Key, bool IsGranted)>();
 
@@ -113,7 +113,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
 
             await Task.WhenAll(setCacheItemTasks);
 
-            _logger.LogDebug($"Finished setting the cache items. Count: {permissions.Count}");
+            _logger.LogDebug("Finished setting the cache items. Count: {permissionsCount}", permissions.Count);
 
             return currentResult;
         }
@@ -122,26 +122,26 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
         {
             var cacheKeys = operationNames.Select(x => string.Format(CacheKeyFormat, providerName, providerKey, x, resourceGroupId)).ToList();
 
-            _logger.LogDebug($"PermissionStore.GetCacheItemAsync: {string.Join(",", cacheKeys)}");
+            _logger.LogDebug("PermissionStore.GetCacheItemAsync: {cacheKeys}", string.Join(",", cacheKeys));
 
             List<Task<KeyValuePair<string, string>>> getCacheItemTasks = new();
 
             foreach (string cacheKey in cacheKeys)
             {
-                getCacheItemTasks.Add(Task.Run(() => new KeyValuePair<string, string>(cacheKey, _distributedCache.GetStringAsync(cacheKey).Result)));
+                getCacheItemTasks.Add(Task.Run(() => new KeyValuePair<string, string>(cacheKey, _distributedCache.GetStringAsync(cacheKey).Result!)));
             }
 
             var cacheItems = await Task.WhenAll(getCacheItemTasks);
 
             if (cacheItems.All(x => x.Value is not null))
             {
-                _logger.LogDebug($"Found in the cache: {string.Join(",", cacheKeys)}");
+                _logger.LogDebug("Found in the cache: {cacheKeys}", string.Join(",", cacheKeys));
                 return cacheItems.ToDictionary(item => item.Key, item => Convert.ToBoolean(item.Value));
             }
 
             var notCacheKeys = cacheItems.Where(x => x.Value is null).Select(x => x.Key).ToList();
 
-            _logger.LogDebug($"Not found in the cache: {string.Join(",", notCacheKeys)}");
+            _logger.LogDebug("Not found in the cache: {notCacheKeys}", string.Join(",", notCacheKeys));
 
             return await SetCacheItemsAsync(providerName, providerKey, resourceGroupId, notCacheKeys);
         }
@@ -150,7 +150,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
         {
             var permissions = _permissionDefinitionManager.GetPermissions().Where(x => notCacheKeys.Any(k => GetPermissionInfoFormCacheKey(k).OperationName == x.Name)).ToList();
 
-            _logger.LogDebug($"Getting not cache granted permissions from the repository for this provider name,key: {providerName},{providerKey}");
+            _logger.LogDebug("Getting not cache granted permissions from the repository for this provider name,key: {providerName},{providerKey}", providerName, providerKey);
 
             var operationNames = notCacheKeys.Select(k => GetPermissionInfoFormCacheKey(k).OperationName).ToArray();
 
@@ -158,7 +158,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
 
             var grantedPermissionsHashSet = new HashSet<string>(permissionGrants.Select(p => p.OperationName));
 
-            _logger.LogDebug($"Setting the cache items. Count: {permissions.Count}");
+            _logger.LogDebug("Setting the cache items. Count: {permissionsCount}", permissions.Count);
 
             Dictionary<string, bool> cacheItems = new();
 
@@ -177,7 +177,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
 
             await Task.WhenAll(setCacheItemTasks);
 
-            _logger.LogDebug($"Finished setting the cache items. Count: {permissions.Count}");
+            _logger.LogDebug("Finished setting the cache items. Count: {permissionsCount}", permissions.Count);
 
             return cacheItems;
         }

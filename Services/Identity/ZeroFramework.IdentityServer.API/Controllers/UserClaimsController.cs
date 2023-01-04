@@ -21,7 +21,13 @@ namespace ZeroFramework.IdentityServer.API.Controllers
         [HttpGet("{userId}")]
         public async Task<ActionResult<IEnumerable<UserClaimModel>>> GetUserClaims(int userId)
         {
-            ApplicationUser user = await _userManager.FindByIdAsync(userId.ToString());
+            ApplicationUser? user = await _userManager.FindByIdAsync(userId.ToString());
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
             IList<Claim> claims = await _userManager.GetClaimsAsync(user);
 
             return claims.Select(c => new UserClaimModel(c.Type, c.Value)).ToList();
@@ -30,7 +36,13 @@ namespace ZeroFramework.IdentityServer.API.Controllers
         [HttpPost("{userId}")]
         public async Task<ActionResult<IEnumerable<UserClaimModel>>> PostUserClaims(int userId, IEnumerable<UserClaimModel> userClaims)
         {
-            ApplicationUser user = await _userManager.FindByIdAsync(userId.ToString());
+            ApplicationUser? user = await _userManager.FindByIdAsync(userId.ToString());
+
+            if (user is null)
+            {
+                return NotFound();
+            }
+
             IList<Claim> claims = await _userManager.GetClaimsAsync(user);
             var newClaims = userClaims.Select(uc => new Claim(uc.ClaimType, uc.ClaimValue));
 
@@ -50,7 +62,12 @@ namespace ZeroFramework.IdentityServer.API.Controllers
         [HttpDelete("{userId}")]
         public async Task<IActionResult> DeleteUserClaims(int userId, IEnumerable<UserClaimModel> userClaims)
         {
-            ApplicationUser user = await _userManager.FindByIdAsync(userId.ToString());
+            ApplicationUser? user = await _userManager.FindByIdAsync(userId.ToString());
+
+            if (user is null)
+            {
+                return NotFound();
+            }
 
             var claims = userClaims.Select(uc => new Claim(uc.ClaimType, uc.ClaimValue));
 

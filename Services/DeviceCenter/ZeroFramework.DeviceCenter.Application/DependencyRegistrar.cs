@@ -68,7 +68,7 @@ namespace ZeroFramework.DeviceCenter.Application
             int retryCount = 5;
             if (!string.IsNullOrEmpty(configurationSection["EventBusRetryCount"]))
             {
-                retryCount = int.Parse(configurationSection["EventBusRetryCount"]);
+                retryCount = int.Parse(configurationSection["EventBusRetryCount"]!);
             }
 
             services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
@@ -99,7 +99,7 @@ namespace ZeroFramework.DeviceCenter.Application
                 var rabbitMQPersistentConnection = sp.GetRequiredService<IRabbitMQPersistentConnection>();
                 var logger = sp.GetRequiredService<ILogger<EventBusRabbitMQ>>();
                 var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
-                string queueName = configurationSection["SubscriptionClientName"];
+                string queueName = configurationSection["SubscriptionClientName"]!;
                 return new EventBusRabbitMQ(rabbitMQPersistentConnection, logger, sp, eventBusSubcriptionsManager, queueName, retryCount);
             });
 
@@ -122,7 +122,7 @@ namespace ZeroFramework.DeviceCenter.Application
         {
             services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 
-            string connectionString = configuration.GetConnectionString(DbConstants.DefaultConnectionStringName);
+            string connectionString = configuration.GetConnectionString(DbConstants.DefaultConnectionStringName)!;
             services.AddTransient<IOrderQueries>(o => new OrderQueries(connectionString));
             services.AddTransient<IMonitoringFactorQueries, MonitoringFactorQueries>();
 

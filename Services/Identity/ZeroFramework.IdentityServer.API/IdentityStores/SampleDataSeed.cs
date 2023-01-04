@@ -101,13 +101,19 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
 
                     IEnumerable<Claim> userClaims = user.Value;
 
-
                     using (currentTenant.Change(user.Key.TenantId))
                     {
-                        await userManager.CreateAsync(createdUser, createdUser.PasswordHash);
+                        if (createdUser.PasswordHash != null)
+                        {
+                            await userManager.CreateAsync(createdUser, createdUser.PasswordHash);
+                        }
 
                         await userManager.ConfirmEmailAsync(createdUser, await userManager.GenerateEmailConfirmationTokenAsync(createdUser));
-                        await userManager.ChangePhoneNumberAsync(createdUser, createdUser.PhoneNumber, await userManager.GenerateChangePhoneNumberTokenAsync(createdUser, createdUser.PhoneNumber));
+
+                        if (createdUser.PhoneNumber != null)
+                        {
+                            await userManager.ChangePhoneNumberAsync(createdUser, createdUser.PhoneNumber, await userManager.GenerateChangePhoneNumberTokenAsync(createdUser, createdUser.PhoneNumber));
+                        }
 
                         var userRoleClaims = userClaims.Where(t => t.Type == JwtClaimTypes.Role || t.Type == ClaimTypes.Role);
 
@@ -115,7 +121,10 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
 
                         var userRoleNames = userRoleClaims?.Select(urc => urc.Value);
 
-                        await userManager.AddToRolesAsync(createdUser, userRoleNames);
+                        if (userRoleNames != null && userRoleNames.Any())
+                        {
+                            await userManager.AddToRolesAsync(createdUser, userRoleNames);
+                        }
                     }
                 }
             }

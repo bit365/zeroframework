@@ -202,14 +202,14 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
 
             Random random = new(Environment.TickCount);
 
-            string stringMock() => $"{System.IO.Path.GetRandomFileName().Replace(".", string.Empty)}";
+            string stringMock() => $"{Path.GetRandomFileName().Replace(".", string.Empty)}";
             string phoneMock() => $"{random.Next(130, 190)}{random.Next(10000000, 99999999)}";
             DateTimeOffset dateMock() => DateTimeOffset.Now.AddDays(-random.Next(1, 365 * 30));
 
             Dictionary<ApplicationUser, IEnumerable<Claim>> result = new();
 
             var currentHostRoles = roles.Where(r => r.TenantId == null).ToArray();
-            List<Claim> claims = currentHostRoles.Select(r => new Claim(JwtClaimTypes.Role, r.Name, ClaimValueTypes.String)).ToList();
+            List<Claim> claims = currentHostRoles.Select(r => new Claim(JwtClaimTypes.Role, r.Name!, ClaimValueTypes.String)).ToList();
             claims.Add(new Claim(JwtClaimTypes.BirthDate, dateMock().ToString("yyyy-MM-dd"), ClaimValueTypes.Date));
             var user = new ApplicationUser
             {
@@ -231,7 +231,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                 {
                     currentTenantRoles = currentTenantRoles.Where(r => r.TenantRoleName != AuthorizeConstants.TenantOwnerRequireRole).ToArray();
                 }
-                claims = currentTenantRoles.Select(r => new Claim(JwtClaimTypes.Role, r.Name, ClaimValueTypes.String)).ToList();
+                claims = currentTenantRoles.Select(r => new Claim(JwtClaimTypes.Role, r.Name!, ClaimValueTypes.String)).ToList();
                 claims.Add(new Claim(JwtClaimTypes.BirthDate, dateMock().ToString("yyyy-MM-dd"), ClaimValueTypes.Date));
                 user = new ApplicationUser
                 {
@@ -257,7 +257,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                 claims = new List<Claim>
                 {
                     new(JwtClaimTypes.BirthDate, dateMock().ToString("yyyy-MM-dd"), ClaimValueTypes.Date),
-                    new(JwtClaimTypes.Role, currentUserRoles[random.Next(0,currentUserRoles.Length)].Name, ClaimValueTypes.String),
+                    new(JwtClaimTypes.Role, currentUserRoles[random.Next(0,currentUserRoles.Length)].Name!, ClaimValueTypes.String),
                 };
 
                 user = new ApplicationUser

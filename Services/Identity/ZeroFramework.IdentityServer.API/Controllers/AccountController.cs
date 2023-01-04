@@ -107,7 +107,7 @@ namespace ZeroFramework.IdentityServer.API.Controllers
                         return View(model);
                     }
 
-                    var loginResult = await _signInManager.PasswordSignInAsync(user?.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
+                    var loginResult = await _signInManager.PasswordSignInAsync(user.UserName!, model.Password, model.RememberMe, lockoutOnFailure: false);
 
                     if (loginResult.Succeeded)
                     {
@@ -174,7 +174,7 @@ namespace ZeroFramework.IdentityServer.API.Controllers
                 // Get the information about the user from the external login provider
                 var info = await _signInManager.GetExternalLoginInfoAsync();
 
-                if (registerResult.Succeeded)
+                if (registerResult.Succeeded && info is not null)
                 {
                     registerResult = await _userManager.AddLoginAsync(user, info);
                     if (registerResult.Succeeded)
@@ -228,13 +228,10 @@ namespace ZeroFramework.IdentityServer.API.Controllers
 
             if (idp is not null && idp != IdentityServerConstants.LocalIdentityProvider)
             {
-                if (model.LogoutId is null)
-                {
-                    // if there's no current logout context, we need to create one
-                    // this captures necessary info from the current logged in user
-                    // before we signout and redirect away to the external IdP for signout
-                    model.LogoutId = await _interactionService.CreateLogoutContextAsync();
-                }
+                // if there's no current logout context, we need to create one
+                // this captures necessary info from the current logged in user
+                // before we signout and redirect away to the external IdP for signout
+                model.LogoutId ??= await _interactionService.CreateLogoutContextAsync();
 
                 string? url = Url.Action("Logout", new { model.LogoutId });
 
@@ -297,7 +294,7 @@ namespace ZeroFramework.IdentityServer.API.Controllers
                 return RedirectToAction(nameof(Login));
             }
 
-            ApplicationUser user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+            ApplicationUser? user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
 
             if (user is not null)
             {
@@ -375,7 +372,7 @@ namespace ZeroFramework.IdentityServer.API.Controllers
 
             // Generate the token and send it
 
-            string code = _distributedCache.GetString(phoneNumber);
+            string? code = await _distributedCache.GetStringAsync(phoneNumber);
 
             if (string.IsNullOrWhiteSpace(code))
             {

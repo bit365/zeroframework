@@ -11,7 +11,7 @@ namespace ZeroFramework.DeviceCenter.Application.Behaviors
 
         public TransactionBehavior(ILogger<TransactionBehavior<TRequest, TResponse>> logger) => _logger = logger ?? throw new ArgumentException(nameof(ILogger));
 
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             string? typeName = request?.GetGenericTypeName();
 

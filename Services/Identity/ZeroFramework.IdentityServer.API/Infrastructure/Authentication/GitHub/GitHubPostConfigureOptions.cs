@@ -5,7 +5,6 @@
  */
 
 using Microsoft.Extensions.Options;
-using System.Diagnostics.CodeAnalysis;
 using static ZeroFramework.IdentityServer.API.Infrastructure.Authentication.GitHub.GitHubAuthenticationDefaults;
 
 namespace ZeroFramework.IdentityServer.API.Infrastructure.Authentication.GitHub;
@@ -15,10 +14,7 @@ namespace ZeroFramework.IdentityServer.API.Infrastructure.Authentication.GitHub;
 /// </summary>
 public class GitHubPostConfigureOptions : IPostConfigureOptions<GitHubAuthenticationOptions>
 {
-    /// <inheritdoc/>
-    public void PostConfigure(
-        [NotNull] string name,
-        [NotNull] GitHubAuthenticationOptions options)
+    public void PostConfigure(string? name, GitHubAuthenticationOptions options)
     {
         if (!string.IsNullOrWhiteSpace(options.EnterpriseDomain))
         {

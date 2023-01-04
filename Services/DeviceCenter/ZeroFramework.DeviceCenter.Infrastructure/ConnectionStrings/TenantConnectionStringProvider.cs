@@ -28,7 +28,7 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.ConnectionStrings
 
                 if (connectionString is not null)
                 {
-                    return Task.FromResult(connectionString);
+                    return Task.FromResult<string>(connectionString);
                 }
             }
 

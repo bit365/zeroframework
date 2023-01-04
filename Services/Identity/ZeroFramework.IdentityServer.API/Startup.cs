@@ -113,38 +113,38 @@ namespace ZeroFramework.IdentityServer.API
             })
             .AddMicrosoftAccount(microsoftOptions =>
             {
-                microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"];
-                microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
+                microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"]!;
+                microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"]!;
                 microsoftOptions.EventsType = typeof(CustomOAuthAuthenticationEvents);
                 //.AspNetCore.Correlation. state property not found
                 microsoftOptions.RemoteAuthenticationTimeout = TimeSpan.FromDays(15);
                 microsoftOptions.CorrelationCookie.SameSite = SameSiteMode.Lax;
             }).AddQQ(qqOptions =>
             {
-                qqOptions.ClientId = Configuration["Authentication:TencentQQ:AppID"];
-                qqOptions.ClientSecret = Configuration["Authentication:TencentQQ:AppKey"];
+                qqOptions.ClientId = Configuration["Authentication:TencentQQ:AppID"]!;
+                qqOptions.ClientSecret = Configuration["Authentication:TencentQQ:AppKey"]!;
                 qqOptions.EventsType = typeof(CustomOAuthAuthenticationEvents);
                 qqOptions.RemoteAuthenticationTimeout = TimeSpan.FromDays(15);
                 qqOptions.CorrelationCookie.SameSite = SameSiteMode.Lax;
             }).AddGitHub(gitHubOptions =>
             {
-                gitHubOptions.ClientId = Configuration["Authentication:GitHub:ClientID"];
-                gitHubOptions.ClientSecret = Configuration["Authentication:GitHub:ClientSecret"];
+                gitHubOptions.ClientId = Configuration["Authentication:GitHub:ClientID"]!;
+                gitHubOptions.ClientSecret = Configuration["Authentication:GitHub:ClientSecret"]!;
                 gitHubOptions.EventsType = typeof(CustomOAuthAuthenticationEvents);
                 gitHubOptions.RemoteAuthenticationTimeout = TimeSpan.FromDays(15);
                 gitHubOptions.CorrelationCookie.SameSite = SameSiteMode.Lax;
             }).AddWeibo("Weibo", "Î¢²©", weiboOptions =>
             {
-                weiboOptions.ClientId = Configuration["Authentication:Weibo:AppKey"];
-                weiboOptions.ClientSecret = Configuration["Authentication:Weibo:AppSecret"];
+                weiboOptions.ClientId = Configuration["Authentication:Weibo:AppKey"]!;
+                weiboOptions.ClientSecret = Configuration["Authentication:Weibo:AppSecret"]!;
                 weiboOptions.EventsType = typeof(CustomOAuthAuthenticationEvents);
                 weiboOptions.UserEmailsEndpoint = string.Empty;
                 weiboOptions.RemoteAuthenticationTimeout = TimeSpan.FromDays(15);
                 weiboOptions.CorrelationCookie.SameSite = SameSiteMode.Lax;
             }).AddWeixin("WeChat", "Î¢ÐÅ", weChatOptions =>
             {
-                weChatOptions.ClientId = Configuration["Authentication:WeChat:AppID"];
-                weChatOptions.ClientSecret = Configuration["Authentication:WeChat:AppSecret"];
+                weChatOptions.ClientId = Configuration["Authentication:WeChat:AppID"]!;
+                weChatOptions.ClientSecret = Configuration["Authentication:WeChat:AppSecret"]!;
                 weChatOptions.EventsType = typeof(CustomOAuthAuthenticationEvents);
                 weChatOptions.RemoteAuthenticationTimeout = TimeSpan.FromDays(15);
                 weChatOptions.CorrelationCookie.SameSite = SameSiteMode.Lax;
@@ -172,7 +172,7 @@ namespace ZeroFramework.IdentityServer.API
                     return api.ActionDescriptor.Id;
                 });
 
-                string identityServer = Configuration.GetValue<string>("IdentityServer:AuthorizationUrl");
+                string? identityServer = Configuration.GetValue<string>("IdentityServer:AuthorizationUrl");
 
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
@@ -206,8 +206,11 @@ namespace ZeroFramework.IdentityServer.API
 
             services.AddCors(options =>
             {
-                string[] allowedOrigins = Configuration.GetSection("AllowedOrigins").Get<string[]>();
-                options.AddDefaultPolicy(builder => builder.WithOrigins(allowedOrigins).AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+                string[]? allowedOrigins = Configuration.GetSection("AllowedOrigins").Get<string[]>();
+                if (allowedOrigins is not null)
+                {
+                    options.AddDefaultPolicy(builder => builder.WithOrigins(allowedOrigins).AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+                }
             });
 
             string[] supportedCultures = new[] { "zh-CN", "en-US" };

@@ -1,5 +1,4 @@
-﻿using System.Dynamic;
-using ZeroFramework.DeviceCenter.Application.Models.Measurements;
+﻿using ZeroFramework.DeviceCenter.Application.Models.Measurements;
 using ZeroFramework.DeviceCenter.Domain.Aggregates.DeviceAggregate;
 using ZeroFramework.DeviceCenter.Domain.Aggregates.ProductAggregate;
 using ZeroFramework.DeviceCenter.Domain.Repositories;

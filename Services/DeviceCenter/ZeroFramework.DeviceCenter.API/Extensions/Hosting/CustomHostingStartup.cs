@@ -38,8 +38,12 @@ namespace ZeroFramework.DeviceCenter.API.Extensions.Hosting
 
                 services.AddCors(options =>
                 {
-                    string[] allowedOrigins = context.Configuration.GetSection("AllowedOrigins").Get<string[]>();
-                    options.AddDefaultPolicy(builder => builder.WithOrigins(allowedOrigins).AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+                    string[]? allowedOrigins = context.Configuration.GetSection("AllowedOrigins").Get<string[]>();
+
+                    if (allowedOrigins is not null)
+                    {
+                        options.AddDefaultPolicy(builder => builder.WithOrigins(allowedOrigins).AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+                    }
                 });
 
                 string[] supportedCultures = new[] { "zh-CN", "en-US" };

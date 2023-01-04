@@ -39,7 +39,7 @@ namespace ZeroFramework.IdentityServer.API.Controllers
 
             if (!string.IsNullOrWhiteSpace(keyword))
             {
-                roleQuery = _roleManager.Roles.Where(u => u.Name.Contains(keyword) || (u.DisplayName != null && u.DisplayName.Contains(keyword)));
+                roleQuery = _roleManager.Roles.Where(u => u.Name!.Contains(keyword) || (u.DisplayName != null && u.DisplayName.Contains(keyword)));
             }
 
             int totalCount = await _roleManager.Roles.CountAsync();
@@ -55,7 +55,7 @@ namespace ZeroFramework.IdentityServer.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<RoleGetResponseModel>> GetRole(int id)
         {
-            ApplicationRole role = await _roleManager.FindByIdAsync(id.ToString());
+            ApplicationRole? role = await _roleManager.FindByIdAsync(id.ToString());
 
             if (role is null)
             {
@@ -91,7 +91,12 @@ namespace ZeroFramework.IdentityServer.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRole(int id, RoleUpdateRequestModel roleModel)
         {
-            ApplicationRole role = await _roleManager.FindByIdAsync(id.ToString());
+            ApplicationRole? role = await _roleManager.FindByIdAsync(id.ToString());
+
+            if (role is null)
+            {
+                return NotFound();
+            }
 
             _mapper.Map(roleModel, role);
 
@@ -109,7 +114,7 @@ namespace ZeroFramework.IdentityServer.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRole(int id)
         {
-            ApplicationRole role = await _roleManager.FindByIdAsync(id.ToString());
+            ApplicationRole? role = await _roleManager.FindByIdAsync(id.ToString());
 
             if (role is null)
             {

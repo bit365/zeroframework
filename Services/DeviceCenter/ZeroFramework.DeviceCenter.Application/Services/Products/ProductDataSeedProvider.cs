@@ -1,5 +1,4 @@
-﻿using MediatR;
-using System.Dynamic;
+﻿using System.Dynamic;
 using ZeroFramework.DeviceCenter.Domain.Aggregates.ProductAggregate;
 using ZeroFramework.DeviceCenter.Domain.Repositories;
 
@@ -620,7 +619,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 {
                                     Type= DataTypeDefinitions.Float,
                                     Specs=createExpandoObject(0,2000,"W/m2")
-                                } 
+                                }
                             },
                             new PropertyFeature
                             {

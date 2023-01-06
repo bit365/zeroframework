@@ -12,7 +12,7 @@ using ZeroFramework.DeviceCenter.Infrastructure.EntityFrameworks;
 namespace ZeroFramework.DeviceCenter.Infrastructure.Migrations
 {
     [DbContext(typeof(DeviceCenterDbContext))]
-    [Migration("20230106001554_InitialCreate")]
+    [Migration("20230106154914_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

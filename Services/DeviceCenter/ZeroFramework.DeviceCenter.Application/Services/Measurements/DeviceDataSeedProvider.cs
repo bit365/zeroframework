@@ -46,7 +46,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Measurements
 
                 if (product1 is not null)
                 {
-                    for (int i = 0; i < 7; i++)
+                    for (int i = 0; i < 2; i++)
                     {
                         var device = new Device
                         {
@@ -66,7 +66,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Measurements
 
                 if (product2 is not null)
                 {
-                    for (int i = 0; i < 6; i++)
+                    for (int i = 0; i < 2; i++)
                     {
                         var device = new Device
                         {
@@ -86,7 +86,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Measurements
 
                 if (product3 is not null)
                 {
-                    for (int i = 0; i < 6; i++)
+                    for (int i = 0; i < 2; i++)
                     {
                         var device = new Device
                         {
@@ -106,7 +106,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Measurements
 
                 if (product4 is not null)
                 {
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < 2; i++)
                     {
                         var device = new Device
                         {
@@ -132,8 +132,12 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Measurements
 
             Random random = new(Guid.NewGuid().GetHashCode());
 
+            _logger.LogInformation("Start generating demo data...");
+
             foreach (Device device in deviceList)
             {
+                _logger.LogInformation("Start generating {deviceName} demo data...", device.Name);
+
                 var values = await _deviceApplicationService.GetDevicePropertyValues(device.ProductId, device.Id);
 
                 if (values is not null && values.Max(e => e.Timestamp) > DateTimeOffset.Now.AddDays(-1).ToUnixTimeMilliseconds())
@@ -145,11 +149,11 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Measurements
 
                 foreach (var propery in properties)
                 {
-                    DateTimeOffset startDate = DateTimeOffset.Now.AddDays(-5).Date;
+                    DateTimeOffset startDate = DateTimeOffset.Now.AddDays(-1);
 
                     while (startDate < DateTimeOffset.Now)
                     {
-                        startDate = startDate.AddMinutes(random.Next(30, 60));
+                        startDate = startDate.AddMinutes(random.Next(10, 20));
 
                         DevicePropertyValue devicePropertyValue = new()
                         {
@@ -197,6 +201,8 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Measurements
                     }
                 }
             }
+
+            _logger.LogInformation("All demo data generated.");
         }
     }
 }

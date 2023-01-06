@@ -17,24 +17,6 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
         {
             if (await _productRepository.GetCountAsync() <= 0)
             {
-                for (int i = 1; i < 18; i++)
-                {
-                    Guid? tenantId = null;
-
-                    if (i >= 3 && i < 6)
-                    {
-                        tenantId = Guid.Parse($"5f6f2110-58b6-4cf9-b416-85820ba12c01");
-                    }
-
-                    if (i >= 8 && i < 8)
-                    {
-                        tenantId = Guid.Parse($"5f6f2110-58b6-4cf9-b416-85820ba12c02");
-                    }
-
-                    var product = new Product { Name = $"智能监测产品{i.ToString().PadLeft(2, '0')}", TenantId = tenantId, CreationTime = DateTimeOffset.Now };
-                    await _productRepository.InsertAsync(product, true);
-                }
-
                 static ExpandoObject createExpandoObject(float min, float max, string? unit)
                 {
                     dynamic result = new ExpandoObject();

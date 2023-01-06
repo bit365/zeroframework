@@ -13,7 +13,7 @@ namespace ZeroFramework.DeviceCenter.API.Extensions.Hosting
     {
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
         {
-            return app =>
+            return (app) =>
             {
                 if (app.ApplicationServices.GetRequiredService<IWebHostEnvironment>().IsStaging())
                 {

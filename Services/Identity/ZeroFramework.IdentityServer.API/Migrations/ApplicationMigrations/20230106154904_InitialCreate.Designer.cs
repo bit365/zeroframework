@@ -12,7 +12,7 @@ using ZeroFramework.IdentityServer.API.IdentityStores;
 namespace ZeroFramework.IdentityServer.API.Migrations.ApplicationMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230106001541_InitialCreate")]
+    [Migration("20230106154904_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

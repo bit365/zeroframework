@@ -33,6 +33,13 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.Repositories
                 classMapInitializer.MapExtraElementsMember(e => e.Fields);
             });
 
+            BsonClassMap.RegisterClassMap<DeviceTelemetry>(classMapInitializer =>
+            {
+                classMapInitializer.MapIdMember(e => e.DeviceId);
+                classMapInitializer.AutoMap();
+                classMapInitializer.SetIgnoreExtraElements(true);
+            });
+
             BsonClassMap.RegisterClassMap<TelemetryAggregate>(classMapInitializer =>
             {
                 classMapInitializer.AutoMap();
@@ -43,7 +50,7 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.Repositories
 
         public MeasurementRepository(IConfiguration configuration) => _mongoClient = new MongoClient(configuration.GetConnectionString("MongoConnectionString"));
 
-        protected virtual async Task<IMongoDatabase> GetProductDatabase(int productId) => await Task.FromResult(_mongoClient.GetDatabase($"database-{productId}"));
+        protected virtual async Task<IMongoDatabase> GetProductDatabase(int productId) => await Task.FromResult(_mongoClient.GetDatabase($"product-{productId}"));
 
         protected virtual async Task<IMongoCollection<MeasurementBucket>> GetDeviceCollection(int productId, long deviceId)
         {

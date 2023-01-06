@@ -26,7 +26,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Measurements
 
         public async Task SetDevicePropertyValues(int productId, long deviceId, IDictionary<string, DevicePropertyValue> values)
         {
-            var telemetryValues = values.Select(e => new TelemetryValue { Identifier = e.Key, Timestamp = e.Value.Timestamp ?? DateTimeOffset.Now.ToUnixTimeMilliseconds(), Value = e.Value });
+            var telemetryValues = values.Select(e => new TelemetryValue { Identifier = e.Key, Timestamp = e.Value.Timestamp ?? DateTimeOffset.Now.ToUnixTimeMilliseconds(), Value = e.Value.Value });
 
             await _repository.SetTelemetryValueAsync(productId, deviceId, telemetryValues.ToArray());
 

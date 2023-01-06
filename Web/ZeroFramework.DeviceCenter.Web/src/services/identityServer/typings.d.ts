@@ -1,12 +1,98 @@
-// @ts-ignore
-/* eslint-disable */
-
 declare namespace API {
+  type deleteRoleParams = {
+    id: number;
+  };
+
+  type deleteTenantClaimParams = {
+    id: number;
+  };
+
+  type deleteTenantParams = {
+    id: string;
+  };
+
+  type deleteUserClaimsParams = {
+    userId: number;
+  };
+
+  type deleteUserParams = {
+    id: number;
+  };
+
+  type getRoleParams = {
+    id: number;
+  };
+
+  type getRolesParams = {
+    keyword?: string;
+    sorter?: string;
+    pageNumber?: number;
+    pageSize?: number;
+  };
+
+  type getTenantClaimParams = {
+    id: number;
+  };
+
+  type getTenantClaimsParams = {
+    tenantId: string;
+  };
+
+  type getTenantParams = {
+    id: string;
+  };
+
+  type getTenantsParams = {
+    keyword?: string;
+    sorter?: string;
+    pageNumber?: number;
+    pageSize?: number;
+  };
+
+  type getUserClaimsParams = {
+    userId: number;
+  };
+
+  type getUserParams = {
+    id: number;
+  };
+
+  type getUserRolesParams = {
+    userId: string;
+  };
+
+  type getUsersParams = {
+    keyword?: string;
+    sorter?: string;
+    pageNumber?: number;
+    pageSize?: number;
+  };
+
   type IdentityTenantClaim = {
     id?: number;
     tenantId?: string;
     claimType?: string;
     claimValue?: string;
+  };
+
+  type postUserClaimsParams = {
+    userId: number;
+  };
+
+  type putRoleParams = {
+    id: number;
+  };
+
+  type putTenantClaimParams = {
+    id: number;
+  };
+
+  type putTenantParams = {
+    id: string;
+  };
+
+  type putUserParams = {
+    id: number;
   };
 
   type RoleCreateRequestModel = {
@@ -64,6 +150,10 @@ declare namespace API {
     name?: string;
     displayName?: string;
     connectionString?: string;
+  };
+
+  type updateUserRolesParams = {
+    userId: string;
   };
 
   type UserClaimModel = {

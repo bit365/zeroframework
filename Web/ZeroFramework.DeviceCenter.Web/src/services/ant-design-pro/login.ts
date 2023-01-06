@@ -2,13 +2,22 @@
 /* eslint-disable */
 import { request } from 'umi';
 
+/** 登录接口 POST /api/login/account */
+export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
+  return request<API.LoginResult>('/api/login/account', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** 发送验证码 POST /api/login/captcha */
 export async function getFakeCaptcha(
-  params: {
-    // query
-    /** 手机号 */
-    phone?: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getFakeCaptchaParams,
   options?: { [key: string]: any },
 ) {
   return request<API.FakeCaptcha>('/api/login/captcha', {
@@ -24,18 +33,6 @@ export async function getFakeCaptcha(
 export async function outLogin(options?: { [key: string]: any }) {
   return request<Record<string, any>>('/api/login/outLogin', {
     method: 'POST',
-    ...(options || {}),
-  });
-}
-
-/** 登录接口 POST /api/login/account */
-export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
-  return request<API.LoginResult>('/api/login/account', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
     ...(options || {}),
   });
 }

@@ -1,7 +1,7 @@
 export default {
   'menu.device.manager.product.list': '产品列表',
   'menu.device.manager.thing.list': '物模型管理',
-  'pages.table.product.id': '产品密钥',
+  'pages.table.product.id': '产品编号',
   'pages.table.product.name': '产品名称',
   'pages.table.product.creationTime': '创建时间',
   'pages.table.product.remark': '备注说明',

@@ -4,13 +4,8 @@ import { request } from 'umi';
 
 /** 获取规则列表 GET /api/rule */
 export async function rule(
-  params: {
-    // query
-    /** 当前的页码 */
-    current?: number;
-    /** 页面的容量 */
-    pageSize?: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.ruleParams,
   options?: { [key: string]: any },
 ) {
   return request<API.RuleList>('/api/rule', {

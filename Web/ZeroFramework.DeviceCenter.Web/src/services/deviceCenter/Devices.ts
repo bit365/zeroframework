@@ -4,16 +4,8 @@ import { request } from 'umi';
 
 /** 此处后端没有提供注释 GET /api/Devices */
 export async function getDevices(
-  params: {
-    // query
-    name?: string;
-    status?: API.DeviceStatus;
-    productId?: string;
-    deviceGroupId?: number;
-    sorter?: string;
-    pageNumber?: number;
-    pageSize?: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getDevicesParams,
   options?: { [key: string]: any },
 ) {
   return request<API.DeviceGetResponseModelPagedResponseModel>('/api/Devices', {
@@ -42,10 +34,8 @@ export async function postDevice(
 
 /** 此处后端没有提供注释 GET /api/Devices/${param0} */
 export async function getDevice(
-  params: {
-    // path
-    id: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getDeviceParams,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
@@ -58,10 +48,8 @@ export async function getDevice(
 
 /** 此处后端没有提供注释 PUT /api/Devices/${param0} */
 export async function putDevice(
-  params: {
-    // path
-    id: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.putDeviceParams,
   body: API.DeviceUpdateRequestModel,
   options?: { [key: string]: any },
 ) {
@@ -79,10 +67,8 @@ export async function putDevice(
 
 /** 此处后端没有提供注释 DELETE /api/Devices/${param0} */
 export async function deleteDevice(
-  params: {
-    // path
-    id: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteDeviceParams,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;

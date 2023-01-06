@@ -4,13 +4,8 @@ import { request } from 'umi';
 
 /** 此处后端没有提供注释 GET /api/MonitoringFactors */
 export async function getMonitoringFactors(
-  params: {
-    // query
-    keyword?: string;
-    sorter?: string;
-    pageNumber?: number;
-    pageSize?: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getMonitoringFactorsParams,
   options?: { [key: string]: any },
 ) {
   return request<API.MonitoringFactorGetResponseModelPagedResponseModel>('/api/MonitoringFactors', {
@@ -39,10 +34,8 @@ export async function postMonitoringFactor(
 
 /** 此处后端没有提供注释 GET /api/MonitoringFactors/${param0} */
 export async function getMonitoringFactor(
-  params: {
-    // path
-    id: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getMonitoringFactorParams,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
@@ -55,10 +48,8 @@ export async function getMonitoringFactor(
 
 /** 此处后端没有提供注释 PUT /api/MonitoringFactors/${param0} */
 export async function putMonitoringFactor(
-  params: {
-    // path
-    id: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.putMonitoringFactorParams,
   body: API.MonitoringFactorUpdateRequestModel,
   options?: { [key: string]: any },
 ) {
@@ -76,10 +67,8 @@ export async function putMonitoringFactor(
 
 /** 此处后端没有提供注释 DELETE /api/MonitoringFactors/${param0} */
 export async function deleteMonitoringFactor(
-  params: {
-    // path
-    id: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteMonitoringFactorParams,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;

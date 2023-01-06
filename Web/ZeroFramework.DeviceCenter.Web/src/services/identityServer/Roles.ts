@@ -4,13 +4,8 @@ import { request } from 'umi';
 
 /** 此处后端没有提供注释 GET /api/Roles */
 export async function getRoles(
-  params: {
-    // query
-    keyword?: string;
-    sorter?: string;
-    pageNumber?: number;
-    pageSize?: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getRolesParams,
   options?: { [key: string]: any },
 ) {
   return request<API.RoleGetResponseModelPagedResponseModel>('/api/Roles', {
@@ -36,10 +31,8 @@ export async function postRole(body: API.RoleCreateRequestModel, options?: { [ke
 
 /** 此处后端没有提供注释 GET /api/Roles/${param0} */
 export async function getRole(
-  params: {
-    // path
-    id: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getRoleParams,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
@@ -52,10 +45,8 @@ export async function getRole(
 
 /** 此处后端没有提供注释 PUT /api/Roles/${param0} */
 export async function putRole(
-  params: {
-    // path
-    id: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.putRoleParams,
   body: API.RoleUpdateRequestModel,
   options?: { [key: string]: any },
 ) {
@@ -73,10 +64,8 @@ export async function putRole(
 
 /** 此处后端没有提供注释 DELETE /api/Roles/${param0} */
 export async function deleteRole(
-  params: {
-    // path
-    id: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteRoleParams,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;

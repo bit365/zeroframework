@@ -4,13 +4,8 @@ import { request } from 'umi';
 
 /** 此处后端没有提供注释 GET /api/MeasurementUnits */
 export async function getMeasurementUnits(
-  params: {
-    // query
-    keyword?: string;
-    sorter?: string;
-    pageNumber?: number;
-    pageSize?: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getMeasurementUnitsParams,
   options?: { [key: string]: any },
 ) {
   return request<API.MeasurementUnitGetResponseModelPagedResponseModel>('/api/MeasurementUnits', {
@@ -39,10 +34,8 @@ export async function postMeasurementUnit(
 
 /** 此处后端没有提供注释 GET /api/MeasurementUnits/${param0} */
 export async function getMeasurementUnit(
-  params: {
-    // path
-    id: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getMeasurementUnitParams,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
@@ -55,10 +48,8 @@ export async function getMeasurementUnit(
 
 /** 此处后端没有提供注释 PUT /api/MeasurementUnits/${param0} */
 export async function putMeasurementUnit(
-  params: {
-    // path
-    id: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.putMeasurementUnitParams,
   body: API.MeasurementUnitUpdateRequestModel,
   options?: { [key: string]: any },
 ) {
@@ -76,10 +67,8 @@ export async function putMeasurementUnit(
 
 /** 此处后端没有提供注释 DELETE /api/MeasurementUnits/${param0} */
 export async function deleteMeasurementUnit(
-  params: {
-    // path
-    id: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteMeasurementUnitParams,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;

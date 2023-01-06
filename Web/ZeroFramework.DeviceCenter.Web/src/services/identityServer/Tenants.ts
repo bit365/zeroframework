@@ -4,13 +4,8 @@ import { request } from 'umi';
 
 /** 此处后端没有提供注释 GET /api/Tenants */
 export async function getTenants(
-  params: {
-    // query
-    keyword?: string;
-    sorter?: string;
-    pageNumber?: number;
-    pageSize?: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getTenantsParams,
   options?: { [key: string]: any },
 ) {
   return request<API.TenantGetResponseModelPagedResponseModel>('/api/Tenants', {
@@ -43,10 +38,8 @@ export async function postTenant(
 
 /** 此处后端没有提供注释 GET /api/Tenants/${param0} */
 export async function getTenant(
-  params: {
-    // path
-    id: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getTenantParams,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
@@ -59,10 +52,8 @@ export async function getTenant(
 
 /** 此处后端没有提供注释 PUT /api/Tenants/${param0} */
 export async function putTenant(
-  params: {
-    // path
-    id: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.putTenantParams,
   body: API.TenantUpdateRequestModel,
   options?: { [key: string]: any },
 ) {
@@ -80,10 +71,8 @@ export async function putTenant(
 
 /** 此处后端没有提供注释 DELETE /api/Tenants/${param0} */
 export async function deleteTenant(
-  params: {
-    // path
-    id: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteTenantParams,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;

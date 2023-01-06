@@ -46,6 +46,14 @@ export default () => {
 
     const columns: ProColumns<API.ProductGetResponseModel>[] = [
         {
+            title: <FormattedMessage id='pages.table.product.id' />,
+            dataIndex: 'id',
+            valueType: 'text',
+            sorter: false,
+            search: false,
+            hideInTable: false,
+        },
+        {
             title: <FormattedMessage id='pages.table.product.name' />,
             dataIndex: 'name',
             valueType: 'text',
@@ -63,14 +71,6 @@ export default () => {
                     </a>
                 );
             },
-        },
-        {
-            title: <FormattedMessage id='pages.table.product.id' />,
-            dataIndex: 'id',
-            valueType: 'text',
-            sorter: false,
-            search: false,
-            hideInTable: false,
         },
         {
             title: <FormattedMessage id='pages.table.product.nodeType' />,

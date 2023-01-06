@@ -4,13 +4,8 @@ import { request } from 'umi';
 
 /** 此处后端没有提供注释 GET /api/ResourceGroups */
 export async function getResourceGroups(
-  params: {
-    // query
-    keyword?: string;
-    sorter?: string;
-    pageNumber?: number;
-    pageSize?: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getResourceGroupsParams,
   options?: { [key: string]: any },
 ) {
   return request<API.ResourceGroupGetResponseModelPagedResponseModel>('/api/ResourceGroups', {
@@ -39,10 +34,8 @@ export async function postResourceGroup(
 
 /** 此处后端没有提供注释 GET /api/ResourceGroups/${param0} */
 export async function getResourceGroup(
-  params: {
-    // path
-    id: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getResourceGroupParams,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
@@ -55,10 +48,8 @@ export async function getResourceGroup(
 
 /** 此处后端没有提供注释 PUT /api/ResourceGroups/${param0} */
 export async function putResourceGroup(
-  params: {
-    // path
-    id: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.putResourceGroupParams,
   body: API.ResourceGroupUpdateRequestModel,
   options?: { [key: string]: any },
 ) {
@@ -76,10 +67,8 @@ export async function putResourceGroup(
 
 /** 此处后端没有提供注释 DELETE /api/ResourceGroups/${param0} */
 export async function deleteResourceGroup(
-  params: {
-    // path
-    id: string;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteResourceGroupParams,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;

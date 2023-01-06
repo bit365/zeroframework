@@ -1,7 +1,7 @@
 export default {
   'menu.device.manager.product.list': 'Product List',
   'menu.device.manager.thing.list': 'Thing List',
-  'pages.table.product.id': 'Product Key',
+  'pages.table.product.id': 'ID',
   'pages.table.product.name': 'Product Name',
   'pages.table.product.creationTime': 'Create Time',
   'pages.table.product.remark': 'Remarks',

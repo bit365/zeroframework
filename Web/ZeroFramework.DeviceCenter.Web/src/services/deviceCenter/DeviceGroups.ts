@@ -4,14 +4,8 @@ import { request } from 'umi';
 
 /** 此处后端没有提供注释 GET /api/DeviceGroups */
 export async function getDeviceGroups(
-  params: {
-    // query
-    keyword?: string;
-    parentId?: number;
-    sorter?: string;
-    pageNumber?: number;
-    pageSize?: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getDeviceGroupsParams,
   options?: { [key: string]: any },
 ) {
   return request<API.DeviceGroupGetResponseModelPagedResponseModel>('/api/DeviceGroups', {
@@ -38,12 +32,57 @@ export async function postDeviceGroup(
   });
 }
 
+/** 此处后端没有提供注释 GET /api/DeviceGroups/${param0} */
+export async function getDeviceGroup(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getDeviceGroupParams,
+  options?: { [key: string]: any },
+) {
+  const { id: param0, ...queryParams } = params;
+  return request<API.DeviceGroupGetResponseModel>(`/api/DeviceGroups/${param0}`, {
+    method: 'GET',
+    params: { ...queryParams },
+    ...(options || {}),
+  });
+}
+
+/** 此处后端没有提供注释 PUT /api/DeviceGroups/${param0} */
+export async function putDeviceGroup(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.putDeviceGroupParams,
+  body: API.DeviceGroupUpdateRequestModel,
+  options?: { [key: string]: any },
+) {
+  const { id: param0, ...queryParams } = params;
+  return request<API.DeviceGroupGetResponseModel>(`/api/DeviceGroups/${param0}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    params: { ...queryParams },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 此处后端没有提供注释 DELETE /api/DeviceGroups/${param0} */
+export async function deleteDeviceGroup(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteDeviceGroupParams,
+  options?: { [key: string]: any },
+) {
+  const { id: param0, ...queryParams } = params;
+  return request<any>(`/api/DeviceGroups/${param0}`, {
+    method: 'DELETE',
+    params: { ...queryParams },
+    ...(options || {}),
+  });
+}
+
 /** 此处后端没有提供注释 PUT /api/DeviceGroups/Devices */
 export async function putDevicesToGroup(
-  params: {
-    // query
-    deviceGroupId?: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.putDevicesToGroupParams,
   body: number[],
   options?: { [key: string]: any },
 ) {
@@ -62,10 +101,8 @@ export async function putDevicesToGroup(
 
 /** 此处后端没有提供注释 DELETE /api/DeviceGroups/Devices */
 export async function deleteDevicesFromGroup(
-  params: {
-    // query
-    deviceGroupId?: number;
-  },
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteDevicesFromGroupParams,
   body: number[],
   options?: { [key: string]: any },
 ) {
@@ -78,59 +115,6 @@ export async function deleteDevicesFromGroup(
       ...params,
     },
     data: body,
-    ...(options || {}),
-  });
-}
-
-/** 此处后端没有提供注释 GET /api/DeviceGroups/${param0} */
-export async function getDeviceGroup(
-  params: {
-    // path
-    id: number;
-  },
-  options?: { [key: string]: any },
-) {
-  const { id: param0, ...queryParams } = params;
-  return request<API.DeviceGroupGetResponseModel>(`/api/DeviceGroups/${param0}`, {
-    method: 'GET',
-    params: { ...queryParams },
-    ...(options || {}),
-  });
-}
-
-/** 此处后端没有提供注释 PUT /api/DeviceGroups/${param0} */
-export async function putDeviceGroup(
-  params: {
-    // path
-    id: number;
-  },
-  body: API.DeviceGroupUpdateRequestModel,
-  options?: { [key: string]: any },
-) {
-  const { id: param0, ...queryParams } = params;
-  return request<API.DeviceGroupGetResponseModel>(`/api/DeviceGroups/${param0}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    params: { ...queryParams },
-    data: body,
-    ...(options || {}),
-  });
-}
-
-/** 此处后端没有提供注释 DELETE /api/DeviceGroups/${param0} */
-export async function deleteDeviceGroup(
-  params: {
-    // path
-    id: number;
-  },
-  options?: { [key: string]: any },
-) {
-  const { id: param0, ...queryParams } = params;
-  return request<any>(`/api/DeviceGroups/${param0}`, {
-    method: 'DELETE',
-    params: { ...queryParams },
     ...(options || {}),
   });
 }

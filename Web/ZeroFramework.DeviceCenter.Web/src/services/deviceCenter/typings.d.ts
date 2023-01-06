@@ -1,6 +1,3 @@
-// @ts-ignore
-/* eslint-disable */
-
 declare namespace API {
   type ApplicationConfiguration = {
     permissions?: PermissionConfiguration;
@@ -41,6 +38,38 @@ declare namespace API {
     | 'struct'
     | 'array';
 
+  type deleteDeviceGroupParams = {
+    id: number;
+  };
+
+  type deleteDeviceParams = {
+    id: number;
+  };
+
+  type deleteDevicesFromGroupParams = {
+    deviceGroupId?: number;
+  };
+
+  type deleteMeasurementUnitParams = {
+    id: number;
+  };
+
+  type deleteMonitoringFactorParams = {
+    id: number;
+  };
+
+  type deleteProductParams = {
+    id: number;
+  };
+
+  type deleteResourceGroupParams = {
+    id: string;
+  };
+
+  type deleteUsingDELETEParams = {
+    id: number;
+  };
+
   type DeviceCreateRequestModel = {
     name?: string;
     status?: DeviceStatus;
@@ -55,7 +84,7 @@ declare namespace API {
     id?: number;
     name?: string;
     status?: DeviceStatus;
-    productId?: string;
+    productId?: number;
     product?: ProductGetResponseModel;
     coordinate?: string;
     remark?: string;
@@ -105,15 +134,16 @@ declare namespace API {
   };
 
   type DevicePropertyReport = {
-    date?: string;
-    minValue?: number;
-    averageValue?: number;
-    maxValue?: number;
+    time?: string;
+    min?: number;
+    average?: number;
+    max?: number;
+    count?: number;
   };
 
   type DevicePropertyReportPageableListResposeModel = {
     items?: DevicePropertyReport[];
-    nextOffset?: number;
+    offset?: number;
   };
 
   type DevicePropertyValue = {
@@ -123,7 +153,7 @@ declare namespace API {
 
   type DevicePropertyValuePageableListResposeModel = {
     items?: DevicePropertyValue[];
-    nextOffset?: number;
+    offset?: number;
   };
 
   type DeviceStatisticGetResponseModel = {
@@ -151,6 +181,119 @@ declare namespace API {
   };
 
   type EventType = 'info' | 'alert' | 'error';
+
+  type getDeviceGroupParams = {
+    id: number;
+  };
+
+  type getDeviceGroupsParams = {
+    keyword?: string;
+    parentId?: number;
+    sorter?: string;
+    pageNumber?: number;
+    pageSize?: number;
+  };
+
+  type getDeviceParams = {
+    id: number;
+  };
+
+  type getDevicePropertyHistoryValuesParams = {
+    productId?: number;
+    deviceId?: number;
+    identifier?: string;
+    startTime?: string;
+    endTime?: string;
+    sorting?: SortingOrder;
+    pageNumber?: number;
+    pageSize?: number;
+  };
+
+  type getDevicePropertyReportsParams = {
+    productId?: number;
+    deviceId?: number;
+    identifier?: string;
+    startTime?: string;
+    endTime?: string;
+    reportType?: string;
+    pageNumber?: number;
+    pageSize?: number;
+  };
+
+  type getDevicePropertyValuesParams = {
+    productId?: number;
+    deviceId?: number;
+  };
+
+  type getDevicesParams = {
+    name?: string;
+    status?: DeviceStatus;
+    productId?: number;
+    deviceGroupId?: number;
+    sorter?: string;
+    pageNumber?: number;
+    pageSize?: number;
+  };
+
+  type getMeasurementUnitParams = {
+    id: number;
+  };
+
+  type getMeasurementUnitsParams = {
+    keyword?: string;
+    sorter?: string;
+    pageNumber?: number;
+    pageSize?: number;
+  };
+
+  type getMonitoringFactorParams = {
+    id: number;
+  };
+
+  type getMonitoringFactorsParams = {
+    keyword?: string;
+    sorter?: string;
+    pageNumber?: number;
+    pageSize?: number;
+  };
+
+  type getParams = {
+    providerName?: string;
+    providerKey?: string;
+    resourceGroupId?: string;
+  };
+
+  type getParams = {
+    sorter?: string;
+    pageNumber?: number;
+    pageSize?: number;
+  };
+
+  type getParams = {
+    id: number;
+  };
+
+  type getProductParams = {
+    id: number;
+  };
+
+  type getProductsParams = {
+    keyword?: string;
+    sorter?: string;
+    pageNumber?: number;
+    pageSize?: number;
+  };
+
+  type getResourceGroupParams = {
+    id: string;
+  };
+
+  type getResourceGroupsParams = {
+    keyword?: string;
+    sorter?: string;
+    pageNumber?: number;
+    pageSize?: number;
+  };
 
   type LocalizationConfiguration = {
     supportedCultures?: string[];
@@ -257,6 +400,10 @@ declare namespace API {
     resourceGroupId?: string;
   };
 
+  type postProductParams = {
+    'x-Request-Id'?: string;
+  };
+
   type ProblemDetails = {
     type?: string;
     title?: string;
@@ -274,7 +421,7 @@ declare namespace API {
   };
 
   type ProductGetResponseModel = {
-    id?: string;
+    id?: number;
     name?: string;
     nodeType?: ProductNodeType;
     netType?: ProductNetType;
@@ -306,7 +453,7 @@ declare namespace API {
     | 'other';
 
   type ProductUpdateRequestModel = {
-    id?: string;
+    id?: number;
     name?: string;
     features?: ProductFeatures;
     remark?: string;
@@ -337,6 +484,38 @@ declare namespace API {
     desc?: string;
     dataType?: DataType;
     accessMode?: PropertyAccessMode;
+  };
+
+  type putDeviceGroupParams = {
+    id: number;
+  };
+
+  type putDeviceParams = {
+    id: number;
+  };
+
+  type putDevicesToGroupParams = {
+    deviceGroupId?: number;
+  };
+
+  type putMeasurementUnitParams = {
+    id: number;
+  };
+
+  type putMonitoringFactorParams = {
+    id: number;
+  };
+
+  type putParams = {
+    id: number;
+  };
+
+  type putProductParams = {
+    id: number;
+  };
+
+  type putResourceGroupParams = {
+    id: string;
   };
 
   type ResourceGroupCreateRequestModel = {
@@ -373,10 +552,10 @@ declare namespace API {
 
   type ServiceInvokeMethod = 'async' | 'await';
 
-  type SortingOrder = 'ascending' | 'descending';
-
-  type StringDevicePropertyValueKeyValuePair = {
-    key?: string;
-    value?: DevicePropertyValue;
+  type setDevicePropertyValueParams = {
+    productId?: number;
+    deviceId?: number;
   };
+
+  type SortingOrder = 'ascending' | 'descending';
 }

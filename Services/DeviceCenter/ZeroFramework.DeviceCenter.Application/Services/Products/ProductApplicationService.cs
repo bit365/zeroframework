@@ -6,9 +6,9 @@ using ZeroFramework.DeviceCenter.Domain.Repositories;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Products
 {
-    public class ProductApplicationService : CrudApplicationService<Product, Guid, ProductGetResponseModel, ProductPagedRequestModel, ProductGetResponseModel, ProductCreateRequestModel, ProductUpdateRequestModel>, IProductApplicationService
+    public class ProductApplicationService : CrudApplicationService<Product, int, ProductGetResponseModel, ProductPagedRequestModel, ProductGetResponseModel, ProductCreateRequestModel, ProductUpdateRequestModel>, IProductApplicationService
     {
-        public ProductApplicationService(IRepository<Product, Guid> repository, IMapper mapper) : base(repository, mapper)
+        public ProductApplicationService(IRepository<Product, int> repository, IMapper mapper) : base(repository, mapper)
         {
         }
 

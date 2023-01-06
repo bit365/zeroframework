@@ -15,13 +15,13 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Devices
 
         private readonly IRepository<Device, long> _deviceRepository;
 
-        private readonly IRepository<Product, Guid> _productRepository;
+        private readonly IRepository<Product, int> _productRepository;
 
         private readonly IMapper _mapper;
 
         private readonly IDeviceGroupDomainService _deviceGroupDomainService;
 
-        public DeviceGroupApplicationService(IRepository<DeviceGroup, int> deviceGroupRepository, IMapper mapper, IRepository<DeviceGrouping> deviceGroupingRepository, IRepository<Device, long> deviceRepository, IRepository<Product, Guid> productRepository, IDeviceGroupDomainService deviceGroupDomainService) : base(deviceGroupRepository, mapper)
+        public DeviceGroupApplicationService(IRepository<DeviceGroup, int> deviceGroupRepository, IMapper mapper, IRepository<DeviceGrouping> deviceGroupingRepository, IRepository<Device, long> deviceRepository, IRepository<Product, int> productRepository, IDeviceGroupDomainService deviceGroupDomainService) : base(deviceGroupRepository, mapper)
         {
             _deviceGroupingRepository = deviceGroupingRepository;
             _mapper = mapper;
@@ -72,7 +72,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Devices
 
             var entityDtos = _mapper.Map<List<DeviceGetResponseModel>>(devices);
 
-            IEnumerable<Guid> productIds = entityDtos.Select(e => e.ProductId).Distinct();
+            IEnumerable<int> productIds = entityDtos.Select(e => e.ProductId).Distinct();
 
             List<Product> products = await _productRepository.AsyncExecuter.ToListAsync(_productRepository.Query.Where(e => productIds.Contains(e.Id)));
 

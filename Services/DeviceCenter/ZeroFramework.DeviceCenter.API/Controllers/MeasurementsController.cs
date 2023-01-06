@@ -17,46 +17,34 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
 
         [HttpGet("property-values")]
         [Authorize(MeasurementPermissions.Measurements.DevicePropertyValues)]
-        public async Task<IEnumerable<DevicePropertyLastValue>?> GetDevicePropertyValues(Guid productId, long deviceId)
+        public async Task<IEnumerable<DevicePropertyLastValue>?> GetDevicePropertyValues(int productId, long deviceId)
         {
             return await _deviceDataApplication.GetDevicePropertyValues(productId, deviceId);
         }
 
         [HttpGet("property-history-values")]
         [Authorize(MeasurementPermissions.Measurements.DevicePropertyHistoryValues)]
-        public async Task<PageableListResposeModel<DevicePropertyValue>> GetDevicePropertyHistoryValues(Guid productId, long deviceId, string identifier, DateTimeOffset startTime, DateTimeOffset endTime, SortingOrder sorting, int pageNumber, int pageSize)
+        public async Task<PageableListResposeModel<DevicePropertyValue>?> GetDevicePropertyHistoryValues(int productId, long deviceId, string identifier, DateTimeOffset startTime, DateTimeOffset endTime, SortingOrder sorting, int pageNumber, int pageSize)
         {
-            int skip = (pageNumber - 1) * pageSize;
+            int offset = (pageNumber - 1) * pageSize;
 
-            return await _deviceDataApplication.GetDevicePropertyHistoryValues(productId, deviceId, identifier, startTime, endTime, sorting, skip, pageSize);
+            return await _deviceDataApplication.GetDevicePropertyHistoryValues(productId, deviceId, identifier, startTime, endTime, false, sorting, offset, pageSize);
         }
 
         [HttpGet("property-reports")]
         [Authorize(MeasurementPermissions.Measurements.DevicePropertyReports)]
-        public async Task<PageableListResposeModel<DevicePropertyReport>> GetDevicePropertyReports(Guid productId, long deviceId, string identifier, DateTimeOffset startTime, DateTimeOffset endTime, string reportType, int pageNumber, int pageSize)
+        public async Task<PageableListResposeModel<DevicePropertyReport>?> GetDevicePropertyReports(int productId, long deviceId, string identifier, DateTimeOffset startTime, DateTimeOffset endTime, string reportType, int pageNumber, int pageSize)
         {
-            int skip = (pageNumber - 1) * pageSize;
+            int offset = (pageNumber - 1) * pageSize;
 
-            return await _deviceDataApplication.GetDevicePropertyReports(productId, deviceId, identifier, startTime, endTime, reportType, skip, pageSize);
-        }
-
-        [HttpPut("property-value")]
-        [Authorize(MeasurementPermissions.Measurements.SetDevicePropertyValues)]
-        public async Task SetDevicePropertyValue([FromQuery] Guid productId, [FromQuery] long deviceId, [FromQuery] string identifier, [FromBody] DevicePropertyValue propertyValue)
-        {
-            await _deviceDataApplication.SetDevicePropertyValue(productId, deviceId, identifier, propertyValue);
+            return await _deviceDataApplication.GetDevicePropertyReports(productId, deviceId, identifier, startTime, endTime, reportType, offset, pageSize);
         }
 
         [HttpPut("property-values")]
         [Authorize(MeasurementPermissions.Measurements.SetDevicePropertyValues)]
-        public async Task SetDevicePropertyValues([FromQuery] Guid productId, [FromQuery] long deviceId, [FromBody] params KeyValuePair<string, DevicePropertyValue>[] propertyValues)
+        public async Task SetDevicePropertyValue([FromQuery] int productId, [FromQuery] long deviceId, [FromBody] IDictionary<string, DevicePropertyValue> values)
         {
-            propertyValues = propertyValues ?? throw new ArgumentNullException(nameof(propertyValues));
-
-            foreach (var item in propertyValues)
-            {
-                await _deviceDataApplication.SetDevicePropertyValue(productId, deviceId, item.Key, item.Value);
-            }
+            await _deviceDataApplication.SetDevicePropertyValues(productId, deviceId, values);
         }
     }
 }

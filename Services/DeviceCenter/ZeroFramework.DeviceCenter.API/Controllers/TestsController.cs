@@ -26,7 +26,7 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
         [HttpGet]
         public async Task<ActionResult<Measurement>> Get()
         {
-            Guid productId = Guid.Parse("b4b9996c-beb5-4695-ad91-072eac1a6f89");
+            int productId = int.Parse("b4b9996c-beb5-4695-ad91-072eac1a6f89");
 
             long deviceId = 10000;
 
@@ -38,14 +38,20 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
             {
                 currentDateTime = currentDateTime.AddMinutes(random.Next(5, 20));
 
-                Measurement value = new(currentDateTime);
+                Measurement value = new(currentDateTime.LocalDateTime);
 
                 value.Fields.Add("Value", i);
 
-                await _deviceDataApplicationService.SetDevicePropertyValue(productId, deviceId, "Abc", new DevicePropertyValue
+                await _deviceDataApplicationService.SetDevicePropertyValues(productId, deviceId, new Dictionary<string, DevicePropertyValue>
                 {
-                    Timestamp = currentDateTime.ToUnixTimeMilliseconds(),
-                    Value = i
+                    {
+                        "Abc",
+                        new DevicePropertyValue
+                        {
+                            Timestamp = currentDateTime.ToUnixTimeMilliseconds(),
+                            Value = i
+                        }
+                    }
                 });
             }
 

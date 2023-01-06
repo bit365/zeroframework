@@ -40,7 +40,7 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
         [Authorize(ProductPermissions.Products.Default)]
-        public async Task<ProductGetResponseModel> GetProduct(Guid id)
+        public async Task<ProductGetResponseModel> GetProduct(int id)
         {
             return await _productService.GetAsync(id);
         }
@@ -63,7 +63,7 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
         [Authorize(ProductPermissions.Products.Edit)]
-        public async Task<ProductGetResponseModel> PutProduct(Guid id, [FromBody] ProductUpdateRequestModel value)
+        public async Task<ProductGetResponseModel> PutProduct(int id, [FromBody] ProductUpdateRequestModel value)
         {
             value.Id = id;
             return await _productService.UpdateAsync(id, value);
@@ -72,7 +72,7 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
         [Authorize(ProductPermissions.Products.Delete)]
-        public async Task DeleteProduct(Guid id)
+        public async Task DeleteProduct(int id)
         {
             await _productService.DeleteAsync(id);
         }

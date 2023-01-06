@@ -9,7 +9,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Devices
 
         public DeviceStatus? Status { get; set; }
 
-        public Guid? ProductId { get; set; }
+        public int? ProductId { get; set; }
 
         public int? DeviceGroupId { get; set; }
     }

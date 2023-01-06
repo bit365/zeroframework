@@ -6,9 +6,9 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
 {
     public class ProductDataSeedProvider : IDataSeedProvider
     {
-        private readonly IRepository<Product, Guid> _productRepository;
+        private readonly IRepository<Product, int> _productRepository;
 
-        public ProductDataSeedProvider(IRepository<Product, Guid> productRepository)
+        public ProductDataSeedProvider(IRepository<Product, int> productRepository)
         {
             _productRepository = productRepository;
         }
@@ -46,7 +46,6 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
 
                 var product1 = new Product
                 {
-                    Id = Guid.NewGuid(),
                     Name = $"环境空气质量监测产品",
                     NetType = ProductNetType.Cellular,
                     NodeType = ProductNodeType.Gateway,
@@ -219,7 +218,6 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
 
                 var product2 = new Product
                 {
-                    Id = Guid.NewGuid(),
                     Name = $"水质监测产品",
                     NetType = ProductNetType.Cellular,
                     NodeType = ProductNodeType.Gateway,
@@ -382,7 +380,6 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
 
                 var product3 = new Product
                 {
-                    Id = Guid.NewGuid(),
                     Name = $"流量液位压力监测产品",
                     NetType = ProductNetType.Cellular,
                     NodeType = ProductNodeType.Gateway,
@@ -434,7 +431,6 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
 
                 var product4 = new Product
                 {
-                    Id = Guid.NewGuid(),
                     Name = $"气象土壤监测产品",
                     NetType = ProductNetType.Cellular,
                     NodeType = ProductNodeType.Gateway,

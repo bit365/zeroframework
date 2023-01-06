@@ -1,30 +1,26 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using ZeroFramework.DeviceCenter.Domain.Aggregates.MeasurementAggregate;
 using ZeroFramework.DeviceCenter.Domain.Aggregates.ProductAggregate;
+using ZeroFramework.DeviceCenter.Domain.Constants;
 
 namespace ZeroFramework.DeviceCenter.Infrastructure.Repositories
 {
     public class MeasurementRepository : IMeasurementRepository
     {
-        private readonly IMongoClient mongoClient;
+        private readonly IMongoClient _mongoClient;
 
         static MeasurementRepository()
         {
             BsonSerializer.RegisterSerializer(new DateTimeSerializer(DateTimeKind.Local, BsonType.DateTime));
-            BsonSerializer.RegisterIdGenerator(typeof(Guid), CombGuidGenerator.Instance);
 
             BsonClassMap.RegisterClassMap<MeasurementBucket>(classMapInitializer =>
             {
                 classMapInitializer.AutoMap();
-                classMapInitializer.MapIdMember(e => e.Id).SetIdGenerator(StringObjectIdGenerator.Instance);
                 classMapInitializer.IdMemberMap.SetSerializer(new StringSerializer(BsonType.ObjectId));
-                classMapInitializer.MapMember(e => e.DeviceId).SetOrder(1);
-                classMapInitializer.MapMember(e => e.ProductId).SetSerializer(new GuidSerializer(BsonType.String));
                 classMapInitializer.MapMember(e => e.FeatureType).SetSerializer(new EnumSerializer<FeatureType>(BsonType.String));
                 classMapInitializer.MapMember(e => e.Measurements);
                 classMapInitializer.MapExtraElementsMember(e => e.Metadata);
@@ -37,201 +33,173 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.Repositories
                 classMapInitializer.MapExtraElementsMember(e => e.Fields);
             });
 
-            BsonClassMap.RegisterClassMap<TelemetryValueList>(classMapInitializer =>
-            {
-                classMapInitializer.AutoMap();
-                classMapInitializer.SetIgnoreExtraElements(true);
-            });
-
             BsonClassMap.RegisterClassMap<TelemetryAggregate>(classMapInitializer =>
             {
                 classMapInitializer.AutoMap();
-                classMapInitializer.MapIdMember(e => e.Date);
+                classMapInitializer.MapIdMember(e => e.Time);
                 classMapInitializer.SetIgnoreExtraElements(true);
             });
         }
 
-        public MeasurementRepository(IConfiguration configuration) => mongoClient = new MongoClient(configuration.GetConnectionString("MongoConnectionString"));
+        public MeasurementRepository(IConfiguration configuration) => _mongoClient = new MongoClient(configuration.GetConnectionString("MongoConnectionString"));
 
-        protected virtual async Task<IMongoCollection<MeasurementBucket>> GetMeasurementBucketCollection(Guid productId, long deviceId)
+        protected virtual async Task<IMongoDatabase> GetProductDatabase(int productId) => await Task.FromResult(_mongoClient.GetDatabase($"database-{productId}"));
+
+        protected virtual async Task<IMongoCollection<MeasurementBucket>> GetDeviceCollection(int productId, long deviceId)
         {
-            IMongoDatabase database = mongoClient.GetDatabase($"db-{productId:N}");
+            IMongoDatabase database = await GetProductDatabase(productId);
 
-            IMongoCollection<MeasurementBucket> collection = database.GetCollection<MeasurementBucket>($"tb-{deviceId}");
+            IMongoCollection<MeasurementBucket> collection = database.GetCollection<MeasurementBucket>($"device-{deviceId}");
 
-            var indexKeys = Builders<MeasurementBucket>.IndexKeys.Ascending(e => e.ProductId).Ascending(e => e.Identifier).Ascending(e => e.FeatureType).Ascending(e => e.StartTime).Ascending(e => e.EndTime);
+            var indexKeys = Builders<MeasurementBucket>.IndexKeys.Ascending(e => e.FeatureType).Ascending(e => e.Identifier).Ascending(e => e.StartTime).Ascending(e => e.EndTime);
 
-            var indexModel = new CreateIndexModel<MeasurementBucket>(indexKeys, new CreateIndexOptions());
+            var indexModel = new CreateIndexModel<MeasurementBucket>(indexKeys);
 
             await collection.Indexes.CreateOneAsync(indexModel);
 
             return collection;
         }
 
-        public virtual async Task AddMeasurementAsync(Guid productId, long deviceId, FeatureType featureType, string identifier, Measurement measurement)
+        public virtual async Task AddMeasurementsAsync(int productId, long deviceId, FeatureType featureType, string identifier, params Measurement[] measurements)
         {
-            IMongoCollection<MeasurementBucket> collection = await GetMeasurementBucketCollection(productId, deviceId);
+            IMongoCollection<MeasurementBucket> collection = await GetDeviceCollection(productId, deviceId);
 
-            var filterBuilder = Builders<MeasurementBucket>.Filter;
-
-            var filter = filterBuilder.Eq(e => e.FeatureType, featureType) & filterBuilder.Eq(e => e.Identifier, identifier);
-
-            DateTimeOffset bucketStartTime = measurement.Timestamp.Date.AddHours(measurement.Timestamp.Hour);
-            DateTimeOffset bucketEndTime = bucketStartTime.AddHours(1).AddMilliseconds(-1);
-
-            filter &= filterBuilder.Eq(e => e.StartTime, bucketStartTime.LocalDateTime);
-
-            var measurementBucket = await collection.Find(filter).Project(Builders<MeasurementBucket>.Projection.Exclude(e => e.Measurements)).FirstOrDefaultAsync();
-
-            UpdateDefinitionBuilder<MeasurementBucket> updateBuilder = Builders<MeasurementBucket>.Update;
-
-            UpdateDefinition<MeasurementBucket>? update = updateBuilder.Set("LastUpdated", DateTimeOffset.Now.LocalDateTime);
-
-            if (featureType == FeatureType.Property && measurement.Fields.TryGetValue("Value", out object? value) && value is not null && (int)Type.GetTypeCode(value.GetType()) is > 4 and < 16)
+            foreach (var bucketingGroup in measurements.GroupBy(e => e.Timestamp.Date.AddHours(e.Timestamp.Hour)))
             {
-                update = update.Inc(nameof(Enumerable.Sum), value).Inc(nameof(Enumerable.Count), 1);
-            }
+                DateTime bucketStartTime = bucketingGroup.Key;
+                DateTime bucketEndTime = bucketStartTime.AddHours(1);
 
-            measurement.Fields.Add(nameof(FeatureType), featureType.ToString());
-            measurement.Fields.Add(nameof(MeasurementBucket.Identifier), identifier);
+                var filter = Builders<MeasurementBucket>.Filter.Where(e => e.FeatureType == featureType && e.Identifier == identifier && e.StartTime == bucketStartTime);
 
-            if (measurementBucket is null)
-            {
-                update = update.Set(e => e.ProductId, productId).Set(e => e.DeviceId, deviceId).Set(e => e.FeatureType, featureType).Set(e => e.Identifier, identifier);
-                update = update.Set(e => e.StartTime, bucketStartTime.LocalDateTime).Set(e => e.EndTime, bucketEndTime.LocalDateTime);
-                update = update.Set(e => e.Measurements, new List<Measurement> { measurement });
-            }
-            else
-            {
-                update = update.Push(e => e.Measurements, measurement);
-            }
+                var update = Builders<MeasurementBucket>.Update.SetOnInsert(e => e.FeatureType, featureType).SetOnInsert(e => e.Identifier, identifier)
+                    .SetOnInsert(e => e.StartTime, bucketStartTime).SetOnInsert(e => e.EndTime, bucketEndTime)
+                    .PushEach(e => e.Measurements, measurements).Set(e => e.LastUpdated, DateTime.Now);
 
-            await collection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
+                List<double> values = new();
+
+                if (featureType == FeatureType.Property)
+                {
+                    bucketingGroup.ToList().ForEach(item =>
+                    {
+                        if (item.Fields.TryGetValue("Value", out object? value) && value is not null && (int)Type.GetTypeCode(value.GetType()) is > 4 and < 16)
+                        {
+                            values.Add(Convert.ToDouble(value));
+                        }
+                    });
+
+                    if (values.Any())
+                    {
+                        update = update.Inc(e => e.Sum, values.Sum()).Min(e => e.Min, values.Min()).Max(e => e.Max, values.Max());
+                    }
+                }
+
+                update = update.Inc(e => e.Count, bucketingGroup.Count());
+
+                await collection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
+            }
         }
 
-        public virtual async Task<PageableListResult<Measurement>> GetMeasurementsAsync(Guid productId, long deviceId, FeatureType? featureType, string? identifier, DateTimeOffset startTime, DateTimeOffset endTime, bool ascending, int skip, int top)
+        public virtual async Task<PageableListResult<Measurement>?> GetMeasurementsAsync(int productId, long deviceId, FeatureType? featureType, string? identifier, DateTime startTime, DateTime endTime, bool hoursFirst = false, bool descending = false, int offset = 0, int count = PagingConstants.DefaultPageSize)
         {
-            IMongoCollection<MeasurementBucket> collection = await GetMeasurementBucketCollection(productId, deviceId);
+            IMongoCollection<MeasurementBucket> collection = await GetDeviceCollection(productId, deviceId);
 
-            FilterDefinitionBuilder<MeasurementBucket> filterBuilder = Builders<MeasurementBucket>.Filter;
+            DateTime bucketStartTime = startTime.Date.AddHours(startTime.Hour);
+            DateTime bucketEndTime = endTime.Date.AddHours(endTime.Hour + 1);
 
-            DateTime bucketStartTime = startTime.LocalDateTime.Date.AddHours(startTime.LocalDateTime.Hour);
-            DateTime bucketEndTime = endTime.LocalDateTime.Date.AddHours(endTime.LocalDateTime.Hour + 1).AddMilliseconds(-1);
-
-            var filter = filterBuilder.Gte(e => e.StartTime, bucketStartTime) & filterBuilder.Lte(e => e.EndTime, bucketEndTime);
+            var bucketQuery = collection.AsQueryable().Where(e => e.StartTime >= bucketStartTime && e.EndTime < bucketEndTime);
 
             if (featureType is not null)
             {
-                filter &= filterBuilder.Eq(e => e.FeatureType, featureType);
+                bucketQuery = bucketQuery.Where(e => e.FeatureType == featureType);
             }
 
             if (identifier is not null)
             {
-                filter &= filterBuilder.Eq(e => e.Identifier, identifier);
+                bucketQuery = bucketQuery.Where(e => e.Identifier == identifier);
             }
 
-            string timestampField = $"{nameof(MeasurementBucket.Measurements)}.{nameof(Measurement.Timestamp)}";
+            IQueryable<Measurement> measurementQuery = hoursFirst ? bucketQuery.Select(e => e.Measurements.First()) : bucketQuery.SelectMany(e => e.Measurements);
 
-            var sort = ascending ? Builders<BsonDocument>.Sort.Ascending(timestampField) : Builders<BsonDocument>.Sort.Descending(timestampField);
+            measurementQuery = measurementQuery.Where(e => e.Timestamp >= startTime && e.Timestamp <= endTime);
 
-            FilterDefinitionBuilder<BsonDocument> chlidFilterBuilder = Builders<BsonDocument>.Filter;
+            var orderedQueryable = descending ? measurementQuery.OrderByDescending(e => e.Timestamp) : measurementQuery.OrderBy(e => e.Timestamp);
 
-            var chlidFilter = chlidFilterBuilder.Gte(timestampField, startTime.LocalDateTime) & chlidFilterBuilder.Lte(timestampField, endTime.LocalDateTime);
+            int tryTakeCount = count + 1;
 
-            int takeCount = top + 1;
+            var list = orderedQueryable.Skip(offset).Take(tryTakeCount).ToList();
 
-            var list = await collection.Aggregate().Match(filter).Unwind(e => e.Measurements).Match(chlidFilter).Sort(sort).Skip(skip).Limit(takeCount).ToListAsync();
+            var measurements = list.Take(count).ToList();
 
-            var measurements = list.Take(top).Select(e => BsonSerializer.Deserialize<Measurement>(e.GetElement(nameof(MeasurementBucket.Measurements)).Value.ToBsonDocument()))?.ToList();
-
-            return new PageableListResult<Measurement>(measurements, list.Count > top ? skip + top : null);
+            return measurements.Any() ? new PageableListResult<Measurement>(measurements, list.Count > count ? offset + count : null) : null;
         }
 
-        public virtual async Task<IEnumerable<Measurement>> GetLastMeasurementsAsync(Guid productId, long deviceId, FeatureType featureType)
+        public virtual async Task<PageableListResult<TelemetryAggregate>?> GetTelemetryAggregatesAsync(int productId, long deviceId, string identifier, DateTime startTime, DateTime endTime, string timeInterval, int offset, int count)
         {
-            IMongoCollection<MeasurementBucket> collection = await GetMeasurementBucketCollection(productId, deviceId);
+            IMongoCollection<MeasurementBucket> collection = await GetDeviceCollection(productId, deviceId);
+
+            DateTime bucketStartTime = startTime.Date.AddHours(startTime.Hour);
+            DateTime bucketEndTime = endTime.Date.AddHours(endTime.Hour + 1);
 
             FilterDefinitionBuilder<MeasurementBucket> filterBuilder = Builders<MeasurementBucket>.Filter;
 
-            var filter = filterBuilder.Eq(e => e.ProductId, productId) & filterBuilder.Eq(e => e.DeviceId, deviceId) & filterBuilder.Eq(e => e.FeatureType, featureType);
+            var filter = filterBuilder.Eq(e => e.FeatureType, FeatureType.Property) & filterBuilder.Eq(e => e.Identifier, identifier) & filterBuilder.Gte(e => e.StartTime, bucketStartTime) & filterBuilder.Lte(e => e.EndTime, bucketEndTime);
 
-            var list = await collection.Aggregate().Match(filter).Group(e => e.Identifier, e => e.Last()).Project(e => e.Measurements.Last()).ToListAsync();
-
-            return list;
-        }
-
-        public virtual async Task<PageableListResult<TelemetryAggregate>> GetTelemetryAggregatesAsync(Guid productId, long deviceId, string identifier, DateTimeOffset startTime, DateTimeOffset endTime, string reportType, int skip, int top)
-        {
-            IMongoCollection<MeasurementBucket> collection = await GetMeasurementBucketCollection(productId, deviceId);
-
-            FilterDefinitionBuilder<MeasurementBucket> filterBuilder = Builders<MeasurementBucket>.Filter;
-
-            var filter = filterBuilder.Eq(e => e.FeatureType, FeatureType.Property) & filterBuilder.Eq(e => e.Identifier, identifier);
-
-            DateTime bucketStartTime = startTime.LocalDateTime.Date.AddHours(startTime.LocalDateTime.Hour);
-            DateTime bucketEndTime = endTime.LocalDateTime.Date.AddHours(endTime.LocalDateTime.Hour + 1).AddMilliseconds(-1);
-
-            filter &= filterBuilder.Gte(e => e.StartTime, bucketStartTime) & filterBuilder.Lte(e => e.EndTime, bucketEndTime);
-
-            Dictionary<string, string> reportTypeToFormatMapping = new() { { nameof(DateTime.Year).ToLower(), "%Y" }, { nameof(DateTime.Month).ToLower(), "%Y-%m" }, { nameof(DateTime.Day).ToLower(), "%Y-%m-%d" }, { nameof(DateTime.Hour).ToLower(), "%Y-%m-%d-%H:00" } };
-
-            string format = reportTypeToFormatMapping[reportType.ToLower()];
-
-            BsonDocument project = new()
+            Dictionary<string, string> reportTypeToFormat = new(StringComparer.OrdinalIgnoreCase)
             {
-                { "Date", new BsonDocument { { "$dateToString", new BsonDocument { { "format", format }, { "date", "$StartTime" }, { "timezone", "Asia/Shanghai" } } } } },
-                { "AverageValue", new BsonDocument { { "$divide", new BsonArray { "$Sum", "$Count" } } } },
+                { "Year", "%Y" },
+                { "Month", "%Y-%m" },
+                { "Day", "%Y-%m-%d" },
+                { "Hour", "%Y-%m-%d %H:00" }
             };
 
-            BsonDocument group = new()
+            string format = reportTypeToFormat[timeInterval];
+
+            int tryTakeCount = count + 1;
+
+            var list = await collection.Aggregate().Match(filter).Group(e => e.StartTime.ToString(format), g => new TelemetryAggregate
             {
-                { "_id", "$Date" },
-                { "AverageValue", new BsonDocument { { "$avg", "$AverageValue" } } },
-                { "MinValue", new BsonDocument { { "$min", "$AverageValue" } } },
-                { "MaxValue", new BsonDocument { { "$max", "$AverageValue" } } },
+                Time = g.Key,
+                Min = g.Min(e => e.Min),
+                Max = g.Max(e => e.Max),
+                Average = g.Average(e => e.Sum / e.Count),
+                Count = g.Sum(e => e.Count)
+            }).SortBy(e => e.Time).Skip(offset).Limit(tryTakeCount).ToListAsync();
+
+            return list.Any() ? new PageableListResult<TelemetryAggregate>(list.Take(count).ToList(), list.Count > count ? offset + count : null) : null;
+        }
+
+        public virtual async Task SetTelemetryValueAsync(int productId, long deviceId, params TelemetryValue[] telemetryValues)
+        {
+            IMongoDatabase database = await GetProductDatabase(productId);
+
+            IMongoCollection<DeviceTelemetry> collection = database.GetCollection<DeviceTelemetry>("telemetry");
+
+            var filter = Builders<DeviceTelemetry>.Filter.Where(e => e.DeviceId == deviceId);
+
+            var identifiers = telemetryValues.Select(e => new StringOrRegularExpression(e.Identifier)).ToArray();
+
+            var subFilter = Builders<TelemetryValue>.Filter.StringIn(e => e.Identifier, identifiers);
+
+            List<WriteModel<DeviceTelemetry>> bulkUpdates = new()
+            {
+                new UpdateOneModel<DeviceTelemetry>(filter, Builders<DeviceTelemetry>.Update.PullFilter(e=>e.Values, subFilter)),
+                new UpdateOneModel<DeviceTelemetry>(filter, Builders<DeviceTelemetry>.Update.SetOnInsert(e => e.DeviceId, deviceId).AddToSetEach(e=>e.Values,telemetryValues)){ IsUpsert=true},
             };
 
-            int takeCount = top + 1;
-
-            var list = await collection.Aggregate().Match(filter).Project(project).Group<TelemetryAggregate>(group).SortBy(e => e.Date).Skip(skip).Limit(takeCount).ToListAsync();
-
-            return new PageableListResult<TelemetryAggregate>(list.Take(top).ToList(), list.Count > top ? skip + top : null);
+            await collection.BulkWriteAsync(bulkUpdates);
         }
 
-        public virtual async Task SetTelemetryValueAsync(Guid productId, long deviceId, string identifier, DateTimeOffset timestamp, object value)
+        public virtual async Task<IEnumerable<TelemetryValue>?> GetTelemetryValuesAsync(int productId, long deviceId)
         {
-            IMongoDatabase database = mongoClient.GetDatabase($"db-{productId:N}");
+            IMongoDatabase database = await GetProductDatabase(productId);
 
-            IMongoCollection<TelemetryValueList> collection = database.GetCollection<TelemetryValueList>($"tb-telemetry");
+            IMongoCollection<DeviceTelemetry> collection = database.GetCollection<DeviceTelemetry>("telemetry");
 
-            var filterBuilder = Builders<TelemetryValueList>.Filter;
+            var filter = Builders<DeviceTelemetry>.Filter.Where(e => e.DeviceId == deviceId);
 
-            var filter = filterBuilder.Eq(e => e.DeviceId, deviceId);
+            var deviceTelemetry = await collection.Find(filter).SingleOrDefaultAsync();
 
-            TelemetryValueList? telemetryValueList = await collection.Find(filter).FirstOrDefaultAsync();
-
-            telemetryValueList ??= new TelemetryValueList { ProductId = productId, DeviceId = deviceId };
-
-            telemetryValueList.Values.RemoveAll(e => e.Identifier == identifier);
-
-            TelemetryValue telemetryValue = new() { Identifier = identifier, Timestamp = timestamp.ToUnixTimeMilliseconds(), Value = value };
-
-            telemetryValueList.Values.Add(telemetryValue);
-
-            await collection.ReplaceOneAsync(filter, telemetryValueList, new ReplaceOptions { IsUpsert = true });
-        }
-
-        public virtual async Task<TelemetryValueList> GetTelemetryValuesAsync(Guid productId, long deviceId)
-        {
-            IMongoDatabase database = mongoClient.GetDatabase($"db-{productId:N}");
-
-            IMongoCollection<TelemetryValueList> collection = database.GetCollection<TelemetryValueList>($"tb-telemetry");
-
-            var filterBuilder = Builders<TelemetryValueList>.Filter;
-
-            var filter = filterBuilder.Eq(e => e.ProductId, productId) & filterBuilder.Eq(e => e.DeviceId, deviceId);
-
-            return await collection.Find(filter).SingleOrDefaultAsync();
+            return deviceTelemetry?.Values;
         }
     }
 }

@@ -7,11 +7,11 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
     {
         Task<ProductGetResponseModel> CreateAsync(ProductCreateRequestModel requestModel);
 
-        Task DeleteAsync(Guid id);
+        Task DeleteAsync(int id);
 
-        Task<ProductGetResponseModel> UpdateAsync(Guid id, ProductUpdateRequestModel requestModel);
+        Task<ProductGetResponseModel> UpdateAsync(int id, ProductUpdateRequestModel requestModel);
 
-        Task<ProductGetResponseModel> GetAsync(Guid id);
+        Task<ProductGetResponseModel> GetAsync(int id);
 
         Task<PagedResponseModel<ProductGetResponseModel>> GetListAsync(ProductPagedRequestModel requestModel);
     }

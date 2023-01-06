@@ -4,11 +4,11 @@ namespace ZeroFramework.DeviceCenter.Domain.Aggregates.MeasurementAggregate
 {
     public class Measurement : DynamicObject
     {
+        public Dictionary<string, object?> Fields { get; set; } = new();
+
         public DateTime Timestamp { get; private set; }
 
-        public IDictionary<string, object?> Fields { get; set; } = new Dictionary<string, object?>();
-
-        public Measurement(DateTimeOffset timestamp) => Timestamp = timestamp.LocalDateTime;
+        public Measurement(DateTime timestamp) => Timestamp = timestamp;
 
         public override bool TrySetMember(SetMemberBinder binder, object? value)
         {

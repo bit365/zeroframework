@@ -4,16 +4,14 @@ namespace ZeroFramework.DeviceCenter.Domain.Aggregates.MeasurementAggregate
 {
     public interface IMeasurementRepository
     {
-        Task AddMeasurementAsync(Guid productId, long deviceId, FeatureType featureType, string identifier, Measurement measurement);
+        Task AddMeasurementsAsync(int productId, long deviceId, FeatureType featureType, string identifier, params Measurement[] measurements);
 
-        Task<IEnumerable<Measurement>> GetLastMeasurementsAsync(Guid productId, long deviceId, FeatureType featureType);
+        Task<PageableListResult<Measurement>?> GetMeasurementsAsync(int productId, long deviceId, FeatureType? featureType, string? identifier, DateTime startTime, DateTime endTime, bool hoursFirst = false, bool descending = false, int offset = 0, int count = 10);
 
-        Task<PageableListResult<Measurement>> GetMeasurementsAsync(Guid productId, long deviceId, FeatureType? featureType, string? identifier, DateTimeOffset startTime, DateTimeOffset endTime, bool ascending, int skip, int top);
+        Task<PageableListResult<TelemetryAggregate>?> GetTelemetryAggregatesAsync(int productId, long deviceId, string identifier, DateTime startTime, DateTime endTime, string timeInterval, int offset, int count);
 
-        Task<PageableListResult<TelemetryAggregate>> GetTelemetryAggregatesAsync(Guid productId, long deviceId, string identifier, DateTimeOffset startTime, DateTimeOffset endTime, string reportType, int skip, int top);
+        Task<IEnumerable<TelemetryValue>?> GetTelemetryValuesAsync(int productId, long deviceId);
 
-        Task<TelemetryValueList> GetTelemetryValuesAsync(Guid productId, long deviceId);
-
-        Task SetTelemetryValueAsync(Guid productId, long deviceId, string identifier, DateTimeOffset timestamp, object value);
+        Task SetTelemetryValueAsync(int productId, long deviceId, params TelemetryValue[] telemetryValues);
     }
 }

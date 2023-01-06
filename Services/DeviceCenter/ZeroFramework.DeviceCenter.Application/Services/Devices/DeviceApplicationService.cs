@@ -10,13 +10,13 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Devices
 {
     public class DeviceApplicationService : CrudApplicationService<Device, long, DeviceGetResponseModel, DevicePagedRequestModel, DeviceGetResponseModel, DeviceCreateRequestModel, DeviceUpdateRequestModel>, IDeviceApplicationService
     {
-        private readonly IRepository<Product, Guid> _productRepository;
+        private readonly IRepository<Product, int> _productRepository;
 
         private readonly IMapper _mapper;
 
         private readonly IDeviceRepository _deviceRepository;
 
-        public DeviceApplicationService(IDeviceRepository deviceRepository, IRepository<Product, Guid> productRepository, IMapper mapper) : base(deviceRepository, mapper)
+        public DeviceApplicationService(IDeviceRepository deviceRepository, IRepository<Product, int> productRepository, IMapper mapper) : base(deviceRepository, mapper)
         {
             _productRepository = productRepository;
             _mapper = mapper;
@@ -39,7 +39,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Devices
 
             var entityDtos = _mapper.Map<List<DeviceGetResponseModel>>(entities);
 
-            IEnumerable<Guid> productIds = entityDtos.Select(e => e.ProductId).Distinct();
+            IEnumerable<int> productIds = entityDtos.Select(e => e.ProductId).Distinct();
 
             List<Product> products = await _productRepository.AsyncExecuter.ToListAsync(_productRepository.Query.Where(e => productIds.Contains(e.Id)));
 

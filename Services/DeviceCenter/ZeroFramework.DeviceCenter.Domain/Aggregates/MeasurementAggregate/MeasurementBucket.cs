@@ -1,32 +1,33 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Dynamic;
+﻿using System.Dynamic;
 using ZeroFramework.DeviceCenter.Domain.Aggregates.ProductAggregate;
 
 namespace ZeroFramework.DeviceCenter.Domain.Aggregates.MeasurementAggregate
 {
     public class MeasurementBucket : DynamicObject
     {
-        [AllowNull]
-        public string Id { get; set; }
+        public string Id { get; set; } = default!;
 
-        public Guid ProductId { get; set; }
-
-        public long DeviceId { get; set; }
-
-        [AllowNull]
         public FeatureType FeatureType { get; set; }
 
-        [AllowNull]
-        public string Identifier { get; set; }
+        public string Identifier { get; set; } = default!;
 
         public DateTime StartTime { get; set; }
 
         public DateTime EndTime { get; set; }
 
-        public IDictionary<string, object?> Metadata { get; set; } = new Dictionary<string, object?>();
+        public Dictionary<string, object?> Metadata { get; set; } = new();
 
-        [AllowNull]
-        public List<Measurement> Measurements { get; set; }
+        public List<Measurement> Measurements { get; set; } = new();
+
+        public DateTime LastUpdated { get; set; }
+
+        public double? Sum { get; set; }
+
+        public int Count { get; set; }
+
+        public double? Min { get; set; }
+
+        public double? Max { get; set; }
 
         public override bool TrySetMember(SetMemberBinder binder, object? value)
         {

@@ -2,14 +2,14 @@
 {
     public class PageableListResposeModel<T>
     {
-        public PageableListResposeModel(IReadOnlyList<T>? items, int? nextOffset)
+        public PageableListResposeModel(IReadOnlyList<T> items, int? offset)
         {
             Items = items;
-            NextOffset = nextOffset;
+            Offset = offset;
         }
 
-        public IReadOnlyList<T>? Items { get; }
+        public IReadOnlyList<T> Items { get; }
 
-        public int? NextOffset { get; }
+        public int? Offset { get; }
     }
 }

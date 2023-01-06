@@ -3,7 +3,7 @@ using ZeroFramework.DeviceCenter.Domain.Entities;
 
 namespace ZeroFramework.DeviceCenter.Domain.Aggregates.ProductAggregate
 {
-    public class Product : BaseAggregateRoot<Guid>, ISoftDelete, IMultiTenant
+    public class Product : BaseAggregateRoot<int>, ISoftDelete, IMultiTenant
     {
         /// <summary>
         /// 产品名称

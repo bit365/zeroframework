@@ -27,7 +27,7 @@ namespace ZeroFramework.DeviceCenter.Application.Models.Devices
         /// 所属产品
         /// </summary>
         [AllowNull]
-        public Guid ProductId { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// 所属产品

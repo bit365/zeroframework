@@ -11,6 +11,7 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.EntityConfigurations.Devices
             builder.ToTable("DeviceGroups", Constants.DbConstants.DefaultTableSchema);
 
             builder.HasKey(e => e.Id);
+            builder.Property(e => e.Id).UseIdentityColumn(100000, 1);
             builder.Property(e => e.Name).HasMaxLength(20);
             builder.Property(e => e.Remark).HasMaxLength(256);
             builder.Ignore(e => e.DomainEvents);

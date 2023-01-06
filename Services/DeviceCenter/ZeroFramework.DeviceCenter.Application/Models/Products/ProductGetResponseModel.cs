@@ -8,7 +8,7 @@ namespace ZeroFramework.DeviceCenter.Application.Models.Products
         /// <summary>
         /// 产品编号
         /// </summary>
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// 产品名称

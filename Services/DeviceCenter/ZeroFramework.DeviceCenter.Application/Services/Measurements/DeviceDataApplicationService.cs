@@ -5,6 +5,7 @@ using ZeroFramework.DeviceCenter.Application.Services.Generics;
 using ZeroFramework.DeviceCenter.Application.Services.Products;
 using ZeroFramework.DeviceCenter.Domain.Aggregates.MeasurementAggregate;
 using ZeroFramework.DeviceCenter.Domain.Aggregates.ProductAggregate;
+using ZeroFramework.DeviceCenter.Domain.Constants;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Measurements
 {
@@ -23,17 +24,23 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Measurements
             _productApplicationService = productApplicationService;
         }
 
-        public async Task SetDevicePropertyValue(Guid productId, long deviceId, string identifier, DevicePropertyValue propertyValue)
+        public async Task SetDevicePropertyValues(int productId, long deviceId, IDictionary<string, DevicePropertyValue> values)
         {
-            dynamic measurement = new Measurement(DateTimeOffset.FromUnixTimeMilliseconds(propertyValue.Timestamp));
+            var telemetryValues = values.Select(e => new TelemetryValue { Identifier = e.Key, Timestamp = e.Value.Timestamp ?? DateTimeOffset.Now.ToUnixTimeMilliseconds(), Value = e.Value });
 
-            measurement.Value = propertyValue.Value;
+            await _repository.SetTelemetryValueAsync(productId, deviceId, telemetryValues.ToArray());
 
-            await _repository.SetTelemetryValueAsync(productId, deviceId, identifier, measurement.Timestamp, propertyValue.Value);
-            await _repository.AddMeasurementAsync(productId, deviceId, FeatureType.Property, identifier, measurement);
+            foreach (var item in telemetryValues)
+            {
+                dynamic measurement = new Measurement(DateTimeOffset.FromUnixTimeMilliseconds(item.Timestamp).LocalDateTime);
+
+                measurement.Value = item.Value;
+
+                await _repository.AddMeasurementsAsync(productId, deviceId, FeatureType.Property, item.Identifier, measurement);
+            }
         }
 
-        public async Task<IEnumerable<DevicePropertyLastValue>?> GetDevicePropertyValues(Guid productId, long deviceId)
+        public async Task<IEnumerable<DevicePropertyLastValue>?> GetDevicePropertyValues(int productId, long deviceId)
         {
             var telemetryValues = await _repository.GetTelemetryValuesAsync(productId, deviceId);
 
@@ -41,11 +48,11 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Measurements
             {
                 ProductGetResponseModel productGetResponseModel = await _productApplicationService.GetAsync(productId);
 
-                telemetryValues.Values ??= Enumerable.Empty<TelemetryValue>().ToList();
+                telemetryValues ??= Enumerable.Empty<TelemetryValue>().ToList();
 
                 List<DevicePropertyLastValue> devicePropertyLastValues = new();
 
-                foreach (var item in telemetryValues.Values)
+                foreach (var item in telemetryValues)
                 {
                     var property = productGetResponseModel?.Features?.Properties?.SingleOrDefault(p => p.Identifier == item.Identifier);
 
@@ -70,22 +77,24 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Measurements
             return null;
         }
 
-        public async Task<PageableListResposeModel<DevicePropertyValue>> GetDevicePropertyHistoryValues(Guid productId, long deviceId, string identifier, DateTimeOffset startTime, DateTimeOffset endTime, SortingOrder sorting, int skip, int top)
+        public async Task<PageableListResposeModel<DevicePropertyValue>?> GetDevicePropertyHistoryValues(int productId, long deviceId, string identifier, DateTimeOffset startTime, DateTimeOffset endTime, bool hoursFirst = false, SortingOrder sorting = SortingOrder.Ascending, int offset = 0, int count = PagingConstants.DefaultPageSize)
         {
-            var result = await _repository.GetMeasurementsAsync(productId, deviceId, FeatureType.Property, identifier, startTime, endTime, sorting == SortingOrder.Ascending, skip, top);
+            bool isDescending = sorting == SortingOrder.Descending;
 
-            var list = result?.Items?.Select(e => new DevicePropertyValue { Timestamp = new DateTimeOffset(e.Timestamp).ToUnixTimeMilliseconds(), Value = e.Fields["Value"] }).ToList();
+            var measurements = await _repository.GetMeasurementsAsync(productId, deviceId, FeatureType.Property, identifier, startTime.LocalDateTime, endTime.LocalDateTime, hoursFirst, isDescending, offset, count);
 
-            return new PageableListResposeModel<DevicePropertyValue>(list, result?.NextOffset);
+            var list = measurements?.Items?.Select(e => new DevicePropertyValue { Timestamp = new DateTimeOffset(e.Timestamp).ToUnixTimeMilliseconds(), Value = e.Fields["Value"] }).ToList();
+
+            return list is null ? null : new PageableListResposeModel<DevicePropertyValue>(list, measurements?.Offset);
         }
 
-        public async Task<PageableListResposeModel<DevicePropertyReport>> GetDevicePropertyReports(Guid productId, long deviceId, string identifier, DateTimeOffset startTime, DateTimeOffset endTime, string reportType, int skip, int top)
+        public async Task<PageableListResposeModel<DevicePropertyReport>?> GetDevicePropertyReports(int productId, long deviceId, string identifier, DateTimeOffset startTime, DateTimeOffset endTime, string reportType, int offset = 0, int count = PagingConstants.DefaultPageSize)
         {
-            var result = await _repository.GetTelemetryAggregatesAsync(productId, deviceId, identifier, startTime, endTime, reportType, skip, top);
+            var aggregates = await _repository.GetTelemetryAggregatesAsync(productId, deviceId, identifier, startTime.LocalDateTime, endTime.LocalDateTime, reportType, offset, count);
 
-            var list = result?.Items?.Select(e => _mapper.Map<DevicePropertyReport>(e)).ToList();
+            var list = aggregates?.Items?.Select(e => new DevicePropertyReport { Time = e.Time, Min = e.Min, Average = e.Average, Max = e.Max, Count = e.Count }).ToList();
 
-            return new PageableListResposeModel<DevicePropertyReport>(list, result?.NextOffset);
+            return list is null ? null : new PageableListResposeModel<DevicePropertyReport>(list, aggregates?.Offset);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("SqlServer:Identity", "100000, 1"),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Remark = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     CreationTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
@@ -64,7 +64,7 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "100000, 1"),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
                     Coordinate = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Remark = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     LastOnlineTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -161,7 +161,8 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.Migrations
                 schema: "dbo",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     NodeType = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     NetType = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),

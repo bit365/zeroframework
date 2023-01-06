@@ -12,7 +12,7 @@ using ZeroFramework.DeviceCenter.Infrastructure.EntityFrameworks;
 namespace ZeroFramework.DeviceCenter.Infrastructure.Migrations
 {
     [DbContext(typeof(DeviceCenterDbContext))]
-    [Migration("20230104154002_InitialCreate")]
+    [Migration("20230106001554_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -99,8 +99,8 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Remark")
                         .HasMaxLength(100)
@@ -125,7 +125,7 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 100000L);
 
                     b.Property<DateTimeOffset>("CreationTime")
                         .HasColumnType("datetimeoffset");
@@ -351,9 +351,11 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.Migrations
 
             modelBuilder.Entity("ZeroFramework.DeviceCenter.Domain.Aggregates.ProductAggregate.Product", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTimeOffset>("CreationTime")
                         .HasColumnType("datetimeoffset");

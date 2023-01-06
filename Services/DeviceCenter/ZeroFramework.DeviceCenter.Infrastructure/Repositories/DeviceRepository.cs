@@ -9,7 +9,7 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.Repositories
     {
         public DeviceRepository(DeviceCenterDbContext dbContext) : base(dbContext) { }
 
-        public async Task<int> GetCountAsync(Guid? productId, int? deviceGroupId, DeviceStatus? status, string? deviceName, CancellationToken cancellationToken = default)
+        public async Task<int> GetCountAsync(int? productId, int? deviceGroupId, DeviceStatus? status, string? deviceName, CancellationToken cancellationToken = default)
         {
             IQueryable<Device> query = DbSet;
 
@@ -36,7 +36,7 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.Repositories
             return await query.CountAsync(cancellationToken: cancellationToken);
         }
 
-        public async Task<List<Device>> GetListAsync(Guid? productId, int? deviceGroupId, DeviceStatus? status, string? deviceName, int pageNumber = 1, int pageSize = PagingConstants.DefaultPageSize, CancellationToken cancellationToken = default)
+        public async Task<List<Device>> GetListAsync(int? productId, int? deviceGroupId, DeviceStatus? status, string? deviceName, int pageNumber = 1, int pageSize = PagingConstants.DefaultPageSize, CancellationToken cancellationToken = default)
         {
             IQueryable<Device> query = DbSet;
 

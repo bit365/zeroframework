@@ -20,7 +20,7 @@ namespace ZeroFramework.DeviceCenter.Domain.Aggregates.DeviceAggregate
         /// <summary>
         /// 产品编号
         /// </summary>
-        public Guid ProductId { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// 经纬度坐标

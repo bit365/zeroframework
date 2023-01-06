@@ -1,16 +1,15 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace ZeroFramework.DeviceCenter.Domain.Aggregates.MeasurementAggregate
+﻿namespace ZeroFramework.DeviceCenter.Domain.Aggregates.MeasurementAggregate
 {
     public class TelemetryAggregate
     {
-        [AllowNull]
-        public string Date { get; set; }
+        public string Time { get; set; } = default!;
 
-        public double? MinValue { get; set; }
+        public double? Min { get; set; }
 
-        public double? AverageValue { get; set; }
+        public double? Average { get; set; }
 
-        public double? MaxValue { get; set; }
+        public double? Max { get; set; }
+
+        public int Count { get; set; }
     }
 }

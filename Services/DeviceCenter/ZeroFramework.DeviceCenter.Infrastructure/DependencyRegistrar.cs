@@ -24,7 +24,9 @@ namespace ZeroFramework.DeviceCenter.Infrastructure
 
             services.AddEntityFrameworkSqlServer();
 
-            services.AddDbContextPool<DeviceCenterDbContext>((serviceProvider, optionsBuilder) =>
+            bool isDemoMode = Convert.ToBoolean(configuration.GetRequiredSection("UseDemoLaunchMode").Value);
+
+            services.AddDbContext<DeviceCenterDbContext>((serviceProvider, optionsBuilder) =>
             {
                 optionsBuilder.UseSqlServer(configuration.GetConnectionString(DbConstants.DefaultConnectionStringName), sqlOptions =>
                 {
@@ -35,13 +37,19 @@ namespace ZeroFramework.DeviceCenter.Infrastructure
                 var connectionStringProvider = serviceProvider.GetRequiredService<IConnectionStringProvider>();
                 optionsBuilder.AddInterceptors(new TenantDbConnectionInterceptor(connectionStringProvider));
 
+                if (isDemoMode)
+                {
+                    optionsBuilder.AddInterceptors(new DisalbeModifiedDeletedSaveChangesInterceptor());
+                }
+
                 IMediator mediator = serviceProvider.GetService<IMediator>() ?? new NullMediator();
+
                 optionsBuilder.AddInterceptors(new CustomSaveChangesInterceptor(mediator));
 
                 optionsBuilder.AddInterceptors(new CustomDbCommandInterceptor());
 
                 optionsBuilder.UseInternalServiceProvider(serviceProvider);
-            });
+            }, ServiceLifetime.Transient, ServiceLifetime.Singleton);
 
             services.AddPooledDbContextFactory<DeviceCenterDbContext>((serviceProvider, optionsBuilder) =>
             {
@@ -53,6 +61,11 @@ namespace ZeroFramework.DeviceCenter.Infrastructure
 
                 var connectionStringProvider = serviceProvider.GetRequiredService<IConnectionStringProvider>();
                 optionsBuilder.AddInterceptors(new TenantDbConnectionInterceptor(connectionStringProvider));
+
+                if (isDemoMode)
+                {
+                    optionsBuilder.AddInterceptors(new DisalbeModifiedDeletedSaveChangesInterceptor());
+                }
 
                 IMediator mediator = serviceProvider.GetService<IMediator>() ?? new NullMediator();
                 optionsBuilder.AddInterceptors(new CustomSaveChangesInterceptor(mediator));

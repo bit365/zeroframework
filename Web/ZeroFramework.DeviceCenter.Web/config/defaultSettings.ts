@@ -14,7 +14,7 @@ const Settings: LayoutSettings & {
   colorWeak: false,
   title: "Loading...",
   pwa: false,
-  logo: 'https://www.xcode.me/img/logo.svg',
+  logo: 'https://www.xcode.me/img/logo-white.svg',
   iconfontUrl: '',
 };
 

@@ -1,7 +1,7 @@
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
-import { notification } from 'antd';
-import { RequestConfig, RunTimeLayoutConfig } from 'umi';
+import { message, notification } from 'antd';
+import type { RequestConfig, RunTimeLayoutConfig } from 'umi';
 import type { RequestOptionsInit } from 'umi-request'
 import { history } from 'umi';
 import RightContent from '@/components/RightContent';
@@ -10,7 +10,7 @@ import type { ResponseError } from 'umi-request';
 import { getConfigurations } from '@/pages/authorization/services/user-service';
 import { FormattedMessage, useIntl } from 'umi';
 import { getLanguage } from '@ant-design/pro-layout/lib/locales';
-import { User } from 'oidc-client';
+import type { User } from 'oidc-client';
 import { userManager } from './pages/authorization/services/AuthorizeService';
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
@@ -82,8 +82,14 @@ const codeMessage = {
 const errorHandler = (error: ResponseError) => {
   const { response, data } = error;
 
+  if (data.status == 400 && data.title == 'DisalbeModifiedDeleted') {
+    message.warn('演示系统不支持编辑和删除操作。',3);
+    throw error;
+  }
+
   // https://tools.ietf.org/html/rfc7807
   if (data && data.status && data.title) {
+
     if (data.status < 400) {
       notification.info({
         message: data.title,

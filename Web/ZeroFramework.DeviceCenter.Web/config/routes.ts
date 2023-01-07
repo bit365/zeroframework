@@ -81,6 +81,9 @@
         access: 'MonitoringFactorManager.MonitoringFactors',
         component: './monitoring-factor',
       },
+      {
+        component: './404',
+      }
     ],
   },
   {
@@ -111,7 +114,11 @@
         path: '/data-report/alarm-record',
         name: 'alarmRecord',
         access: 'MeasurementManager.Measurements.DevicePropertyReports',
+        component: './404',
       },
+      {
+        component: './404',
+      }
     ],
   },
   {
@@ -128,7 +135,11 @@
       {
         path: '/data-visualization/monitor',
         name: 'monitorView',
+        component: './404',
       },
+      {
+        component: './404',
+      }
     ],
   },
   {
@@ -139,15 +150,21 @@
       {
         path: '/rule-engine/scene-orchestration',
         name: 'sceneOrchestration',
+        component: './404',
       },
       {
         path: '/rule-engine/data-forwarding',
         name: 'dataForwarding',
+        component: './404',
       },
       {
         path: '/rule-engine/data-Subscription',
         name: 'dataSubscription',
+        component: './404',
       },
+      {
+        component: './404',
+      }
     ],
   },
   {
@@ -158,15 +175,21 @@
       {
         path: '/maintenance/device-log',
         name: 'deviceLog',
+        component: './404',
       },
       {
         path: '/maintenance/ota-update',
         name: 'otaUpdate',
+        component: './404',
       },
       {
         path: '/maintenance/device-debug',
         name: 'deviceDebug',
+        component: './404',
       },
+      {
+        component: './404',
+      }
     ],
   },
   {
@@ -197,12 +220,16 @@
         access: 'ResourceGroupManager.ResourceGroups',
         component: './resource-group',
       },
+      {
+        component: './404',
+      }
     ],
   },
   {
     path: '/video-service',
     name: 'videoService',
     icon: 'VideoCameraOutlined',
+    component: './404',
   },
   {
     path: '/settings',
@@ -212,11 +239,16 @@
       {
         path: '/settings/account',
         name: 'account',
+        component: './404',
       },
       {
         path: '/settings/help',
         name: 'help',
+        component: './404',
       },
+      {
+        component: './404',
+      }
     ],
   },
   {
@@ -227,11 +259,16 @@
       {
         path: '/open-platform/identity-server',
         name: 'identityServer',
+        component: './404',
       },
       {
         path: '/open-platform/device-center',
         name: 'deviceCenter',
+        component: './404',
       },
+      {
+        component: './404',
+      }
     ],
   },
   {

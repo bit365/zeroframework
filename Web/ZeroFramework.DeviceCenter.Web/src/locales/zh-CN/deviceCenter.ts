@@ -1,5 +1,5 @@
 export default {
-  'site.title': '零度云平台',
+  'site.title': '零度云平台演示版',
 
   'menu.device.manager': '设备管理',
   'menu.device.manager.device.list': '设备列表',

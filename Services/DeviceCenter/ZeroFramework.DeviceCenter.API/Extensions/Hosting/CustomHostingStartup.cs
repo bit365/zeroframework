@@ -60,6 +60,7 @@ namespace ZeroFramework.DeviceCenter.API.Extensions.Hosting
                 services.Configure<Microsoft.AspNetCore.Mvc.MvcOptions>(options =>
                 {
                     options.ModelBinderProviders.Add(new ModelBinding.SortingBinderProvider());
+                    options.Filters.Add<HttpResponseExceptionFilter>();
                 });
             });
         }

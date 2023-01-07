@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeroFramework.ReverseProxy"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "ZeroFramework.DeviceCenter.Web", "Web\ZeroFramework.DeviceCenter.Web\ZeroFramework.DeviceCenter.Web.esproj", "{36C7DC67-6483-4B19-8083-4EC67C5B725A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroFramework.DeviceCenter.BackgroundTasks", "Services\DeviceCenter\ZeroFramework.DeviceCenter.BackgroundTasks\ZeroFramework.DeviceCenter.BackgroundTasks.csproj", "{3DB3EF76-F630-4507-A4AB-FFCAD45C6809}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{36C7DC67-6483-4B19-8083-4EC67C5B725A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36C7DC67-6483-4B19-8083-4EC67C5B725A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{36C7DC67-6483-4B19-8083-4EC67C5B725A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3DB3EF76-F630-4507-A4AB-FFCAD45C6809}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DB3EF76-F630-4507-A4AB-FFCAD45C6809}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DB3EF76-F630-4507-A4AB-FFCAD45C6809}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DB3EF76-F630-4507-A4AB-FFCAD45C6809}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,6 +109,7 @@ Global
 		{90916A42-38F4-43F4-B708-7E6C24431337} = {F7A2B173-F63E-445B-9228-1C770ED82471}
 		{83C5B53D-5074-40FF-B511-27AF30EE9EEA} = {E38125DF-3F39-4179-BF34-80E0A16A2A8C}
 		{36C7DC67-6483-4B19-8083-4EC67C5B725A} = {CA326A05-90FE-45C5-B8BA-CE0B37AA1404}
+		{3DB3EF76-F630-4507-A4AB-FFCAD45C6809} = {F662543E-F10A-47E3-8E51-DC94DD5A181E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1BD3363E-A076-4C8B-B139-020BE0972350}

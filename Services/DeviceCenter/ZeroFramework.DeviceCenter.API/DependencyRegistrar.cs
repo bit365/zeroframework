@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using ZeroFramework.DeviceCenter.API.Extensions.Authorization;
+using ZeroFramework.DeviceCenter.API.Extensions.Hosting;
 using ZeroFramework.DeviceCenter.Application.Services.Permissions;
 
 namespace ZeroFramework.DeviceCenter.API
@@ -20,6 +21,8 @@ namespace ZeroFramework.DeviceCenter.API
             services.AddTransient<IAuthorizationHandler, ResourcePermissionRequirementHandler>();
 
             services.AddHttpContextAccessor();
+
+            services.AddHostedService<MockSampleWorker>();
 
             return services;
         }

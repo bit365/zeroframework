@@ -1,14 +1,35 @@
-var builder = WebApplication.CreateBuilder(args);
+using NLog;
+using NLog.Web;
 
-// Add services to the container.
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
-var startup = new ZeroFramework.IdentityServer.API.Startup(builder.Configuration);
-startup.ConfigureServices(builder.Services);
+try
+{
+    var builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
+    builder.Host.UseNLog();
 
-// Configure the HTTP request pipeline.
+    // Add services to the container.
 
-startup.Configure(app, app.Environment);
+    var startup = new ZeroFramework.IdentityServer.API.Startup(builder.Configuration);
+    startup.ConfigureServices(builder.Services);
 
-app.Run();
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+
+    startup.Configure(app, app.Environment);
+
+    app.Run();
+}
+catch (Exception exception)
+{
+    // NLog: catch setup errors
+    logger.Error(exception, "Stopped program because of exception");
+    throw;
+}
+finally
+{
+    // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
+    NLog.LogManager.Shutdown();
+}

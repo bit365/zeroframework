@@ -1,14 +1,33 @@
-var builder = WebApplication.CreateBuilder(args);
+using NLog;
+using NLog.Web;
 
-// Add services to the container.
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
-var startup = new ZeroFramework.DeviceCenter.API.Startup(builder.Configuration);
-startup.ConfigureServices(builder.Services);
+try
+{
+    var builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
+    // Add services to the container.
 
-// Configure the HTTP request pipeline.
+    var startup = new ZeroFramework.DeviceCenter.API.Startup(builder.Configuration);
+    startup.ConfigureServices(builder.Services);
 
-startup.Configure(app, app.Environment);
+    var app = builder.Build();
 
-app.Run();
+    // Configure the HTTP request pipeline.
+
+    startup.Configure(app, app.Environment);
+
+    app.Run();
+}
+catch (Exception exception)
+{
+    // NLog: catch setup errors
+    logger.Error(exception, "Stopped program because of exception");
+    throw;
+}
+finally
+{
+    // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
+   LogManager.Shutdown();
+}

@@ -17,7 +17,7 @@
     <div class="card p-3">
         <div class="card-body">
             <h4 class="text-center mb-5 card-title text-uppercase">零度登录</h4>
-            <form id="account" method="post">
+            <form method="post">
                 <div class="form-group">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 </div>
@@ -34,7 +34,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text bg-white"><i class="fa fa-key" style="font-size:12px;"></i></span>
                     </div>
-                    <input asp-for="Password" class="form-control" aria-required="true" />
+                    <input asp-for="Password" class="form-control" aria-required="true"/>
                     <div class="invalid-feedback d-block">
                         <span asp-validation-for="Password"></span>
                     </div>

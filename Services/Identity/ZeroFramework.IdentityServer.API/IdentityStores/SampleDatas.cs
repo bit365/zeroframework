@@ -58,9 +58,11 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                 RequireConsent = false,
                 RedirectUris = {
                     "https://localhost:6001/swagger/oauth2-redirect.html",
+                    "https://devicecenterapi.helloworldnet.com/oauth2-redirect.html"
                 },
                 PostLogoutRedirectUris = {
                     "https://localhost:6001/swagger",
+                    "https://devicecenterapi.helloworldnet.com/swagger"
                 },
                 AllowOfflineAccess=true,
                 RequirePkce = true,
@@ -70,7 +72,10 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                     IdentityServerConstants.StandardScopes.Profile,
                     "devicecenter"
                 },
-                AllowedCorsOrigins = { "https://localhost:6001"},
+                AllowedCorsOrigins = {
+                    "https://localhost:6001",
+                    "https://devicecenterapi.helloworldnet.com"
+                },
                 AccessTokenLifetime = 600
             },
             new Client
@@ -85,10 +90,12 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                 AlwaysIncludeUserClaimsInIdToken=true,
                 RequireConsent = false,
                 RedirectUris = {
-                    "https://localhost:5001/swagger/oauth2-redirect.html"
+                    "https://localhost:5001/swagger/oauth2-redirect.html",
+                    "https://identityserver.helloworldnet.com"
                 },
                 PostLogoutRedirectUris = {
-                    "https://localhost:5001/swagger"
+                    "https://localhost:5001/swagger",
+                    "https://identityserver.helloworldnet.com/swagger"
                 },
                 AllowOfflineAccess=true,
                 RequirePkce = true,
@@ -98,7 +105,10 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                     IdentityServerConstants.StandardScopes.Profile,
                     "identityserver"
                 },
-                AllowedCorsOrigins = { "https://localhost:5001"},
+                AllowedCorsOrigins = {
+                    "https://localhost:5001",
+                    "https://identityserver.helloworldnet.com"
+                },
                 AccessTokenLifetime = 600
             },
             new Client
@@ -112,10 +122,12 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                 AlwaysIncludeUserClaimsInIdToken=true,
                 RequireConsent = false,
                 RedirectUris = {
-                    "http://localhost:8000/authorization/login-callback"
+                    "http://localhost:8000/authorization/login-callback",
+                    "https://cloud.helloworldnet.com/authorization/login-callback"
                 },
                 PostLogoutRedirectUris = {
-                    "http://localhost:8000/authorization/logout-callback"
+                    "http://localhost:8000/authorization/logout-callback",
+                    "https://cloud.helloworldnet.com/authorization/logout-callback"
                 },
                 AllowOfflineAccess=true,
                 RequirePkce = true,
@@ -128,7 +140,10 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                     "identityserver",
                     "devicecenter"
                 },
-                AllowedCorsOrigins = { "http://localhost:8000"},
+                AllowedCorsOrigins = { 
+                    "http://localhost:8000",
+                    "https://cloud.helloworldnet.com"
+                },
                 AccessTokenLifetime = 600
             }
         };

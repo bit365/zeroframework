@@ -3,7 +3,7 @@ import { userManager } from './AuthorizeService'
 import { get as getAppConfigs } from '@/services/deviceCenter/Configurations'
 
 /** 获取当前的用户 GET /api/currentUser */
-export async function currentUser(options?: { [key: string]: any }) {
+export async function currentUser(options?: Record<string, any>) {
   return new Promise<API.CurrentUser>(async (resolve, reject) => {
     let user = (await userManager.getUser())?.profile;
     if (user) {

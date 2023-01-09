@@ -37,7 +37,9 @@ Update-Database -Context ConfigurationDbContext -Project ZeroFramework.IdentityS
 Update-Database -Context ApplicationDbContext -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API
 Update-Database -Context DeviceCenterDbContext -Project ZeroFramework.DeviceCenter.Infrastructure -StartupProject ZeroFramework.DeviceCenter.Infrastructure
 
-2、依次启动 ZeroFramework.IdentityServer.API 和 ZeroFramework.DeviceCenter.API 项目，容器、网关和聚合可暂时不配置，后期根据需要进行配置。
+2、设备数据通过「分桶模式」存储在 Mongdb 数据库中，因此你需要安装并启动 Mongdb 数据库，并在配置文件中修改连接字符串。
+
+3、依次启动 ZeroFramework.IdentityServer.API 和 ZeroFramework.DeviceCenter.API 项目，容器、网关和聚合可暂时不配置，后期根据需要进行配置。
 
 
  ♥ 在 Visual Studio Code 中运行前端站点
@@ -51,11 +53,10 @@ Update-Database -Context DeviceCenterDbContext -Project ZeroFramework.DeviceCent
 
  ♥ 项目更新记录
 
-+ 所有项目框架及其用到的包已经升级到 .NET 7 最新版
++ 所有项目框架及其用到的包已经升级到 .NET 7 最新版，并消除了很多警告和建议。
 
 + 在配置文件中添加了 「"UseDemoLaunchMode": false」以表示以演示模式运行，演示模式使用 EF Core 拦截器禁用了编辑和删除操作。
 
-+ 
 
  ♥ 项目目录结构说明
 

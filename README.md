@@ -13,6 +13,7 @@
 
 演示地址：https://cloud.helloworldnet.com
 
+演示账号：用户名 admin 密码 guest
 
 
  ♥ 在 Visual Studio 2022 中运行后端微服务

@@ -25,7 +25,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text bg-white"><i class="fa fa-user-o" style="font-size:14px;"></i></span>
                     </div>
-                    <input asp-for="UserName" class="form-control" aria-required="true" />
+                    <input asp-for="UserName" class="form-control" aria-required="true" value="admin" />
                     <div class="invalid-feedback d-block">
                         <span asp-validation-for="UserName"></span>
                     </div>
@@ -34,7 +34,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text bg-white"><i class="fa fa-key" style="font-size:12px;"></i></span>
                     </div>
-                    <input asp-for="Password" class="form-control" aria-required="true"/>
+                    <input asp-for="Password" class="form-control" aria-required="true" value="guest" />
                     <div class="invalid-feedback d-block">
                         <span asp-validation-for="Password"></span>
                     </div>

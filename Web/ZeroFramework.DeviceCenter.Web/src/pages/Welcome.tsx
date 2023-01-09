@@ -14,6 +14,11 @@ const CodePreview: React.FC = ({ children }) => (
 
 export default (): React.ReactNode => {
   const intl = useIntl();
+
+ const identityService= REACT_APP_ENV=='dev'?'https://localhost:5001':'https://identityserver.helloworldnet.com'
+
+ const deviceService= REACT_APP_ENV=='dev'?'https://localhost:6001':'https://devicecenterapi.helloworldnet.com'
+
   return (
     <PageContainer>
       <Space direction="vertical" size="middle" style={{ display: 'flex' }} >
@@ -63,14 +68,14 @@ export default (): React.ReactNode => {
         <Typography.Text strong>
             <FormattedMessage id="pages.welcome.identityserver" />{' '}
             <a
-              href="https://localhost:5001/swagger"
+              href={`${identityService}/swagger`}
               rel="noopener noreferrer"
               target="__blank"
             >
               <FormattedMessage id="pages.welcome.link" defaultMessage="欢迎使用" />
             </a>
           </Typography.Text>
-          <CodePreview>https://localhost:5001/swagger</CodePreview>
+          <CodePreview>{`${identityService}/swagger`}</CodePreview>
           <Typography.Text
             strong
             style={{
@@ -79,14 +84,14 @@ export default (): React.ReactNode => {
           >
             <FormattedMessage id="pages.welcome.devicecenter" />{' '}
             <a
-              href="https://localhost:6001/swagger"
+              href={`${deviceService}/swagger`}
               rel="noopener noreferrer"
               target="__blank"
             >
               <FormattedMessage id="pages.welcome.link" defaultMessage="欢迎使用" />
             </a>
           </Typography.Text>
-          <CodePreview>https://localhost:6001/swagger</CodePreview>
+          <CodePreview>{`${deviceService}/swagger`}</CodePreview>
         </Card>
       </Space>
     </PageContainer>

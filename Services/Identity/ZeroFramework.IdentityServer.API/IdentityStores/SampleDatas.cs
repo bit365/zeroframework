@@ -76,7 +76,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                     "https://localhost:6001",
                     "https://devicecenterapi.helloworldnet.com"
                 },
-                AccessTokenLifetime = 600
+                AccessTokenLifetime =3600*24
             },
             new Client
             {
@@ -109,7 +109,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                     "https://localhost:5001",
                     "https://identityserver.helloworldnet.com"
                 },
-                AccessTokenLifetime = 600
+                AccessTokenLifetime = 3600*24
             },
             new Client
             {
@@ -144,7 +144,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                     "http://localhost:8000",
                     "https://cloud.helloworldnet.com"
                 },
-                AccessTokenLifetime = 600
+                AccessTokenLifetime = 3600*24
             }
         };
 

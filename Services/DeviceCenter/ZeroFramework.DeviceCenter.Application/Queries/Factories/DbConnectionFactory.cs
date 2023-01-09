@@ -17,12 +17,7 @@ namespace ZeroFramework.DeviceCenter.Application.Queries.Factories
         {
             string connectionString = await _connectionStringProvider.GetAsync(nameOrConnectionString);
 
-            DbConnection? dbConnection = DbProviderFactories.GetFactory("System.Data.SqlClient").CreateConnection();
-
-            if (dbConnection is null)
-            {
-                throw new ArgumentException("Unable to find the requested database provider. It may not be installed.");
-            }
+            DbConnection? dbConnection = DbProviderFactories.GetFactory("System.Data.SqlClient").CreateConnection() ?? throw new ArgumentException("Unable to find the requested database provider. It may not be installed.");
 
             dbConnection.ConnectionString = connectionString;
 

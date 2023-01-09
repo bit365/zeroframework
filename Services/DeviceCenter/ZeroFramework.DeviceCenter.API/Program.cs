@@ -7,6 +7,8 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
+    builder.Host.UseNLog();
+
     // Add services to the container.
 
     var startup = new ZeroFramework.DeviceCenter.API.Startup(builder.Configuration);

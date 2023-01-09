@@ -15,6 +15,7 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.ConnectionStrings
         public virtual Task<string> GetAsync(string? connectionStringName = null)
         {
             connectionStringName ??= DbConstants.DefaultConnectionStringName;
+
             return Task.FromResult(_configuration.GetConnectionString(connectionStringName)!);
         }
     }

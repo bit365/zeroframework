@@ -58,7 +58,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                 RequireConsent = false,
                 RedirectUris = {
                     "https://localhost:6001/swagger/oauth2-redirect.html",
-                    "https://devicecenterapi.helloworldnet.com/oauth2-redirect.html"
+                    "https://devicecenterapi.helloworldnet.com/swagger/oauth2-redirect.html"
                 },
                 PostLogoutRedirectUris = {
                     "https://localhost:6001/swagger",
@@ -91,7 +91,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                 RequireConsent = false,
                 RedirectUris = {
                     "https://localhost:5001/swagger/oauth2-redirect.html",
-                    "https://identityserver.helloworldnet.com"
+                    "https://identityserver.helloworldnet.com/swagger/oauth2-redirect.html"
                 },
                 PostLogoutRedirectUris = {
                     "https://localhost:5001/swagger",

@@ -1,5 +1,4 @@
 using NLog.Extensions.Logging;
-using ZeroFramework.DeviceCenter.BackgroundTasks;
 using ZeroFramework.DeviceCenter.Domain;
 using ZeroFramework.DeviceCenter.Infrastructure;
 using ZeroFramework.DeviceCenter.Application;

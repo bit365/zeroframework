@@ -31,7 +31,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
             {
                 foreach (var entity in entries)
                 {
-                    if (entity.State == EntityState.Modified|| entity.State== EntityState.Deleted)
+                    if (entity.State == EntityState.Modified || entity.State == EntityState.Deleted)
                     {
                         throw new InvalidOperationException("DisalbeModifiedDeleted");
                     }

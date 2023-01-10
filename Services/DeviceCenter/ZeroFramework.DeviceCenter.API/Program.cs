@@ -7,8 +7,6 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.Host.UseNLog();
-
     // Add services to the container.
 
     var startup = new ZeroFramework.DeviceCenter.API.Startup(builder.Configuration);
@@ -31,5 +29,5 @@ catch (Exception exception)
 finally
 {
     // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
-   LogManager.Shutdown();
+    LogManager.Shutdown();
 }

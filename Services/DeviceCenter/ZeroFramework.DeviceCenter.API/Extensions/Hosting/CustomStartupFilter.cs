@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using ZeroFramework.DeviceCenter.Application.IntegrationEvents.EventHandling.Ordering;
 using ZeroFramework.DeviceCenter.Application.IntegrationEvents.Events.Ordering;
 using ZeroFramework.DeviceCenter.Domain.Repositories;
-using ZeroFramework.DeviceCenter.Infrastructure.Repositories;
 using ZeroFramework.EventBus.Abstractions;
 
 namespace ZeroFramework.DeviceCenter.API.Extensions.Hosting

@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
-using System.Threading;
-
+﻿
 //namespace ZeroFramework.DeviceCenter.BackgroundTasks.Services
 //{
 //    public class TestDeviceDataService

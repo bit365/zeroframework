@@ -8,11 +8,9 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Security.Claims;
@@ -44,8 +42,8 @@ namespace ZeroFramework.IdentityServer.API
 
             services.AddControllersWithViews(options =>
             {
-               options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
-               options.Filters.Add<HttpResponseExceptionFilter>();
+                options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
+                options.Filters.Add<HttpResponseExceptionFilter>();
             }).AddViewLocalization().AddDataAnnotationsLocalization();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly()).AddFluentValidationAutoValidation();

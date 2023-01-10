@@ -1,12 +1,14 @@
 using NLog.Extensions.Logging;
-using ZeroFramework.DeviceCenter.Domain;
-using ZeroFramework.DeviceCenter.Infrastructure;
 using ZeroFramework.DeviceCenter.Application;
 using ZeroFramework.DeviceCenter.BackgroundTasks.Services;
+using ZeroFramework.DeviceCenter.Domain;
+using ZeroFramework.DeviceCenter.Infrastructure;
 
 IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices((context,services) =>
+    .ConfigureServices((context, services) =>
     {
+
+        services.AddHttpClient();
         services.AddDomainLayer();
         services.AddInfrastructureLayer(context.Configuration);
         services.AddApplicationLayer(context.Configuration);

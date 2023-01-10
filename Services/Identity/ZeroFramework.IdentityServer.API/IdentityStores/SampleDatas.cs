@@ -140,7 +140,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                     "identityserver",
                     "devicecenter"
                 },
-                AllowedCorsOrigins = { 
+                AllowedCorsOrigins = {
                     "http://localhost:8000",
                     "https://cloud.helloworldnet.com"
                 },

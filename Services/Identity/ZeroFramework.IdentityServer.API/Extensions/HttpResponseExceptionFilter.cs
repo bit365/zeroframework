@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ZeroFramework.IdentityServer.API.Extensions
 {
@@ -18,7 +18,7 @@ namespace ZeroFramework.IdentityServer.API.Extensions
                     Status = 400,
                     Title = ex.Message,
                     Detail = "The demo system does not support edit and delete operations."
-                }) ;
+                });
 
                 context.ExceptionHandled = true;
             }

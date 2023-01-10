@@ -36,7 +36,7 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.Services
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Generate device mock data error");                   
+                    _logger.LogError(ex, "Generate device mock data error");
                 }
 
                 await Task.Delay(TimeSpan.FromMinutes(8), stoppingToken);

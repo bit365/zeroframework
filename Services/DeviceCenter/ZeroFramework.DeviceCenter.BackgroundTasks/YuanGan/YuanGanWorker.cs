@@ -69,7 +69,7 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.YuanGan
 
             Product product = await _productRepository.GetAsync(e => e.Name == "多参数水质分析仪", cancellationToken: stoppingToken);
 
-            var properties = product.Features?.Properties?.ToDictionary(p => Convert.ToInt32(p.DataType?.Specs?.First(e => e.Key == "sensorId").Value?.ToString()), p => p);
+            var properties = product.Features?.Properties?.ToDictionary(p => Convert.ToInt32(p.DataType?.Specs?.First(e => e.Key == "externalId").Value?.ToString()), p => p);
 
             foreach (var monitorModel in monitorModels)
             {

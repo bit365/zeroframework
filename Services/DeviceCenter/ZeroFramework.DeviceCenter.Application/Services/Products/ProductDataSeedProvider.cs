@@ -17,15 +17,15 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
         {
             if (await _productRepository.GetCountAsync() <= 0)
             {
-                static ExpandoObject createExpandoObject(float min, float max, string? unit, int? sensorId = null)
+                static ExpandoObject createExpandoObject(float min, float max, string? unit, string? externalId = null)
                 {
                     dynamic result = new ExpandoObject();
                     result.minValue = min;
                     result.maxValue = max;
                     result.unit = unit;
-                    if (sensorId.HasValue)
+                    if (externalId is not null)
                     {
-                        result.sensorId = sensorId.Value;
+                        result.externalId = externalId;
                     }
 
                     return result;
@@ -51,7 +51,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,10,"mg/L",7),
+                                    Specs=createExpandoObject(0,10,"mg/L","7"),
                                 }
                             },
                             new PropertyFeature
@@ -62,7 +62,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,10,"mg/L",8),
+                                    Specs=createExpandoObject(0,10,"mg/L","8"),
                                 }
                             },
                             new PropertyFeature
@@ -73,7 +73,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,2,"NTU",9),
+                                    Specs=createExpandoObject(0,2,"NTU","9"),
                                 }
                             },
                             new PropertyFeature
@@ -84,7 +84,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,10,"°C",10),
+                                    Specs=createExpandoObject(0,10,"°C","10"),
                                 }
                             },
                             new PropertyFeature
@@ -95,7 +95,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,14,null,17),
+                                    Specs=createExpandoObject(0,14,null,"17"),
                                 }
                             },
                             new PropertyFeature
@@ -106,7 +106,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,100,"mg/L",18),
+                                    Specs=createExpandoObject(0,100,"mg/L","18"),
                                 }
                             },
                             new PropertyFeature
@@ -117,7 +117,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(10,1500,"μS/cm",20),
+                                    Specs=createExpandoObject(10,1500,"μS/cm","20"),
                                 }
                             },
                             new PropertyFeature
@@ -128,7 +128,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,20,"mg/L",21),
+                                    Specs=createExpandoObject(0,20,"mg/L","21"),
                                 }
                             },
                             new PropertyFeature
@@ -139,7 +139,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,999,"m³/h",22),
+                                    Specs=createExpandoObject(0,999,"m³/h","22"),
                                 }
                             },
                             new PropertyFeature
@@ -150,7 +150,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,999999,"m³",23),
+                                    Specs=createExpandoObject(0,999999,"m³","23"),
                                 }
                             },
                             new PropertyFeature
@@ -161,7 +161,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,2.5f,"MPa",26),
+                                    Specs=createExpandoObject(0,2.5f,"MPa","26"),
                                 }
                             },
                             new PropertyFeature
@@ -172,7 +172,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,50,"m",27),
+                                    Specs=createExpandoObject(0,50,"m","27"),
                                 }
                             },
                             new PropertyFeature
@@ -183,7 +183,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,2,"mg/L",29),
+                                    Specs=createExpandoObject(0,2,"mg/L","29"),
                                 }
                             },
                             new PropertyFeature
@@ -194,7 +194,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,1,"mg/L",30),
+                                    Specs=createExpandoObject(0,1,"mg/L","30"),
                                 }
                             },
                             new PropertyFeature
@@ -205,7 +205,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,1,"mg/L",31),
+                                    Specs=createExpandoObject(0,1,"mg/L","31"),
                                 }
                             },
                             new PropertyFeature
@@ -216,7 +216,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,50,"PCU",32),
+                                    Specs=createExpandoObject(0,50,"PCU","32"),
                                 }
                             },
                             new PropertyFeature
@@ -227,7 +227,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,15,"mg/L",42),
+                                    Specs=createExpandoObject(0,15,"mg/L","42"),
                                 }
                             },
                             new PropertyFeature
@@ -238,7 +238,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,5000,"mv",49),
+                                    Specs=createExpandoObject(0,5000,"mv","49"),
                                 }
                             },
                             new PropertyFeature
@@ -249,7 +249,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 DataType= new DataType
                                 {
                                     Type= DataTypeDefinitions.Float,
-                                    Specs=createExpandoObject(0,1,null,54),
+                                    Specs=createExpandoObject(0,1,null,"54"),
                                 }
                             },
                         }
@@ -257,6 +257,80 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                 };
 
                 await _productRepository.InsertAsync(product1, true);
+
+
+                var product2 = new Product
+                {
+                    Name = $"李河污水监测站",
+                    NetType = ProductNetType.Cellular,
+                    NodeType = ProductNodeType.Gateway,
+                    ProtocolType = ProductProtocolType.Modbus,
+                    DataFormat = ProductDataFormat.Custom,
+                    CreationTime = DateTimeOffset.Now,
+                    Features = new ProductFeatures
+                    {
+                        Properties = new List<PropertyFeature>
+                        {
+                            new PropertyFeature
+                            {
+                                Identifier="PH1",
+                                Name="缺氧池PH",
+                                AccessMode= PropertyAccessMode.Read,
+                                DataType= new DataType
+                                {
+                                    Type= DataTypeDefinitions.Float,
+                                    Specs=createExpandoObject(0,14,null,"wtg011"),
+                                }
+                            },
+                            new PropertyFeature
+                            {
+                                Identifier="DO1",
+                                Name="缺氧池DO",
+                                AccessMode= PropertyAccessMode.Read,
+                                DataType= new DataType
+                                {
+                                    Type= DataTypeDefinitions.Float,
+                                    Specs=createExpandoObject(0,10,"mg/L","wtg091"),
+                                }
+                            },
+                            new PropertyFeature
+                            {
+                                Identifier="MLSS",
+                                Name="沉淀池MLSS",
+                                AccessMode= PropertyAccessMode.Read,
+                                DataType= new DataType
+                                {
+                                    Type= DataTypeDefinitions.Float,
+                                    Specs=createExpandoObject(0,10000,"mg/L","wtg097"),
+                                }
+                            },
+                            new PropertyFeature
+                            {
+                                Identifier="PH2",
+                                Name="沉淀池PH",
+                                AccessMode= PropertyAccessMode.Read,
+                                DataType= new DataType
+                                {
+                                    Type= DataTypeDefinitions.Float,
+                                    Specs=createExpandoObject(0,14,null,"wtg012"),
+                                }
+                            },
+                            new PropertyFeature
+                            {
+                                Identifier="DO2",
+                                Name="沉淀池DO",
+                                AccessMode= PropertyAccessMode.Read,
+                                DataType= new DataType
+                                {
+                                    Type= DataTypeDefinitions.Float,
+                                    Specs=createExpandoObject(0,10,"mg/L","wtg092"),
+                                }
+                            },
+                        }
+                    }
+                };
+
+                await _productRepository.InsertAsync(product2, true);
             }
         }
     }

@@ -1,12 +1,12 @@
 using NLog.Extensions.Logging;
+using ZeroFramework.DeviceCenter.Application;
+using ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212;
+using ZeroFramework.DeviceCenter.BackgroundTasks.YuanGan;
 using ZeroFramework.DeviceCenter.Domain;
 using ZeroFramework.DeviceCenter.Infrastructure;
-using ZeroFramework.DeviceCenter.Application;
-using ZeroFramework.DeviceCenter.BackgroundTasks.YuanGan;
-using ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212;
 
 IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices((context,services) =>
+    .ConfigureServices((context, services) =>
     {
         services.AddHttpClient();
         services.AddDomainLayer();
@@ -16,7 +16,7 @@ IHost host = Host.CreateDefaultBuilder(args)
 
         services.AddLogging(options => options.ClearProviders().AddNLog());
 
-        services.AddTransient<IDictionaryDataService,DictionaryDataService>();
+        services.AddTransient<IDictionaryDataService, DictionaryDataService>();
 
         services.AddHostedService<HuanJingWorker>();
         services.AddHostedService<YuanGanWorker>();

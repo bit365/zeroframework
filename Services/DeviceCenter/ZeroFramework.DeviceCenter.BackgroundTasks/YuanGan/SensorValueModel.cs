@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZeroFramework.DeviceCenter.BackgroundTasks.YuanGan
+﻿namespace ZeroFramework.DeviceCenter.BackgroundTasks.YuanGan
 {
     public class SensorValueModel
     {

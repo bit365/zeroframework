@@ -1,15 +1,9 @@
-using System;
-using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
 using ZeroFramework.DeviceCenter.Application.Models.Measurements;
 using ZeroFramework.DeviceCenter.Application.Services.Measurements;
 using ZeroFramework.DeviceCenter.Domain.Aggregates.DeviceAggregate;
 using ZeroFramework.DeviceCenter.Domain.Aggregates.ProductAggregate;
 using ZeroFramework.DeviceCenter.Domain.Repositories;
-using static ZeroFramework.DeviceCenter.Application.PermissionProviders.DeviceGroupPermissions;
 
 namespace ZeroFramework.DeviceCenter.BackgroundTasks.YuanGan
 {

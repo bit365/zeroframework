@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using ZeroFramework.DeviceCenter.Application.Models.Measurements;
 using ZeroFramework.DeviceCenter.Application.Services.Measurements;
-using ZeroFramework.DeviceCenter.BackgroundTasks.YuanGan;
 using ZeroFramework.DeviceCenter.Domain.Aggregates.DeviceAggregate;
 using ZeroFramework.DeviceCenter.Domain.Aggregates.ProductAggregate;
 using ZeroFramework.DeviceCenter.Domain.Repositories;
@@ -36,7 +29,7 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
         {
             Product product = await _productRepository.GetAsync(e => e.Name == "李河污水监测站");
 
-            var properties = product.Features?.Properties?.ToDictionary(p =>p.DataType?.Specs?.FirstOrDefault(e => e.Key == "externalId").Value?.ToString()??string.Empty, p => p);
+            var properties = product.Features?.Properties?.ToDictionary(p => p.DataType?.Specs?.FirstOrDefault(e => e.Key == "externalId").Value?.ToString() ?? string.Empty, p => p);
 
             var device = await _deviceRepository.FindAsync(e => e.Remark == keyValuePairs["MN"], true);
 
@@ -49,7 +42,7 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
                     CreationTime = DateTimeOffset.Now,
                     Remark = keyValuePairs["MN"],
                     ProductId = product.Id,
-                    Status =  DeviceStatus.Online
+                    Status = DeviceStatus.Online
                 };
 
                 device = await _deviceRepository.InsertAsync(device, true);
@@ -57,9 +50,9 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
 
             var propertyValues = new Dictionary<string, DevicePropertyValue>();
 
-            DateTimeOffset dateTime = DateTime.ParseExact(keyValuePairs["DataTime"],"yyyyMMddHHmmss", CultureInfo.CurrentCulture);
+            DateTimeOffset dateTime = DateTime.ParseExact(keyValuePairs["DateTime"], "yyyyMMddHHmmss", CultureInfo.CurrentCulture);
 
-            var sensorValues = keyValuePairs.Where(x=>x.Key.EndsWith("Rtd"));
+            var sensorValues = keyValuePairs.Where(x => x.Key.EndsWith("Rtd"));
 
             foreach (var sensorValue in sensorValues)
             {

@@ -1,14 +1,13 @@
-﻿using DotNetty.Transport.Channels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DotNetty.Common.Internal.Logging;
+using DotNetty.Transport.Channels;
 
 namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
 {
     public class DictionaryHandler : SimpleChannelInboundHandler<Dictionary<string, string>>
     {
+        static readonly IInternalLogger Logger = InternalLoggerFactory.GetInstance<DictionaryHandler>();
+
+
         private readonly IDictionaryDataService _dictionaryDataService;
 
         public DictionaryHandler(IDictionaryDataService dictionaryDataService)
@@ -22,6 +21,11 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
             {
                 await _dictionaryDataService.HandlingAaync(msg);
             });
+        }
+
+        public override void ExceptionCaught(IChannelHandlerContext context, Exception exception)
+        {
+            Logger.Error(exception);
         }
     }
 }

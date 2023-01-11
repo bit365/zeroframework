@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using ZeroFramework.DeviceCenter.API.Extensions.Authorization;
-using ZeroFramework.DeviceCenter.API.Extensions.Hosting;
 using ZeroFramework.DeviceCenter.Application.Services.Permissions;
 
 namespace ZeroFramework.DeviceCenter.API

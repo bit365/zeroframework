@@ -1,17 +1,12 @@
-﻿using DotNetty.Common.Internal.Logging;
+﻿using DotNetty.Codecs;
+using DotNetty.Common.Internal.Logging;
 using DotNetty.Handlers.Logging;
-using DotNetty.Transport.Bootstrapping;
-using DotNetty.Transport.Channels.Sockets;
-using DotNetty.Transport.Channels;
-using System.Text;
-using ZeroFramework.DeviceCenter.Application.Services.Measurements;
-using ZeroFramework.DeviceCenter.BackgroundTasks.YuanGan;
-using ZeroFramework.DeviceCenter.Domain.Aggregates.DeviceAggregate;
-using ZeroFramework.DeviceCenter.Domain.Aggregates.ProductAggregate;
-using ZeroFramework.DeviceCenter.Domain.Repositories;
-using DotNetty.Codecs;
 using DotNetty.Handlers.Timeout;
+using DotNetty.Transport.Bootstrapping;
+using DotNetty.Transport.Channels;
+using DotNetty.Transport.Channels.Sockets;
 using NLog.Extensions.Logging;
+using System.Text;
 
 namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
 {

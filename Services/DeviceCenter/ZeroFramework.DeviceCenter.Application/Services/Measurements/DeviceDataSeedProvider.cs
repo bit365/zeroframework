@@ -26,16 +26,18 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Measurements
 
         public async Task SeedAsync(IServiceProvider serviceProvider)
         {
-            await CreateDevicesAsync();
+            //await CreateDevicesAsync();
 
-            try
-            {
-                await GenerateDeviceDataAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning(ex, "Device demo data generation failed.");
-            }
+            //try
+            //{
+            //    await GenerateDeviceDataAsync();
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogWarning(ex, "Device demo data generation failed.");
+            //}
+
+            await Task.CompletedTask;
         }
 
         public async Task CreateDevicesAsync()

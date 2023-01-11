@@ -33,11 +33,11 @@ const GlobalHeaderRight: React.FC = () => {
       <HeaderSearch
         className={`${styles.action} ${styles.search}`}
         placeholder="站内搜索"
-        defaultValue="零度云平台"
+        defaultValue="水乙方云平台"
         options={[
           {
-            label: <a href="https://www.xcode.me">零度</a>,
-            value: '零度云平台'
+            label: <a href="https://www.xcode.me">水乙方</a>,
+            value: '水乙方云平台'
           },
           {
             label: <a href="https://www.xcode.me">物联网平台</a>,

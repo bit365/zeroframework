@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ZeroFramework.IdentityServer.API.Migrations.PersistedGrantMigrations
 {
     [DbContext(typeof(PersistedGrantDbContext))]
-    [Migration("20230110022348_InitialCreate")]
+    [Migration("20230111054504_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

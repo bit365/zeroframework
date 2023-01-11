@@ -58,11 +58,11 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                 RequireConsent = false,
                 RedirectUris = {
                     "https://localhost:6001/swagger/oauth2-redirect.html",
-                    "https://devicecenterapi.helloworldnet.com/swagger/oauth2-redirect.html"
+                    "https://devicecenterapi.syifang.com/swagger/oauth2-redirect.html"
                 },
                 PostLogoutRedirectUris = {
                     "https://localhost:6001/swagger",
-                    "https://devicecenterapi.helloworldnet.com/swagger"
+                    "https://devicecenterapi.syifang.com/swagger"
                 },
                 AllowOfflineAccess=true,
                 RequirePkce = true,
@@ -74,7 +74,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                 },
                 AllowedCorsOrigins = {
                     "https://localhost:6001",
-                    "https://devicecenterapi.helloworldnet.com"
+                    "https://devicecenterapi.syifang.com"
                 },
                 AccessTokenLifetime =3600*24
             },
@@ -91,11 +91,11 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                 RequireConsent = false,
                 RedirectUris = {
                     "https://localhost:5001/swagger/oauth2-redirect.html",
-                    "https://identityserver.helloworldnet.com/swagger/oauth2-redirect.html"
+                    "https://identityserver.syifang.com/swagger/oauth2-redirect.html"
                 },
                 PostLogoutRedirectUris = {
                     "https://localhost:5001/swagger",
-                    "https://identityserver.helloworldnet.com/swagger"
+                    "https://identityserver.syifang.com/swagger"
                 },
                 AllowOfflineAccess=true,
                 RequirePkce = true,
@@ -107,7 +107,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                 },
                 AllowedCorsOrigins = {
                     "https://localhost:5001",
-                    "https://identityserver.helloworldnet.com"
+                    "https://identityserver.syifang.com"
                 },
                 AccessTokenLifetime = 3600*24
             },
@@ -123,11 +123,11 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                 RequireConsent = false,
                 RedirectUris = {
                     "http://localhost:8000/authorization/login-callback",
-                    "https://cloud.helloworldnet.com/authorization/login-callback"
+                    "https://cloud.syifang.com/authorization/login-callback"
                 },
                 PostLogoutRedirectUris = {
                     "http://localhost:8000/authorization/logout-callback",
-                    "https://cloud.helloworldnet.com/authorization/logout-callback"
+                    "https://cloud.syifang.com/authorization/logout-callback"
                 },
                 AllowOfflineAccess=true,
                 RequirePkce = true,
@@ -142,7 +142,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                 },
                 AllowedCorsOrigins = {
                     "http://localhost:8000",
-                    "https://cloud.helloworldnet.com"
+                    "https://cloud.syifang.com"
                 },
                 AccessTokenLifetime = 3600*24
             }
@@ -231,7 +231,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                 UserName = "admin",
                 PasswordHash = "guest",
                 PhoneNumber = phoneMock(),
-                Email = "admin@helloworldnet.com",
+                Email = "admin@syifang.com",
                 TenantId = null,
                 TenantUserName = "admin",
                 DisplayName = "超级管理员"
@@ -253,7 +253,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                     UserName = $"guest{i}@{tenant.Name}",
                     PasswordHash = $"guest",
                     PhoneNumber = phoneMock(),
-                    Email = $"guest{i}@helloworldnet.com",
+                    Email = $"guest{i}@syifang.com",
                     TenantId = tenant.Id,
                     TenantUserName = $"guest{i}",
                     DisplayName = $"来宾访客{i}"
@@ -280,7 +280,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                     UserName = $"{tenantUserName}@{tenant.Name}",
                     PasswordHash = tenantUserName,
                     PhoneNumber = phoneMock(),
-                    Email = $"{stringMock()}@helloworldnet.com",
+                    Email = $"{stringMock()}@syifang.com",
                     TenantId = tenant.Id,
                     TenantUserName = tenantUserName,
                     DisplayName = $"普通用户{i.ToString().PadLeft(2, '0')}"

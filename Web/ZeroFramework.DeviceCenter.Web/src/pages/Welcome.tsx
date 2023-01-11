@@ -15,9 +15,9 @@ const CodePreview: React.FC = ({ children }) => (
 export default (): React.ReactNode => {
   const intl = useIntl();
 
- const identityService= REACT_APP_ENV=='dev'?'https://localhost:5001':'https://identityserver.helloworldnet.com'
+ const identityService= REACT_APP_ENV=='dev'?'https://localhost:5001':'https://identityserver.syifang.com'
 
- const deviceService= REACT_APP_ENV=='dev'?'https://localhost:6001':'https://devicecenterapi.helloworldnet.com'
+ const deviceService= REACT_APP_ENV=='dev'?'https://localhost:6001':'https://devicecenterapi.syifang.com'
 
   return (
     <PageContainer>

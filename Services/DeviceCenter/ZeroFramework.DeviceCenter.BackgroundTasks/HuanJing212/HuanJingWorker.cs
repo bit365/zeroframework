@@ -16,29 +16,11 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
 {
     public class HuanJingWorker : BackgroundService
     {
-        private readonly IRepository<Product, int> _productRepository;
+        private readonly IDictionaryDataService _dictionaryDataService;
 
-        private readonly IRepository<Device, long> _deviceRepository;
-
-        private readonly IDeviceDataApplicationService _deviceApplicationService;
-
-        private readonly ILogger<YuanGanWorker> _logger;
-
-        private readonly HttpClient _httpClient;
-
-        private readonly IRepository<DeviceGroup, int> _deviceGroupRepository;
-
-        private readonly IRepository<DeviceGrouping> _deviceGroupingRepository;
-
-        public HuanJingWorker(IRepository<Product, int> productRepository, IRepository<Device, long> deviceRepository, IDeviceDataApplicationService deviceDataApplicationService, ILogger<YuanGanWorker> logger, IHttpClientFactory httpClientFactory, IRepository<DeviceGroup, int> deviceGroupRepository, IRepository<DeviceGrouping> deviceGroupingRepository)
+        public HuanJingWorker(IDictionaryDataService dictionaryDataService)
         {
-            _productRepository = productRepository;
-            _deviceRepository = deviceRepository;
-            _deviceApplicationService = deviceDataApplicationService;
-            _logger = logger;
-            _httpClient = httpClientFactory.CreateClient();
-            _deviceGroupRepository = deviceGroupRepository;
-            _deviceGroupingRepository = deviceGroupingRepository;
+            _dictionaryDataService = dictionaryDataService;
         }
 
         private readonly IEventLoopGroup _bossGroup = new MultithreadEventLoopGroup();
@@ -65,6 +47,8 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
                     pipeline.AddLast(new LoggingHandler(DotNetty.Handlers.Logging.LogLevel.INFO));
                     pipeline.AddLast(new StringDecoder(Encoding.ASCII));
                     pipeline.AddLast(new LineBasedFrameDecoder(1200));
+                    pipeline.AddLast(new StringToDictionaryDecoder());
+                    pipeline.AddLast(new DictionaryHandler(_dictionaryDataService));
                 }));
 
             _boundChannel = await bootstrap.BindAsync(5212);

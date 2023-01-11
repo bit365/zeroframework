@@ -295,7 +295,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                             },
                             new PropertyFeature
                             {
-                                Identifier="MLSS",
+                                Identifier="MLSS2",
                                 Name="沉淀池MLSS",
                                 AccessMode= PropertyAccessMode.Read,
                                 DataType= new DataType
@@ -324,6 +324,39 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                                 {
                                     Type= DataTypeDefinitions.Float,
                                     Specs=createExpandoObject(0,10,"mg/L","wtg092"),
+                                }
+                            },
+                            new PropertyFeature
+                            {
+                                Identifier="PH3",
+                                Name="好氧池PH",
+                                AccessMode= PropertyAccessMode.Read,
+                                DataType= new DataType
+                                {
+                                    Type= DataTypeDefinitions.Float,
+                                    Specs=createExpandoObject(0,14,null,"wtg013"),
+                                }
+                            },
+                            new PropertyFeature
+                            {
+                                Identifier="DO3",
+                                Name="好氧池DO",
+                                AccessMode= PropertyAccessMode.Read,
+                                DataType= new DataType
+                                {
+                                    Type= DataTypeDefinitions.Float,
+                                    Specs=createExpandoObject(0,10,"mg/L","wtg093"),
+                                }
+                            },
+                            new PropertyFeature
+                            {
+                                Identifier="MLSS3",
+                                Name="好氧池MLSS",
+                                AccessMode= PropertyAccessMode.Read,
+                                DataType= new DataType
+                                {
+                                    Type= DataTypeDefinitions.Float,
+                                    Specs=createExpandoObject(0,10000,"mg/L","wtg094"),
                                 }
                             },
                         }

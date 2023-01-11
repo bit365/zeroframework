@@ -55,7 +55,7 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.YuanGan
                     _logger.LogError(ex, "Polling device data error");
                 }
 
-                await Task.Delay(TimeSpan.FromMinutes(8), stoppingToken);
+                await Task.Delay(TimeSpan.FromMinutes(5), stoppingToken);
             }
         }
 
@@ -145,7 +145,7 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.YuanGan
                 {
                     _logger.LogInformation("productId={productId},deviceId={deviceId},values={values}", device.ProductId, device.Id, propertyValues);
 
-                    //await _deviceApplicationService.SetDevicePropertyValues(device.ProductId, device.Id, propertyValues);
+                    await _deviceApplicationService.SetDevicePropertyValues(device.ProductId, device.Id, propertyValues);
                 }
             }
         }

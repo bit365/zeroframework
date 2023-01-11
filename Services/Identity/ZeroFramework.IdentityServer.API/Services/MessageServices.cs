@@ -31,7 +31,7 @@ namespace ZeroFramework.IdentityServer.API.Services
 
             MailMessage mailMessage = new()
             {
-                From = new MailAddress("123456@qq.com", "零度编程")
+                From = new MailAddress("123456@qq.com", "水乙方编程")
             };
             mailMessage.To.Add(email);
             mailMessage.Subject = subject;
@@ -55,7 +55,7 @@ namespace ZeroFramework.IdentityServer.API.Services
             request.Options.TryAdd("Version", "2017-05-25");
             request.Options.TryAdd("Action", "SendSms");
             request.Options.TryAdd("PhoneNumbers", number);
-            request.Options.TryAdd("SignName", "零度");
+            request.Options.TryAdd("SignName", "水乙方");
             request.Options.TryAdd("TemplateParam", new { code = message });
             request.Options.TryAdd("TemplateCode", "SMS_277241031");
 

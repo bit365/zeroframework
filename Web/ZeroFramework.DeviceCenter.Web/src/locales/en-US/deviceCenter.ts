@@ -1,5 +1,5 @@
 export default {
-  'site.title': 'ZEROCLOUD',
+  'site.title': '水乙方云平台',
 
   'menu.device.manager':'Device Manager',
   'menu.device.manager.device.list':'Device List',

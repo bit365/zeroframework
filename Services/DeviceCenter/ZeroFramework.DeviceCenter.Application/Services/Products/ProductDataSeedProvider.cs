@@ -166,8 +166,8 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                             },
                             new PropertyFeature
                             {
-                                Identifier="液位",
-                                Name="LiquidLevel",
+                                Identifier="LiquidLevel",
+                                Name="液位",
                                 AccessMode= PropertyAccessMode.Read,
                                 DataType= new DataType
                                 {
@@ -264,7 +264,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                     Name = $"李河污水监测站",
                     NetType = ProductNetType.Cellular,
                     NodeType = ProductNodeType.Gateway,
-                    ProtocolType = ProductProtocolType.Modbus,
+                    ProtocolType = ProductProtocolType.Other,
                     DataFormat = ProductDataFormat.Custom,
                     CreationTime = DateTimeOffset.Now,
                     Features = new ProductFeatures

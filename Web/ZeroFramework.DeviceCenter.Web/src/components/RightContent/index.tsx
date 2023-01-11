@@ -36,19 +36,19 @@ const GlobalHeaderRight: React.FC = () => {
         defaultValue="水乙方云平台"
         options={[
           {
-            label: <a href="https://www.xcode.me">水乙方</a>,
+            label: <a href="https://www.syifang.com">水乙方</a>,
             value: '水乙方云平台'
           },
           {
-            label: <a href="https://www.xcode.me">物联网平台</a>,
+            label: <a href="https://www.syifang.com">物联网平台</a>,
             value: '物联网',
           },
           {
-            label: <a href="https://www.xcode.me">工业互联网</a>,
+            label: <a href="https://www.syifang.com">工业互联网</a>,
             value: '工业互联',
           },
           {
-            label: <a href="https://www.xcode.me">人工智能</a>,
+            label: <a href="https://www.syifang.com">人工智能</a>,
             value: '人工智能',
           },
         ]}
@@ -59,7 +59,7 @@ const GlobalHeaderRight: React.FC = () => {
       <span
         className={styles.action}
         onClick={() => {
-          window.open('https://www.xcode.me');
+          window.open('https://www.syifang.com');
         }}
       >
         <QuestionCircleOutlined />

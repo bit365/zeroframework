@@ -39,6 +39,7 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
                 {
                     Name = $"李河监测{keyValuePairs["MN"]}",
                     Coordinate = (GeoCoordinate?)"108.272613,30.82183",
+                    LastOnlineTime = DateTimeOffset.Now,
                     CreationTime = DateTimeOffset.Now,
                     Remark = keyValuePairs["MN"],
                     ProductId = product.Id,
@@ -46,6 +47,11 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
                 };
 
                 device = await _deviceRepository.InsertAsync(device, true);
+            }
+            else
+            {
+                device.LastOnlineTime= DateTimeOffset.Now;
+                await _deviceRepository.UpdateAsync(device,true);
             }
 
             var propertyValues = new Dictionary<string, DevicePropertyValue>();

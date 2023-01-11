@@ -14,7 +14,7 @@ const Settings: LayoutSettings & {
   colorWeak: false,
   title: "Loading...",
   pwa: false,
-  logo: 'https://www.syifang.com/img/logo.png',
+  logo: 'https://www.syifang.com/img/logo-white.png',
   iconfontUrl: '',
 };
 

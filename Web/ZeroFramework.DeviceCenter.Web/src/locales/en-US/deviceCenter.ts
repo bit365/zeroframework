@@ -1,5 +1,5 @@
 export default {
-  'site.title': '水乙方云平台',
+  'site.title': 'SHUIYIFANGCLOUD',
 
   'menu.device.manager':'Device Manager',
   'menu.device.manager.device.list':'Device List',

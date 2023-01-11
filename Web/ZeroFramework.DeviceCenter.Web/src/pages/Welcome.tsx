@@ -32,37 +32,6 @@ export default (): React.ReactNode => {
           />
         </Card>
         <Card title={intl.formatMessage({
-          id: 'pages.welcome.zeroframework'
-        })}>
-          <Typography.Text strong>
-            <FormattedMessage id="pages.welcome.video" />{' '}
-            <a
-              href="https://www.xcode.me/video/list/1000225681"
-              rel="noopener noreferrer"
-              target="__blank"
-            >
-              <FormattedMessage id="pages.welcome.link" defaultMessage="欢迎使用" />
-            </a>
-          </Typography.Text>
-          <CodePreview>https://www.xcode.me/video/list/1000225681</CodePreview>
-          <Typography.Text
-            strong
-            style={{
-              marginBottom: 12,
-            }}
-          >
-            <FormattedMessage id="pages.welcome.framework" />{' '}
-            <a
-              href="https://www.xcode.me/business/we-framework"
-              rel="noopener noreferrer"
-              target="__blank"
-            >
-              <FormattedMessage id="pages.welcome.link" defaultMessage="欢迎使用" />
-            </a>
-          </Typography.Text>
-          <CodePreview>https://www.xcode.me/business/we-framework</CodePreview>
-        </Card>
-        <Card title={intl.formatMessage({
           id: 'pages.welcome.openapi'
         })}>
         <Typography.Text strong>

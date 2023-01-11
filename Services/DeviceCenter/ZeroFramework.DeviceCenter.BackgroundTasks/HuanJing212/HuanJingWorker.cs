@@ -35,11 +35,12 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
                 .ChildHandler(new ActionChannelInitializer<IChannel>(channel =>
                 {
                     IChannelPipeline pipeline = channel.Pipeline;
+
                     pipeline.AddLast(new StringEncoder(Encoding.ASCII));
                     pipeline.AddLast(new IdleStateHandler(TimeSpan.FromMinutes(5), TimeSpan.Zero, TimeSpan.Zero));
                     pipeline.AddLast(new LoggingHandler(DotNetty.Handlers.Logging.LogLevel.INFO));
-                    pipeline.AddLast(new StringDecoder(Encoding.ASCII));
                     pipeline.AddLast(new LineBasedFrameDecoder(9999));
+                    pipeline.AddLast(new StringDecoder(Encoding.ASCII));
                     pipeline.AddLast(new StringToDictionaryDecoder());
                     pipeline.AddLast(new DictionaryHandler(_serviceProvider));
                 }));

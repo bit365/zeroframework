@@ -73,7 +73,8 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.YuanGan
                 {
                     parentGroup = new DeviceGroup()
                     {
-                        Name = monitorModel.ProvinceName
+                        Name = monitorModel.ProvinceName,
+                        CreationTime=DateTimeOffset.Now
                     };
 
                     parentGroup = await _deviceGroupRepository.InsertAsync(parentGroup, true, stoppingToken);
@@ -86,6 +87,7 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.YuanGan
                     childGroup = new DeviceGroup()
                     {
                         Name = monitorModel.CityName,
+                        CreationTime = DateTimeOffset.Now,
                         ParentId = parentGroup.Id,
                     };
 
@@ -115,6 +117,7 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.YuanGan
                     device.Coordinate = (GeoCoordinate?)monitorModel.Location;
                     device.Status = monitorModel.IsOnline ? DeviceStatus.Online : DeviceStatus.Offline;
                     device.Name = monitorModel.Name;
+                    device.LastOnlineTime = monitorModel.ActiveTime;
 
                     await _deviceRepository.UpdateAsync(device, true, stoppingToken);
                 }

@@ -21,16 +21,16 @@
 	<ItemGroup>
 		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.2.0" />
 		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.2.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.1">
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.2">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.1" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.2" />
 		<PackageReference Include="NLog.Web.AspNetCore" Version="5.2.1" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 		<PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
 	</ItemGroup>

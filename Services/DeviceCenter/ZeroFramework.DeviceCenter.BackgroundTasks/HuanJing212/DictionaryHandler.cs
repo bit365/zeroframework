@@ -1,5 +1,6 @@
 ﻿using DotNetty.Common.Internal.Logging;
 using DotNetty.Transport.Channels;
+using System;
 
 namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
 {
@@ -7,25 +8,27 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
     {
         static readonly IInternalLogger Logger = InternalLoggerFactory.GetInstance<DictionaryHandler>();
 
+        private readonly IServiceProvider _serviceProvider;
 
-        private readonly IDictionaryDataService _dictionaryDataService;
-
-        public DictionaryHandler(IDictionaryDataService dictionaryDataService)
+        public DictionaryHandler(IServiceProvider serviceProvider)
         {
-            _dictionaryDataService = dictionaryDataService;
+            _serviceProvider = serviceProvider;
         }
 
         protected override void ChannelRead0(IChannelHandlerContext ctx, Dictionary<string, string> msg)
         {
             ctx.Channel.EventLoop.Execute(async () =>
             {
-                await _dictionaryDataService.HandlingAaync(msg);
+                try
+                {
+                    var _dictionaryDataService = _serviceProvider.GetRequiredService<IDictionaryDataService>();
+                    await _dictionaryDataService.HandlingAaync(msg);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex);
+                }
             });
-        }
-
-        public override void ExceptionCaught(IChannelHandlerContext context, Exception exception)
-        {
-            Logger.Error(exception);
         }
     }
 }

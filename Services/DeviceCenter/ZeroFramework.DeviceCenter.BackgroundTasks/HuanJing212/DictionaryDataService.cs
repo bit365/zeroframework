@@ -50,21 +50,24 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
 
             var propertyValues = new Dictionary<string, DevicePropertyValue>();
 
-            DateTimeOffset dateTime = DateTime.ParseExact(keyValuePairs["DateTime"], "yyyyMMddHHmmss", CultureInfo.CurrentCulture);
-
-            var sensorValues = keyValuePairs.Where(x => x.Key.EndsWith("Rtd"));
-
-            foreach (var sensorValue in sensorValues)
+            if (keyValuePairs.TryGetValue("DataTime",out string? dateTimeString))
             {
-                DevicePropertyValue devicePropertyValue = new()
-                {
-                    Timestamp = dateTime.ToUnixTimeMilliseconds(),
-                    Value = Convert.ToDouble(sensorValue.Value),
-                };
+                DateTimeOffset dateTime = DateTime.ParseExact(dateTimeString, "yyyyMMddHHmmss", CultureInfo.CurrentCulture);
 
-                if (properties != null && properties.TryGetValue(sensorValue.Key.TrimEnd("-Rtd".ToArray()), out PropertyFeature? property))
+                var sensorValues = keyValuePairs.Where(x => x.Key.EndsWith("Rtd"));
+
+                foreach (var sensorValue in sensorValues)
                 {
-                    propertyValues.Add(property.Identifier, devicePropertyValue);
+                    DevicePropertyValue devicePropertyValue = new()
+                    {
+                        Timestamp = dateTime.ToUnixTimeMilliseconds(),
+                        Value = Convert.ToDouble(sensorValue.Value),
+                    };
+
+                    if (properties != null && properties.TryGetValue(sensorValue.Key.TrimEnd("-Rtd".ToArray()), out PropertyFeature? property))
+                    {
+                        propertyValues.Add(property.Identifier, devicePropertyValue);
+                    }
                 }
             }
 

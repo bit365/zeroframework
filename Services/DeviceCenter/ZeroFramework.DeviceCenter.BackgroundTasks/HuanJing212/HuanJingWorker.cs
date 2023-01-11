@@ -39,7 +39,7 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
                     pipeline.AddLast(new IdleStateHandler(TimeSpan.FromMinutes(5), TimeSpan.Zero, TimeSpan.Zero));
                     pipeline.AddLast(new LoggingHandler(DotNetty.Handlers.Logging.LogLevel.INFO));
                     pipeline.AddLast(new StringDecoder(Encoding.ASCII));
-                    pipeline.AddLast(new LineBasedFrameDecoder(1200));
+                    pipeline.AddLast(new LineBasedFrameDecoder(5000));
                     pipeline.AddLast(new StringToDictionaryDecoder());
                     pipeline.AddLast(new DictionaryHandler(_serviceProvider));
                 }));

@@ -11,6 +11,7 @@ using ZeroFramework.DeviceCenter.Domain.Aggregates.ProductAggregate;
 using ZeroFramework.DeviceCenter.Domain.Repositories;
 using DotNetty.Codecs;
 using DotNetty.Handlers.Timeout;
+using NLog.Extensions.Logging;
 
 namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
 {
@@ -30,10 +31,7 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
 
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
-            InternalLoggerFactory.DefaultFactory = LoggerFactory.Create(builder => builder.AddSimpleConsole(options =>
-            {
-                options.TimestampFormat = "[HH:mm:ss]";
-            }));
+            InternalLoggerFactory.DefaultFactory = LoggerFactory.Create(builder => builder.AddNLog());
 
             var bootstrap = new ServerBootstrap().Group(_bossGroup, _workerGroup).Channel<TcpServerSocketChannel>();
 

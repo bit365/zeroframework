@@ -12,11 +12,11 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
 {
     public class HuanJingWorker : BackgroundService
     {
-        private readonly IDictionaryDataService _dictionaryDataService;
+        private readonly IServiceProvider _serviceProvider;
 
-        public HuanJingWorker(IDictionaryDataService dictionaryDataService)
+        public HuanJingWorker(IServiceProvider serviceProvider)
         {
-            _dictionaryDataService = dictionaryDataService;
+            _serviceProvider = serviceProvider;
         }
 
         private readonly IEventLoopGroup _bossGroup = new MultithreadEventLoopGroup();
@@ -41,7 +41,7 @@ namespace ZeroFramework.DeviceCenter.BackgroundTasks.HuanJing212
                     pipeline.AddLast(new StringDecoder(Encoding.ASCII));
                     pipeline.AddLast(new LineBasedFrameDecoder(9999));
                     pipeline.AddLast(new StringToDictionaryDecoder());
-                    pipeline.AddLast(new DictionaryHandler(_dictionaryDataService));
+                    pipeline.AddLast(new DictionaryHandler(_serviceProvider));
                 }));
 
             _boundChannel = await bootstrap.BindAsync(5212);

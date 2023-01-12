@@ -155,8 +155,8 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                             },
                             new PropertyFeature
                             {
-                                Identifier="压力",
-                                Name="Pressure",
+                                Identifier="Pressure",
+                                Name="压力",
                                 AccessMode= PropertyAccessMode.Read,
                                 DataType= new DataType
                                 {

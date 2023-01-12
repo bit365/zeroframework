@@ -2,7 +2,7 @@ import type { UserManagerSettings } from "oidc-client";
 import { UserManager } from "oidc-client";
 
 const userManagerSettings: UserManagerSettings = {
-    authority: REACT_APP_ENV === 'dev' ? 'https://localhost:5001' : 'https://identityserver.syifang.com',
+    authority: REACT_APP_ENV === 'dev' ? 'https://localhost:5001' : 'https://identityserver.helloworldnet.com',
     client_id: 'devicecenterweb',
     redirect_uri: `${window.location.origin}/authorization/login-callback`,
     post_logout_redirect_uri: `${window.location.origin}/authorization/logout-callback`,

@@ -34,15 +34,15 @@ export default (props: DeviceListProps) => {
             dataIndex: 'productName',
             valueType: 'text',
             sorter: false,
-            renderFormItem: (_, { type, defaultRender }, form) => {
+            renderFormItem: () => {
                 return (<ProFormSelect<API.MeasurementUnitGetResponseModel>
                     name='productId'
                     key='productIdSearch'
                     showSearch
                     request={async ({ keyWords }: any) => {
                         const parameter = { pageSize: 20, keyword: keyWords };
-                        let result = await getProducts(parameter);
-                        let list: any[] = [];
+                        const result = await getProducts(parameter);
+                        const list: any[] = [];
                         result.items?.forEach(item => {
                             if (item.name && item.id) {
                                 list.push({ label: item.name, value: item.id });
@@ -85,13 +85,14 @@ export default (props: DeviceListProps) => {
                     showSizeChanger: true,
                     showQuickJumper: true,
                 }}
-                request={async (params, sort, filter) => {
+                request={async (params, sort) => {
+                    // eslint-disable-next-line no-param-reassign
                     params = Object.assign(params, {
                         sorter: sort,
                         pageNumber: params.current,
                     });
                     const { current, ...parameter } = params
-                    let result = await getDevices(parameter);
+                    const result = await getDevices(parameter);
                     return {
                         data: result.items,
                         total: result.totalCount,

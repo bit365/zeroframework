@@ -3,10 +3,11 @@ import { ProFormRadio } from '@ant-design/pro-form';
 import React from 'react';
 import DataParameterArea from './DataParameterArea';
 import { Form } from 'antd';
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type ServiceFeatureFormItemsProps = {
 };
 
-const ServiceFeatureFormItems: React.FC<ServiceFeatureFormItemsProps> = (props) => {
+const ServiceFeatureFormItems: React.FC<ServiceFeatureFormItemsProps> = () => {
 
   const intl = useIntl();
   return <>

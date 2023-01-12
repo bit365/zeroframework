@@ -19,13 +19,14 @@ export default (props: DeviceGroupInfoProps) => {
 
     const fetchDeviceGroupInfoApi = async () => {
         setLoading(true);
-        let result = await getDeviceGroup({ id: props.groupId });
+        const result = await getDeviceGroup({ id: props.groupId });
         setDeviceGroupInfo(result);
         setLoading(false);
     }
 
     useEffect(() => {
         fetchDeviceGroupInfoApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.groupId]);
 
     return (

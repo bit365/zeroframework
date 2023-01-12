@@ -1,4 +1,5 @@
-import { Badge, Button, Card, Col, Drawer, FormInstance, message, Popconfirm, Row, Space, Statistic } from 'antd';
+import type { FormInstance} from 'antd';
+import { Badge, Button, Card, Col, Drawer, message, Popconfirm, Row, Space, Statistic } from 'antd';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { PlusOutlined } from '@ant-design/icons';
@@ -6,7 +7,8 @@ import { FooterToolbar, PageContainer } from '@ant-design/pro-layout';
 import { useIntl, FormattedMessage, Link } from 'umi';
 import { deleteDevice, getDevice, getDevices, getStatistic, postDevice, putDevice } from '@/services/deviceCenter/Devices';
 import { useEffect, useRef, useState } from 'react';
-import ProDescriptions, { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
+import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
+import ProDescriptions from '@ant-design/pro-descriptions';
 import { ModalForm, ProFormSelect, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import UpdateForm from './components/UpdateForm';
 import { getProducts } from '@/services/deviceCenter/Products';
@@ -23,7 +25,7 @@ export default (props: any) => {
     const [deviceStatistic, setDeviceStatistic] = useState<API.DeviceStatisticGetResponseModel>();
 
     const fetchStatisticApi = async () => {
-        let result = await getStatistic({});
+        const result = await getStatistic({});
         setDeviceStatistic(result);
     }
 
@@ -31,6 +33,7 @@ export default (props: any) => {
         fetchStatisticApi();
     }, []);
 
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const handleRemove = async (selectedRows: API.DeviceGetResponseModel[]) => {
         const hide = message.loading(intl.formatMessage({ id: 'pages.table.processing' }));
         if (!selectedRows) return true;
@@ -83,15 +86,15 @@ export default (props: any) => {
             dataIndex: 'productName',
             valueType: 'text',
             sorter: false,
-            renderFormItem: (_, { type, defaultRender }, form) => {
+            renderFormItem: () => {
                 return (<ProFormSelect<API.MeasurementUnitGetResponseModel>
                     name='productId'
                     key='productIdSearch'
                     showSearch
                     request={async ({ keyWords }: any) => {
                         const parameter = { pageSize: 20, keyword: keyWords };
-                        let result = await getProducts(parameter);
-                        let list: any[] = [];
+                        const result = await getProducts(parameter);
+                        const list: any[] = [];
                         result.items?.forEach(item => {
                             if (item.name && item.id) {
                                 list.push({ label: item.name, value: item.id });
@@ -263,13 +266,14 @@ export default (props: any) => {
                     showSizeChanger: true,
                     showQuickJumper: true,
                 }}
-                request={async (params, sort, filter) => {
+                request={async (params, sort) => {
+                    // eslint-disable-next-line no-param-reassign
                     params = Object.assign(params, {
                         sorter: sort,
                         pageNumber: params.current
                     });
                     const { current, ...parameter } = params
-                    let result = await getDevices(parameter);
+                    const result = await getDevices(parameter);
                     return {
                         data: result.items,
                         total: result.totalCount,
@@ -296,6 +300,7 @@ export default (props: any) => {
                     fullScreen: true,
                 }}
                 rowSelection={{
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
                     onChange: (_, selectedRows) => {
                         setSelectedRows(selectedRows);
                     },
@@ -371,6 +376,7 @@ export default (props: any) => {
                     return false;
                 }}
                 submitter={{
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
                     render: (props: any, dom: JSX.Element[]) => {
                         return (
                             <Space style={{
@@ -390,8 +396,8 @@ export default (props: any) => {
                     showSearch
                     request={async ({ keyWords }: any) => {
                         const parameter = { pageSize: 20, keyword: keyWords };
-                        let result = await getProducts(parameter);
-                        let list: any[] = [];
+                        const result = await getProducts(parameter);
+                        const list: any[] = [];
                         result.items?.forEach(item => {
                             if (item.name && item.id) {
                                 list.push({ label: item.name, value: item.id });
@@ -417,7 +423,7 @@ export default (props: any) => {
                     name="coordinate"
                     label={intl.formatMessage({ id: 'pages.table.device.coordinate' })}
                     tooltip={{
-                        title: <a href='https://lbs.amap.com/tools/picker' target='_blank' style={{ color: 'white' }}>Click Map Picker</a>,
+                        title: <a href='https://lbs.amap.com/tools/picker' target='_blank' style={{ color: 'white' }} rel="noreferrer">Click Map Picker</a>,
                         color: 'cyan',
                     }}
                     rules={[

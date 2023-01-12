@@ -1,4 +1,5 @@
-import { FormInstance, Space } from 'antd';
+import type { FormInstance} from 'antd';
+import { Space } from 'antd';
 import { useIntl } from 'umi';
 import { ModalForm, ProFormText } from '@ant-design/pro-form';
 import { useEffect, useRef } from 'react';
@@ -22,6 +23,7 @@ const DataParameterModalForm: React.FC<DataParameterModalFormProps> = (props) =>
         ...props.initialValues,
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.visible]);
 
   return <ModalForm<API.DataParameter>
@@ -42,6 +44,7 @@ const DataParameterModalForm: React.FC<DataParameterModalFormProps> = (props) =>
       id: 'pages.table.product.thing.addParameter',
     })}
     submitter={{
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       render: (props, doms) => {
         return (
           <Space style={{

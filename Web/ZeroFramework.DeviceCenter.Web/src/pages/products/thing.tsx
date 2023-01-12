@@ -6,7 +6,8 @@ import { FooterToolbar, PageContainer } from '@ant-design/pro-layout';
 import { useIntl, FormattedMessage, history } from 'umi';
 import { getProduct, putProduct } from '@/services/deviceCenter/Products';
 import { useEffect, useRef, useState } from 'react';
-import ProDescriptions, { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
+import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
+import ProDescriptions from '@ant-design/pro-descriptions';
 import FeatureForm from './components/FeatureForm';
 import { ModalForm } from '@ant-design/pro-form';
 
@@ -31,6 +32,7 @@ export default (props: any) => {
 
     const [productFeatures, setProductFeatures] = useState<API.ProductFeatures>();
 
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const handleRemove = async (selectedRows: TableColumnType[]) => {
         const hide = message.loading(intl.formatMessage({ id: 'pages.table.processing' }));
         if (!selectedRows) {
@@ -79,11 +81,11 @@ export default (props: any) => {
 
     const featuresToTableColumns = (features?: API.ProductFeatures): TableColumnType[] => {
 
-        let properties = features?.properties;
-        let services = features?.services;
-        let events = features?.events;
+        const properties = features?.properties;
+        const services = features?.services;
+        const events = features?.events;
 
-        let datas: TableColumnType[] = [];
+        const datas: TableColumnType[] = [];
 
         if (properties) {
             properties.forEach(item => {
@@ -132,13 +134,14 @@ export default (props: any) => {
 
     const fetchApi = async () => {
         if (props.location.state?.id) {
-            let result = await getProduct({ id: props.location.state.id });
+            const result = await getProduct({ id: props.location.state.id });
             setProductFeatures(result.features);
         }
     }
 
     useEffect(() => {
         fetchApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const columns: ProColumns<TableColumnType>[] = [
@@ -194,7 +197,7 @@ export default (props: any) => {
             dataIndex: 'remark',
             valueType: 'text',
             sorter: false,
-            search: { transform: (value) => 'keyword' },
+            search: { transform: () => 'keyword' },
             hideInTable: true,
         },
         {
@@ -229,7 +232,7 @@ export default (props: any) => {
 
     return (
         <PageContainer
-            onBack={e => { history.goBack(); }}
+            onBack={() => { history.goBack(); }}
             title={intl.formatMessage({ id: 'menu.device.manager.product.list' })}
         >
             <ProTable<TableColumnType>
@@ -287,6 +290,7 @@ export default (props: any) => {
                     fullScreen: true,
                 }}
                 rowSelection={{
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
                     onChange: (_, selectedRows) => {
                         setSelectedRows(selectedRows);
                     },
@@ -395,11 +399,12 @@ export default (props: any) => {
                 title={intl.formatMessage({
                     id: 'pages.table.product.thing.tslModel',
                 })}
-                onFinish={async (value) => {
+                onFinish={async () => {
                     setTslFormVisible(false);
                     return true;
                 }}
                 submitter={{
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
                     render: (props, doms) => {
                         return (
                             <Space style={{

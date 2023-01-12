@@ -1,4 +1,5 @@
-import { Button, Drawer, FormInstance, message, Popconfirm, Space } from 'antd';
+import type { FormInstance} from 'antd';
+import { Button, Drawer, message, Popconfirm, Space } from 'antd';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { PlusOutlined } from '@ant-design/icons';
@@ -6,7 +7,8 @@ import { FooterToolbar, PageContainer } from '@ant-design/pro-layout';
 import { useIntl, FormattedMessage } from 'umi';
 import { deleteResourceGroup, getResourceGroup, getResourceGroups, postResourceGroup, putResourceGroup } from '@/services/deviceCenter/ResourceGroups';
 import { useRef, useState } from 'react';
-import ProDescriptions, { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
+import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
+import ProDescriptions from '@ant-design/pro-descriptions';
 import { ModalForm, ProFormText } from '@ant-design/pro-form';
 import UpdateForm from './components/UpdateForm';
 import AddPermissions from '../identity/components/AddPermissions';
@@ -22,6 +24,7 @@ export default () => {
     const actionRef = useRef<ActionType>();
     const createModalRef = useRef<FormInstance>();
 
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const handleRemove = async (selectedRows: API.ResourceGroupGetResponseModel[]) => {
         const hide = message.loading(intl.formatMessage({ id: 'pages.table.processing' }));
         if (!selectedRows) return true;
@@ -57,7 +60,7 @@ export default () => {
             dataIndex: 'name',
             valueType: 'text',
             sorter: { multiple: 2 },
-            search: { transform: (value) => 'keyword' },
+            search: { transform: () => 'keyword' },
             render: (dom, entity) => {
                 return (
                     <a
@@ -76,7 +79,7 @@ export default () => {
             dataIndex: 'displayName',
             valueType: 'text',
             sorter: { multiple: 2 },
-            search: { transform: (value) => 'keyword' },
+            search: { transform: () => 'keyword' },
         },
         {
             title: <FormattedMessage id="pages.searchTable.titleOption" />,
@@ -134,13 +137,14 @@ export default () => {
                     showSizeChanger: true,
                     showQuickJumper: true,
                 }}
-                request={async (params, sort, filter) => {
+                request={async (params, sort) => {
+                    // eslint-disable-next-line no-param-reassign
                     params = Object.assign(params, {
                         sorter: sort,
                         pageNumber: params.current
                     });
                     const { current, ...parameter } = params
-                    let result = await getResourceGroups(parameter);
+                    const result = await getResourceGroups(parameter);
                     return {
                         data: result.items,
                         total: result.totalCount,
@@ -166,6 +170,7 @@ export default () => {
                     search: true,
                 }}
                 rowSelection={{
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
                     onChange: (_, selectedRows) => {
                         setSelectedRows(selectedRows);
                     },

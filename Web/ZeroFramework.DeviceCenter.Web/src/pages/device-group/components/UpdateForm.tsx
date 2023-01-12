@@ -1,9 +1,10 @@
-import { ConfigProvider, Form, FormInstance, Space, TreeSelect } from 'antd';
+import type { FormInstance} from 'antd';
+import { ConfigProvider, Form, Space, TreeSelect } from 'antd';
 import { useIntl } from 'umi';
 import { ProFormText, DrawerForm, ProFormTextArea } from '@ant-design/pro-form';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { getDeviceGroup, getDeviceGroups } from '@/services/deviceCenter/DeviceGroups';
-import { DataNode } from 'antd/lib/tree';
+import type { DataNode } from 'antd/lib/tree';
 
 export type UpdateFormProps = {
   onCancel: () => void;
@@ -27,14 +28,16 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       });
     }
     if (props.visible) {
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       fetchDeviceGroupListApi().then(e => { setDeviceGroupTreeData(e) });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.visible]);
 
   const intl = useIntl();
 
   const fetchDeviceGroupListApi = async (parentId?: number) => {
-    let result = await getDeviceGroups({ parentId: parentId, pageNumber: 1, pageSize: 100 });
+    const result = await getDeviceGroups({ parentId: parentId, pageNumber: 1, pageSize: 100 });
     if (result) {
       const parentDataNodes: any[] = [];
       result.items?.forEach(e => {
@@ -66,6 +69,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         submitText: context.locale?.Modal?.okText,
         resetText: context.locale?.Modal?.cancelText,
       },
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       render: (props: any, doms: JSX.Element[]) => {
         return (
           <Space style={{ width: '100%' }}>
@@ -89,7 +93,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         treeData={deviceGroupTreeData}
         placeholder={intl.formatMessage({ id: 'pages.table.device.selectPlaceholder' })}
         allowClear
-        onChange={value => {
+        onChange={() => {
 
         }}
         loadData={async ({ id }) => {

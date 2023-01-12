@@ -1,4 +1,5 @@
-import { Button, Drawer, FormInstance, message, Popconfirm, Space } from 'antd';
+import type { FormInstance} from 'antd';
+import { Button, Drawer, message, Popconfirm, Space } from 'antd';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { PlusOutlined } from '@ant-design/icons';
@@ -6,7 +7,8 @@ import { FooterToolbar, PageContainer } from '@ant-design/pro-layout';
 import { useIntl, FormattedMessage } from 'umi';
 import { deleteMonitoringFactor, getMonitoringFactor, getMonitoringFactors, postMonitoringFactor, putMonitoringFactor } from '@/services/deviceCenter/MonitoringFactors';
 import { useRef, useState } from 'react';
-import ProDescriptions, { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
+import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
+import ProDescriptions from '@ant-design/pro-descriptions';
 import { ModalForm, ProFormDigit, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import UpdateForm from './components/UpdateForm';
 
@@ -20,6 +22,7 @@ export default () => {
     const tableActionRef = useRef<ActionType>();
     const createFormRef = useRef<FormInstance>();
 
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const handleRemove = async (selectedRows: API.MonitoringFactorGetResponseModel[]) => {
         const hide = message.loading(intl.formatMessage({ id: 'pages.table.processing' }));
         if (!selectedRows) return true;
@@ -54,7 +57,7 @@ export default () => {
             dataIndex: 'factorCode',
             valueType: 'text',
             sorter: { multiple: 2 },
-            search: { transform: (value) => 'keyword' },
+            search: { transform: () => 'keyword' },
             render: (dom, entity) => {
                 return (
                     <a
@@ -73,28 +76,28 @@ export default () => {
             dataIndex: 'chineseName',
             valueType: 'text',
             sorter: { multiple: 2 },
-            search: { transform: (value) => 'keyword' },
+            search: { transform: () => 'keyword' },
         },
         {
             title: <FormattedMessage id='pages.table.monitoringFactor.englishName' />,
             dataIndex: 'englishName',
             valueType: 'text',
             sorter: { multiple: 2 },
-            search: { transform: (value) => 'keyword' },
+            search: { transform: () => 'keyword' },
         },
         {
             title: <FormattedMessage id='pages.table.monitoringFactor.unit' />,
             dataIndex: 'unit',
             valueType: 'text',
             sorter: false,
-            search: { transform: (value) => 'keyword' },
+            search: { transform: () => 'keyword' },
         },
         {
             title: <FormattedMessage id='pages.table.monitoringFactor.decimals' />,
             dataIndex: 'decimals',
             valueType: 'text',
             sorter: false,
-            search: { transform: (value) => 'keyword' },
+            search: { transform: () => 'keyword' },
         },
         {
             title: <FormattedMessage id="pages.searchTable.titleOption" />,
@@ -143,13 +146,14 @@ export default () => {
                     showSizeChanger: true,
                     showQuickJumper: true,
                 }}
-                request={async (params, sort, filter) => {
+                request={async (params, sort) => {
+                    // eslint-disable-next-line no-param-reassign
                     params = Object.assign(params, {
                         sorter: sort,
                         pageNumber: params.current
                     });
                     const { current, ...parameter } = params
-                    let result = await getMonitoringFactors(parameter);
+                    const result = await getMonitoringFactors(parameter);
                     return {
                         data: result.items,
                         total: result.totalCount,
@@ -175,6 +179,7 @@ export default () => {
                     search: true,
                 }}
                 rowSelection={{
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
                     onChange: (_, selectedRows) => {
                         setSelectedRows(selectedRows);
                     },

@@ -15,7 +15,7 @@ export type TableListItem = {
     uploadTime: number;
 };
 
-export default (props: any) => {
+export default () => {
     const [currentRow, setCurrentRow] = useState<TableListItem>();
     const [selectedRows, setSelectedRows] = useState<TableListItem[]>([]);
     const [showDetail, setShowDetail] = useState<boolean>(false);
@@ -23,6 +23,7 @@ export default (props: any) => {
     const intl = useIntl();
     const tableActionRef = useRef<ActionType>();
 
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const handleRemove = async (selectedRows: TableListItem[]) => {
         const hide = message.loading(intl.formatMessage({ id: 'pages.table.processing' }));
         if (!selectedRows) return true;
@@ -147,6 +148,7 @@ export default (props: any) => {
                     showSizeChanger: true,
                     showQuickJumper: true,
                 }}
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 request={(params, sort, filter) => {
                     return Promise.resolve({
                         data: tableListDataSource,
@@ -155,7 +157,7 @@ export default (props: any) => {
                 }}
                 dateFormatter="string"
                 headerTitle={
-                    <Upload name="logo" action="/upload.do" itemRender={item => null} onChange={info => {
+                    <Upload name="logo" action="/upload.do" itemRender={() => null} onChange={info => {
                         if (info.file.status == 'done' && info.file.name && info.file.size) {
                             const list = [...tableListDataSource, {
                                 key: info.file.uid,
@@ -168,13 +170,14 @@ export default (props: any) => {
                         }
                     }}>
                         <Button icon={<UploadOutlined />}>
-                            <FormattedMessage id='pages.devices.view.files.upload'></FormattedMessage>
+                            <FormattedMessage id='pages.devices.view.files.upload' />
                         </Button>
                     </Upload>}
                 options={{
                     search: true,
                 }}
                 rowSelection={{
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
                     onChange: (_, selectedRows) => {
                         setSelectedRows(selectedRows);
                     },

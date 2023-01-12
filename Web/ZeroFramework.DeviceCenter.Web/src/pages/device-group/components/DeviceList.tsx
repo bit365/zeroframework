@@ -31,6 +31,7 @@ export default (props: DeviceListProps) => {
         tableActionRef.current?.reloadAndRest?.();
     }, [props.groupId]);
 
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const handleRemove = async (selectedRows: API.DeviceGetResponseModel[]) => {
         const hide = message.loading(intl.formatMessage({ id: 'pages.table.processing' }));
         if (!selectedRows) return true;
@@ -235,12 +236,13 @@ export default (props: DeviceListProps) => {
                     fullScreen: true,
                 }}
                 rowSelection={{
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
                     onChange: (_, selectedRows) => {
                         setSelectedRows(selectedRows);
                     },
                 }}
                 search={{ labelWidth: 'auto' }}
-                footer={e =>
+                footer={() =>
                     selectedRows?.length > 0 && (
                         <Button type="default"
                             onClick={async () => {
@@ -287,7 +289,7 @@ export default (props: DeviceListProps) => {
                     id: 'pages.deviceGroup.view.addDeviceToGroup',
                 })}
                 formRef={createFormRef}
-                onFinish={async (value: any) => {
+                onFinish={async () => {
                     const ids = addDeviceToGroupSelectedRows.map(e => e.id || 0).filter(e => e > 0);
                     await putDevicesToGroup({ deviceGroupId: props.groupId }, ids);
                     setCreateModalVisible(false);
@@ -301,6 +303,7 @@ export default (props: DeviceListProps) => {
                         submitText: context.locale?.Modal?.okText,
                         resetText: context.locale?.Modal?.cancelText,
                     },
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
                     render: (props: any, doms: JSX.Element[]) => {
                         return (
                             <Space style={{ width: '100%' }}>
@@ -313,7 +316,7 @@ export default (props: DeviceListProps) => {
                 <Card bordered>
                     <AddDeviceToGroup rowSelectionChange={devices => {
                         setAddDeviceToGroupSelectedRows(devices);
-                    }}></AddDeviceToGroup>
+                    }} />
                 </Card>
             </DrawerForm>
         </>

@@ -3,12 +3,12 @@ import { FormattedMessage, Link, useIntl } from 'umi';
 import { useRef, useState } from 'react';
 import { ProFormDependency, ProFormSelect, QueryFilter } from '@ant-design/pro-form';
 import { getProducts } from '@/services/deviceCenter/Products';
-import { Badge, Card, Col, Empty, FormInstance, Row, Spin, Statistic } from 'antd';
+import type { FormInstance} from 'antd';
+import { Badge, Card, Col, Empty, Row, Spin, Statistic } from 'antd';
 import { getDevices } from '@/services/deviceCenter/Devices';
 import { getDevicePropertyValues } from '@/services/deviceCenter/Measurements';
-import { ResponseError } from 'umi-request';
 
-export default (props: any) => {
+export default () => {
 
     const intl = useIntl();
 
@@ -16,10 +16,10 @@ export default (props: any) => {
     const formRef = useRef<FormInstance>();
     const [devicePropertyValues, setDevicePropertyValues] = useState<API.DevicePropertyLastValue[]>();
 
-    const fetchDevicePropertyValuesApi = async (productId?: string, deviceId?: number) => {
+    const fetchDevicePropertyValuesApi = async (productId?: number, deviceId?: number) => {
         setLoading(true);
-        let result = await getDevicePropertyValues({ productId, deviceId }, {
-            errorHandler: (error: ResponseError) => {
+        const result = await getDevicePropertyValues({ productId, deviceId }, {
+            errorHandler: () => {
                 setDevicePropertyValues(undefined);
             }
         });
@@ -51,8 +51,8 @@ export default (props: any) => {
                         showSearch
                         request={async ({ keyWords }: any) => {
                             const parameter = { pageSize: 20, keyword: keyWords };
-                            let result = await getProducts(parameter);
-                            let list: any[] = [];
+                            const result = await getProducts(parameter);
+                            const list: any[] = [];
                             result.items?.forEach(item => {
                                 if (item.name && item.id) {
                                     list.push({ label: item.name, value: item.id });
@@ -62,7 +62,7 @@ export default (props: any) => {
                         }}
                         rules={[{ required: false }]}
                         fieldProps={{
-                            onChange: async (selectedValue: any) => {
+                            onChange: async () => {
                                 formRef.current?.resetFields(['deviceId']);
                             },
                         }}
@@ -75,10 +75,11 @@ export default (props: any) => {
                                 key='deviceId'
                                 showSearch
                                 params={{ productId: productId }}
+                                // eslint-disable-next-line @typescript-eslint/no-shadow
                                 request={async ({ keyWords, productId }: any) => {
                                     const parameter = { pageSize: 20, keyword: keyWords, productId: productId };
-                                    let result = await getDevices(parameter);
-                                    let list: any[] = [];
+                                    const result = await getDevices(parameter);
+                                    const list: any[] = [];
                                     result.items?.forEach(item => {
                                         if (item.name && item.id) {
                                             list.push({ label: item.name, value: item.id, productid: item.productId });

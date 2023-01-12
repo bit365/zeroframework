@@ -28,6 +28,7 @@ const OperationModal: FC<OperationModalProps> = (props) => {
     if (form && !visible) {
       form.resetFields();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.visible]);
 
   useEffect(() => {
@@ -37,6 +38,7 @@ const OperationModal: FC<OperationModalProps> = (props) => {
         createdAt: current.createdAt ? moment(current.createdAt) : null,
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.current]);
 
   const handleSubmit = () => {

@@ -4,10 +4,10 @@ import React  from 'react';
 import DataTypeFormItems from './DataTypeFormItems';
 
 export type PropertyFeatureFormItemsProps = {
-  initialDataType?:string;
+  initialDataType?: string;
 };
 
-const PropertyFeatureFormItems: React.FC<PropertyFeatureFormItemsProps> = (props) => {
+const PropertyFeatureFormItems: React.FC<PropertyFeatureFormItemsProps> = () => {
 
   const intl = useIntl();
   return <>

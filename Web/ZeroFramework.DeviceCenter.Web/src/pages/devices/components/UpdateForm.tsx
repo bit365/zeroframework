@@ -1,4 +1,5 @@
-import { ConfigProvider, FormInstance, Space } from 'antd';
+import type { FormInstance} from 'antd';
+import { ConfigProvider, Space } from 'antd';
 import { useIntl } from 'umi';
 import { ProFormText, DrawerForm, ProFormTextArea, ProFormDateTimePicker } from '@ant-design/pro-form';
 import React, { useContext, useEffect, useRef } from 'react';
@@ -22,6 +23,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         });
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.visible]);
 
   const intl = useIntl();
@@ -44,6 +46,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         submitText: context.locale?.Modal?.okText,
         resetText: context.locale?.Modal?.cancelText,
       },
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       render: (props, doms) => {
         return (
           <Space style={{ width: '100%' }}>
@@ -74,7 +77,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       name="coordinate"
       label={intl.formatMessage({ id: 'pages.table.device.coordinate' })}
       tooltip={{
-        title: <a href='https://lbs.amap.com/tools/picker' target='_blank' style={{ color: 'white' }}>Click Map Picker</a>,
+        title: <a href='https://lbs.amap.com/tools/picker' target='_blank' style={{ color: 'white' }} rel="noreferrer">Click Map Picker</a>,
         color: 'cyan',
       }}
       rules={[

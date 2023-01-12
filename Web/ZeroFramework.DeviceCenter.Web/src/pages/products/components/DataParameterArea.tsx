@@ -20,6 +20,7 @@ const DataParameterArea: React.FC<DataParameterAreaProps> = (props) => {
     if (props.value) {
       setParameters(props.value);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <>

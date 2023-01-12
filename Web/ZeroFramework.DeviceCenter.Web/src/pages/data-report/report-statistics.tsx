@@ -40,7 +40,7 @@ export default () => {
         }, { errorHandler: () => { } });
 
         paginationState.hasPrevious = values.pageNumber > 1;
-        paginationState.hasNext = result.nextOffset != null;
+        paginationState.hasNext = result.offset != null;
         paginationState.pageNumber = values.pageNumber;
 
         setPaginationState(paginationState);
@@ -98,6 +98,7 @@ export default () => {
                                 key='deviceId'
                                 showSearch
                                 params={{ productId: productId }}
+                                // eslint-disable-next-line @typescript-eslint/no-shadow
                                 request={async ({ keyWords, productId }: any) => {
                                     const parameter = { pageSize: 20, keyword: keyWords, productId: productId };
                                     const result = await getDevices(parameter);
@@ -127,11 +128,12 @@ export default () => {
                                 name='identifier'
                                 key='identifier'
                                 params={{ productId: productId }}
-                                request={async ({ keyWords, productId }: any) => {
-                                    let list: any[] = [];
+                                // eslint-disable-next-line @typescript-eslint/no-shadow
+                                request={async ({ productId }: any) => {
+                                    const list: any[] = [];
                                     if (productId) {
                                         const parameter = { id: productId };
-                                        let result = await getProduct(parameter);
+                                        const result = await getProduct(parameter);
                                         result.features?.properties?.forEach(item => {
                                             if (item.name && item.identifier) {
                                                 list.push({ label: item.name, value: item.identifier });
@@ -208,7 +210,7 @@ export default () => {
                 </QueryFilter>
             </Card>
             <Card
-                actions={[<Space hidden={!paginationState.hasPrevious && !paginationState.hasNext}>
+                actions={[<Space key={10} hidden={!paginationState.hasPrevious && !paginationState.hasNext}>
                     <Button style={{ fontSize: 12 }} disabled={!paginationState.hasPrevious} onClick={async () => {
                         formRef.current?.setFieldsValue({ pageNumber: paginationState.pageNumber - 1 });
                         await fetchDataApi();
@@ -235,16 +237,16 @@ export default () => {
                             <Line
                                 data={dataSourceState.data.flatMap(function (e) {
                                     return [{
-                                        time: e.date,
-                                        value: e.averageValue,
+                                        time: e.time,
+                                        value: e.average,
                                         type: intl.formatMessage({ id: 'pages.dataReport.reportStatistics.averageValue' }),
                                     }, {
-                                        time: e.date,
-                                        value: e.minValue,
+                                        time: e.time,
+                                        value: e.min,
                                         type: intl.formatMessage({ id: 'pages.dataReport.reportStatistics.minValue' }),
                                     }, {
-                                        time: e.date,
-                                        value: e.maxValue,
+                                        time: e.time,
+                                        value: e.max,
                                         type: intl.formatMessage({ id: 'pages.dataReport.reportStatistics.maxValue' }),
                                     }]
                                 }).sort((a, b) => a.time?.localeCompare(b?.time || '') || 1)}
@@ -278,7 +280,7 @@ export default () => {
                                     type: 'cat'
                                 }}
                                 lineStyle={e => {
-                                    if (e.type != intl.formatMessage({ id: 'pages.dataReport.reportStatistics.averageValue' })) {
+                                    if (e.type != intl.formatMessage({ id: 'pages.dataReport.reportStatistics.average' })) {
                                         return {
                                             lineDash: [4, 4],
                                             opacity: 0.8,
@@ -304,25 +306,25 @@ export default () => {
                             columns={[{
                                 key: 'date',
                                 title: intl.formatMessage({ id: 'pages.devices.view.properties.history.dateTime' }),
-                                dataIndex: 'date',
+                                dataIndex: 'time',
                             },
                             {
-                                key: 'averageValue',
+                                key: 'average',
                                 title: intl.formatMessage({ id: 'pages.dataReport.reportStatistics.averageValue' }),
-                                dataIndex: 'averageValue',
-                                render: (dom, entity) => `${entity.averageValue?.toFixed(2)}`,
+                                dataIndex: 'average',
+                                render: (dom, entity) => `${entity.average?.toFixed(2)}`,
                             },
                             {
-                                key: 'minValue',
+                                key: 'min',
                                 title: intl.formatMessage({ id: 'pages.dataReport.reportStatistics.minValue' }),
-                                dataIndex: 'minValue',
-                                render: (dom, entity) => `${entity.minValue?.toFixed(2)}`,
+                                dataIndex: 'min',
+                                render: (dom, entity) => `${entity.min?.toFixed(2)}`,
                             },
                             {
-                                key: 'maxValue',
+                                key: 'max',
                                 title: intl.formatMessage({ id: 'pages.dataReport.reportStatistics.maxValue' }),
-                                dataIndex: 'maxValue',
-                                render: (dom, entity) => `${entity.maxValue?.toFixed(2)}`,
+                                dataIndex: 'max',
+                                render: (dom, entity) => `${entity.max?.toFixed(2)}`,
                             },]}
                             rowKey='timestamp'
                             dataSource={dataSourceState.data}

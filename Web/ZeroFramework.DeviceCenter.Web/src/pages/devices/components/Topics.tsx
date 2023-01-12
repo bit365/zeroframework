@@ -12,6 +12,7 @@ export default (props: EventsProps) => {
 
     useEffect(() => {
         setDeviceInfo(props.device);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const dataSource = [

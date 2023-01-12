@@ -4,11 +4,7 @@ import React from 'react';
 import DataParameterArea from './DataParameterArea';
 import { Form } from 'antd';
 
-export type EventFeatureFormItemsProps = {
-
-};
-
-const EventFeatureFormItems: React.FC<EventFeatureFormItemsProps> = (props) => {
+const EventFeatureFormItems: React.FC = () => {
 
   const intl = useIntl();
   return <>

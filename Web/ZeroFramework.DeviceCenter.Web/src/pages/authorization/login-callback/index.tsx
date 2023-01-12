@@ -16,7 +16,8 @@ const UserLoginCallback: React.FC = () => {
       }
     }
     fetchRedirect();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
   return <PageLoading tip='Loading...' />;
 };

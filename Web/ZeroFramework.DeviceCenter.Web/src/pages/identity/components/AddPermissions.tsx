@@ -1,9 +1,11 @@
-import { Card, ConfigProvider, FormInstance, Space, Tabs, Tree } from 'antd';
+import type { FormInstance} from 'antd';
+import { Card, ConfigProvider, Space, Tabs, Tree } from 'antd';
 import { useIntl } from 'umi';
 import { DrawerForm, ProFormSelect, } from '@ant-design/pro-form';
-import React, { Key, useContext, useEffect, useRef, useState } from 'react';
+import type { Key} from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { get, update } from '@/services/deviceCenter/Permissions';
-import { DataNode } from 'antd/lib/tree';
+import type { DataNode } from 'antd/lib/tree';
 import { getResourceGroups } from '@/services/deviceCenter/ResourceGroups';
 import { getUsers } from '@/services/identityServer/Users';
 import { getRoles } from '@/services/identityServer/Roles';
@@ -22,7 +24,7 @@ const { TabPane } = Tabs;
 const AddPermissions: React.FC<AddPermissionsProps> = (props) => {
 
     const [permissionList, setPermissionList] = useState<API.PermissionListResponseModel>();
-    const [selectedPermissionKeys, setSelectedPermissionKeys] = useState<{ [key: string]: string[] }>({});
+    const [selectedPermissionKeys, setSelectedPermissionKeys] = useState<Record<string, string[]>>({});
     const formRef = useRef<FormInstance>();
     const intl = useIntl();
     const [selectedResourceGroupId, setSelectedResourceGroupId] = useState<string>();
@@ -41,7 +43,7 @@ const AddPermissions: React.FC<AddPermissionsProps> = (props) => {
             resourceGroupId: selectedResourceGroupId != '0' ? selectedResourceGroupId : undefined
         });
         setPermissionList(result);
-        const permissionKeys: { [key: string]: string[] } = {};
+        const permissionKeys: Record<string, string[]> = {};
         result?.groups?.forEach(g => {
             if (g.name) {
                 permissionKeys[g.name] = [];
@@ -81,12 +83,14 @@ const AddPermissions: React.FC<AddPermissionsProps> = (props) => {
             setPermissionList({});
             formRef.current?.resetFields();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.visible]);
 
     useEffect(() => {
         if (props.visible) {
             fetchPermissions();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedResourceGroupId, selectedProviderInfos]);
 
     const treeDataNodeRecursively = (dataNode: DataNode, group: API.PermissionGroupModel) => {
@@ -163,6 +167,7 @@ const AddPermissions: React.FC<AddPermissionsProps> = (props) => {
                 submitText: context.locale?.Modal?.okText,
                 resetText: context.locale?.Modal?.cancelText,
             },
+            // eslint-disable-next-line @typescript-eslint/no-shadow
             render: (props, doms) => {
                 return (
                     <Space style={{ width: '100%' }}>
@@ -178,8 +183,9 @@ const AddPermissions: React.FC<AddPermissionsProps> = (props) => {
             rules={[{ required: true }]}
             request={async ({ keyWords }) => {
                 const parameter = { pageSize: 100, keyword: keyWords };
-                let result = await getResourceGroups(parameter);
-                let permissionList: any[] = [{ label: intl.formatMessage({ id: 'identity.components.allResource' }), value: '0' }];
+                const result = await getResourceGroups(parameter);
+                // eslint-disable-next-line @typescript-eslint/no-shadow
+                const permissionList: any[] = [{ label: intl.formatMessage({ id: 'identity.components.allResource' }), value: '0' }];
                 result.items?.forEach(item => {
                     if (item.name && item.id) {
                         let text = item.name;
@@ -201,9 +207,10 @@ const AddPermissions: React.FC<AddPermissionsProps> = (props) => {
             name='principal'
             label={intl.formatMessage({ id: 'identity.components.principal' })}
             request={async ({ keyWords }) => {
-                let permissionList: any = [];
+                // eslint-disable-next-line @typescript-eslint/no-shadow
+                const permissionList: any = [];
                 const parameter = { pageSize: 100, keyword: keyWords };
-                let rolesResult = await getRoles(parameter);
+                const rolesResult = await getRoles(parameter);
                 if (rolesResult.items && rolesResult.items.length) {
                     permissionList.push({ label: intl.formatMessage({ id: 'identity.components.principal.role' }), optionType: 'optGroup', value: 'roleList' });
                 }
@@ -217,7 +224,7 @@ const AddPermissions: React.FC<AddPermissionsProps> = (props) => {
                     }
                 });
 
-                let usersResult = await getUsers(parameter);
+                const usersResult = await getUsers(parameter);
                 if (usersResult.items && usersResult.items.length) {
                     permissionList.push({ label: intl.formatMessage({ id: 'identity.components.principal.user' }), optionType: 'optGroup', value: 'userList' });
                 }
@@ -250,7 +257,7 @@ const AddPermissions: React.FC<AddPermissionsProps> = (props) => {
         <Card title={intl.formatMessage({ id: 'identity.components.permissionPolicy' })} size="small">
             <Tabs tabPosition='left'>
                 {
-                    permissionList?.groups?.map((g, i) => {
+                    permissionList?.groups?.map((g) => {
                         return <TabPane tab={g.displayName} key={g.name}>
                             <Tree
                                 key={g.name}
@@ -266,7 +273,7 @@ const AddPermissions: React.FC<AddPermissionsProps> = (props) => {
                                         keys = [...keys];
                                     }
                                     if (g.name) {
-                                        let selectedKeys = { ...selectedPermissionKeys };
+                                        const selectedKeys = { ...selectedPermissionKeys };
                                         selectedKeys[g.name] = keys.map(p => p.toString());
                                         setSelectedPermissionKeys(selectedKeys);
                                     }

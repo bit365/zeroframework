@@ -1,21 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Badge, Button, Card, Col, Form, Row, Statistic, Modal, Empty, Table } from 'antd';
+import { Table } from 'antd';
 
-import { FormattedMessage, useIntl } from 'umi';
-import { ProFormDateTimeRangePicker, ProFormRadio, ProFormSelect, QueryFilter } from '@ant-design/pro-form';
+import { useIntl } from 'umi';
 import moment from 'moment';
 
 export type ServicesProps = {
     device: API.DeviceGetResponseModel;
 };
 
-export default (props: ServicesProps) => {
+export default () => {
     const intl = useIntl();
-    const [deviceInfo, setDeviceInfo] = useState<API.DeviceGetResponseModel>();
     const [tableListDataSource, setTableListDataSource] = useState<any>([]);
 
     useEffect(() => {
-        setDeviceInfo(props.device);
         const initialValues: any[] = [];
         for (let i = 0; i < 50; i += 1) {
             initialValues.push({

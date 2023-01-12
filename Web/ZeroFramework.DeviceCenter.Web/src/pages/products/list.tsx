@@ -1,4 +1,5 @@
-import { Button, Drawer, Form, FormInstance, message, RadioChangeEvent, Select, Space } from 'antd';
+import type { FormInstance, RadioChangeEvent} from 'antd';
+import { Button, Drawer, Form, message, Select, Space } from 'antd';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { PlusOutlined } from '@ant-design/icons';
@@ -6,7 +7,8 @@ import { FooterToolbar, PageContainer } from '@ant-design/pro-layout';
 import { useIntl, FormattedMessage, Link } from 'umi';
 import { deleteProduct, getProduct, getProducts, postProduct, putProduct } from '@/services/deviceCenter/Products';
 import { useRef, useState } from 'react';
-import ProDescriptions, { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
+import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
+import ProDescriptions from '@ant-design/pro-descriptions';
 import { ModalForm, ProFormRadio, ProFormSelect, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import UpdateForm from './components/UpdateForm';
 
@@ -24,6 +26,7 @@ export default () => {
 
     const [protocolTypes, setProtocolTypes] = useState({});
 
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const handleRemove = async (selectedRows: API.ProductGetResponseModel[]) => {
         const hide = message.loading(intl.formatMessage({ id: 'pages.table.processing' }));
         if (!selectedRows) return true;
@@ -58,7 +61,7 @@ export default () => {
             dataIndex: 'name',
             valueType: 'text',
             sorter: { multiple: 2 },
-            search: { transform: (value) => 'keyword' },
+            search: { transform: () => 'keyword' },
             render: (dom, entity) => {
                 return (
                     <a
@@ -127,7 +130,7 @@ export default () => {
             dataIndex: 'remark',
             valueType: 'text',
             sorter: false,
-            search: { transform: (value) => 'keyword' },
+            search: { transform: () => 'keyword' },
             hideInTable: true,
         },
         {
@@ -136,7 +139,7 @@ export default () => {
             valueType: 'dateTime',
             sorter: true,
             defaultSortOrder: 'descend',
-            search: { transform: (value) => 'keyword' },
+            search: { transform: () => 'keyword' },
         },
         {
             title: <FormattedMessage id="pages.searchTable.titleOption" />,
@@ -192,13 +195,14 @@ export default () => {
                     showSizeChanger: true,
                     showQuickJumper: true,
                 }}
-                request={async (params, sort, filter) => {
+                request={async (params, sort) => {
+                    // eslint-disable-next-line no-param-reassign
                     params = Object.assign(params, {
                         sorter: sort,
                         pageNumber: params.current
                     });
                     const { current, ...parameter } = params
-                    let result = await getProducts(parameter);
+                    const result = await getProducts(parameter);
                     return {
                         data: result.items,
                         total: result.totalCount,
@@ -225,6 +229,7 @@ export default () => {
                     fullScreen: true,
                 }}
                 rowSelection={{
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
                     onChange: (_, selectedRows) => {
                         setSelectedRows(selectedRows);
                     },

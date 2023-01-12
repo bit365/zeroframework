@@ -14,6 +14,7 @@ export default (props: any) => {
     const intl = useIntl();
     const { TabPane } = Tabs;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     function callback(key: any) {
     }
 
@@ -38,10 +39,10 @@ export default (props: any) => {
                         <Properties device={props.location.state as API.DeviceGetResponseModel} />
                     </TabPane>
                     <TabPane tab={intl.formatMessage({ id: 'pages.devices.view.services' })} key="3">
-                        <Services device={props.location.state as API.DeviceGetResponseModel} />
+                        <Services />
                     </TabPane>
                     <TabPane tab={intl.formatMessage({ id: 'pages.devices.view.events' })} key="4">
-                        <Events device={props.location.state as API.DeviceGetResponseModel} />
+                        <Events />
                     </TabPane>
                     <TabPane tab={intl.formatMessage({ id: 'pages.devices.view.topics' })} key="5">
                         <Topics device={props.location.state as API.DeviceGetResponseModel} />

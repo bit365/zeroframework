@@ -19,13 +19,14 @@ export default (props: DeviceInfoProps) => {
 
     const fetchDeviceInfoApi = async () => {
         setLoading(true);
-        let result = await getDevice({ id: props.devideId });
+        const result = await getDevice({ id: props.devideId });
         setDeviceInfo(result);
         setLoading(false);
     }
 
     useEffect(() => {
         fetchDeviceInfoApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

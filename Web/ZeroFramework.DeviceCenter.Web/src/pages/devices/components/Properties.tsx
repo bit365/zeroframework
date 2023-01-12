@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import type {
+  FormInstance} from 'antd';
 import {
   Badge,
   Button,
@@ -11,7 +13,6 @@ import {
   Empty,
   Table,
   Input,
-  FormInstance,
   Space,
 } from 'antd';
 
@@ -77,7 +78,7 @@ export default (props: PropertiesProps) => {
     );
 
     paginationState.hasPrevious = values.pageNumber > 1;
-    paginationState.hasNext = result.nextOffset != null;
+    paginationState.hasNext = result.offset != null;
     paginationState.pageNumber = values.pageNumber;
 
     setPaginationState(paginationState);
@@ -88,7 +89,7 @@ export default (props: PropertiesProps) => {
     });
   };
 
-  const fetchDevicePropertyValuesApi = async (productId: string, deviceId?: number) => {
+  const fetchDevicePropertyValuesApi = async (productId: number, deviceId?: number) => {
     setLoading(true);
     const result = await getDevicePropertyValues(
       { productId, deviceId },
@@ -105,7 +106,7 @@ export default (props: PropertiesProps) => {
     if (props.device.product?.id) {
       fetchDevicePropertyValuesApi(props.device.product.id, props.device.id);
     }
-  }, []);
+  }, [props.device]);
 
   useEffect(() => {
     if (isModalVisible) {
@@ -114,6 +115,7 @@ export default (props: PropertiesProps) => {
       setDataSourceState({ loading: false, data: [] });
       setPaginationState({ hasPrevious: false, hasNext: false, pageNumber: 1 });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isModalVisible, dateTimeRang]);
 
   const chartConfig = {
@@ -162,7 +164,7 @@ export default (props: PropertiesProps) => {
                 <Card>
                   <a
                     style={{ float: 'right' }}
-                    onClick={(_) => {
+                    onClick={() => {
                       setPropertyIdentifier(e.identifier);
                       setIsModalVisible(true);
                     }}
@@ -226,7 +228,7 @@ export default (props: PropertiesProps) => {
           formRef={formRef}
           defaultCollapsed={false}
           layout="horizontal"
-          optionRender={(searchConfig, props, dom) => {
+          optionRender={() => {
             return [];
           }}
         >
@@ -283,7 +285,7 @@ export default (props: PropertiesProps) => {
                 ],
               },
               format: 'YYYY-MM-DD HH:mm',
-              onChange: (values, dateStrings) => {
+              onChange: (values) => {
                 formRef.current?.setFieldsValue({ pageNumber: 1 });
                 if (values && values[0] && values[1]) {
                   setDateTimeRang({ from: values[0], to: values[1] });

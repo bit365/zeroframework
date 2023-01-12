@@ -1,6 +1,7 @@
 import { useIntl } from 'umi';
 import { ModalForm, ProFormRadio, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
-import { FormInstance, RadioChangeEvent, Space } from 'antd';
+import type { FormInstance, RadioChangeEvent} from 'antd';
+import { Space } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import PropertyFeatureFormItems from './PropertyFeatureFormItems';
 import ServiceFeatureFormItems from './ServiceFeatureFormItems';
@@ -27,6 +28,7 @@ const FeatureForm: React.FC<FeatureFormProps> = (props) => {
       setFeatureType('property');
       formRef.current?.setFieldsValue({featureType:'property'});
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.visible]);
 
   const intl = useIntl();
@@ -46,6 +48,7 @@ const FeatureForm: React.FC<FeatureFormProps> = (props) => {
       id: 'pages.table.product.thing.createForm.title',
     })}
     submitter={{
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       render: (props, doms) => {
         return (
           <Space style={{

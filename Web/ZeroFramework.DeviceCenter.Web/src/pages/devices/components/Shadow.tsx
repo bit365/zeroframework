@@ -19,13 +19,12 @@ export default (props: ShadowProps) => {
 
     useEffect(() => {
         fetchDeviceInfoApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
         <Space direction="vertical" style={{ width: '100%' }} size='large'>
-            <TextArea rows={20} value={JSON.stringify(deviceInfo?.product?.features?.properties, null, 2)} >
-
-            </TextArea>
+            <TextArea rows={20} value={JSON.stringify(deviceInfo?.product?.features?.properties, null, 2)}  />
             <Button
                 icon={<CloudUploadOutlined />}
                 onClick={async () => { message.success(intl.formatMessage({ id: 'pages.table.successful' })); }}>

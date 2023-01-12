@@ -7,7 +7,8 @@ import styles from './index.less';
 import { ProFormSelect, QueryFilter } from '@ant-design/pro-form';
 import { useIntl, history } from 'umi';
 import { getProducts } from '@/services/deviceCenter/Products';
-import { FormInstance, Space, Table, Tag } from 'antd';
+import type { FormInstance} from 'antd';
+import { Space, Table, Tag } from 'antd';
 import { Form } from 'antd';
 import { Card, TreeSelect } from 'antd';
 import { getDevices } from '@/services/deviceCenter/Devices';
@@ -17,7 +18,7 @@ import { getDeviceGroups } from '@/services/deviceCenter/DeviceGroups';
 import type { DataNode } from 'antd/lib/tree';
 import moment from 'moment';
 
-export default (props: any) => {
+export default () => {
 
     const [markers, setMarkers] = useState<any>();
     const [infoWindowState, setInfoWindowState] = useState<InfoWindowProps>({ visible: false, position: [0, 0] });
@@ -44,7 +45,7 @@ export default (props: any) => {
         return [];
     }
 
-    const fetchDevicePropertyValuesApi = async (productId?: string, deviceId?: number) => {
+    const fetchDevicePropertyValuesApi = async (productId?: number, deviceId?: number) => {
         setLoading(true);
         const result = await getDevicePropertyValues({ productId, deviceId }, {
             errorHandler: () => {
@@ -113,7 +114,7 @@ export default (props: any) => {
                             pageSize: 100,
                         });
 
-                        const positions = result.items?.map((e, idx) => {
+                        const positions = result.items?.map((e) => {
                             const position = {
                                 longitude: e.coordinate?.split(',')[0],
                                 latitude: e.coordinate?.split(',')[1]
@@ -209,7 +210,7 @@ export default (props: any) => {
                             return list;
                         }}
                         fieldProps={{
-                            onChange: (selectedValue: any, option: any) => {
+                            onChange: (selectedValue: any) => {
                                 for (let index = 0; index < markers.length; index++) {
                                     const element = markers[index];
                                     if (element.device.id == selectedValue) {
@@ -281,6 +282,7 @@ export default (props: any) => {
                                         title: intl.formatMessage({ id: 'pages.devices.view.properties.history.dateTime' }),
                                         dataIndex: 'timestamp',
                                         key: 'timestamp',
+                                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
                                         render: (value: any, record: any, index: number) => moment(value).format('YYYY-MM-DD HH:mm:ss'),
                                     },
                                 ]} bordered size='small' pagination={false} />

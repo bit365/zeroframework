@@ -47,7 +47,7 @@ export default (props: any) => {
         }, { errorHandler: () => { } });
 
         paginationState.hasPrevious = values.pageNumber > 1;
-        paginationState.hasNext = result.nextOffset != null;
+        paginationState.hasNext = result.offset != null;
         paginationState.pageNumber = values.pageNumber;
 
         setPaginationState(paginationState);

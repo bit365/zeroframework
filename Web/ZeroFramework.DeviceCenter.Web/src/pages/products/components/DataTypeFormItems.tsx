@@ -1,4 +1,5 @@
-import { Form, Input, InputNumber, RadioChangeEvent, Space } from 'antd';
+import type { RadioChangeEvent} from 'antd';
+import { Form, Input, InputNumber, Space } from 'antd';
 import { FormattedMessage, useIntl } from 'umi';
 import { ProFormDigit, ProFormRadio, ProFormSelect } from '@ant-design/pro-form';
 import { getMeasurementUnits } from '@/services/deviceCenter/MeasurementUnits';
@@ -6,11 +7,12 @@ import { useState } from 'react';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import DataParameterArea from './DataParameterArea';
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type DataTypeFormItemsProps = {
 
 };
 
-const DataTypeFormItems: React.FC<DataTypeFormItemsProps> = (props) => {
+const DataTypeFormItems: React.FC<DataTypeFormItemsProps> = () => {
 
   const intl = useIntl();
   const [selectedDataType, setSelectedDataType] = useState<string>();
@@ -81,8 +83,8 @@ const DataTypeFormItems: React.FC<DataTypeFormItemsProps> = (props) => {
               showSearch
               request={async ({ keyWords }) => {
                 const parameter = { pageSize: 50, keyword: keyWords };
-                let result = await getMeasurementUnits(parameter);
-                let unitList: any[] = [];
+                const result = await getMeasurementUnits(parameter);
+                const unitList: any[] = [];
                 result.items?.forEach(item => {
                   if (item.unit && item.id) {
                     unitList.push({ label: `${item.unitName} / ${item.unit}`, value: item.unit });
@@ -103,7 +105,6 @@ const DataTypeFormItems: React.FC<DataTypeFormItemsProps> = (props) => {
                         <Form.Item
                           {...restField}
                           name={[name, 'value']}
-                          fieldKey={[fieldKey, 'value']}
                           rules={[
                             {
                               required: true,
@@ -120,7 +121,6 @@ const DataTypeFormItems: React.FC<DataTypeFormItemsProps> = (props) => {
                         <Form.Item
                           {...restField}
                           name={[name, 'description']}
-                          fieldKey={[fieldKey, 'description']}
                           rules={[
                             {
                               required: true,

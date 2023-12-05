@@ -3,18 +3,17 @@
 
 零度框架是一套基于微服务和领域模型驱动设计的企业级快速开发框架，基于微软 .NET 7+ 最新技术栈构建，容器化微服务最佳实践，零度框架的搭建以开发简单，多屏体验，前后端分离，灵活部署，最少依赖，最新框架为原则，以物联网平台管理系统为业务模型，参考诸多优秀开源框架，采用主流稳定的技术栈，从零开始搭建企业级架构。
 
-后端技术：Visual Studio 2022 + C# 11.0 + .NET 7.0 + ASP.NET Core + EF Core
+后端技术：Visual Studio 2022 + C# 12.0 + .NET 8.0 + ASP.NET Core + EF Core
 
 前端技术：Visual Studio Code + Node.js + TypeScript + React + ANTD
 
-技术架构：https://www.xcode.me/business/we-framework
-
-视频教程：https://www.xcode.me/video/list/1000225681
+视频教程：https://www.xcode.me/Training/Module/250
 
 演示地址：https://cloud.helloworldnet.com
 
 演示账号：用户名 admin 密码 guest
 
+[]
 
  ♥ 在 Visual Studio 2022 中运行后端微服务
 
@@ -56,7 +55,7 @@ Update-Database -Context DeviceCenterDbContext -Project ZeroFramework.DeviceCent
 
 + 所有项目框架及其用到的包已经升级到 .NET 7 最新版，并消除了很多警告和建议。
 
-+ 在配置文件中添加了 「"UseDemoLaunchMode": false」以表示以演示模式运行，演示模式使用 EF Core 拦截器禁用了编辑和删除操作。
++ 在配置文件中添加了 「"UseDemoLaunchMode": true」以表示以演示模式运行，演示模式使用 EF Core 拦截器禁用了编辑和删除操作。
 
 
  ♥ 项目目录结构说明

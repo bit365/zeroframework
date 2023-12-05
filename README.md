@@ -1,7 +1,15 @@
 ﻿
  ## 框架介绍
 
-零度框架是一套基于微服务和领域模型驱动设计的企业级快速开发框架，基于微软 .NET 7+ 最新技术栈构建，容器化微服务最佳实践，零度框架的搭建以开发简单，多屏体验，前后端分离，灵活部署，最少依赖，最新框架为原则，以物联网平台管理系统为业务模型，参考诸多优秀开源框架，采用主流稳定的技术栈，从零开始搭建企业级架构。
+零度框架是一款基于微服务和领域模型驱动设计的企业级快速开发框架。该框架构建于微软 .NET 平台，并采用了最新的技术栈，以实现容器化微服务的最佳实践。搭建零度框架的原则是开发简单、多屏体验、前后端分离、灵活部署、最少依赖以及采用最新框架。此外，零度框架还以物联网平台管理系统为业务模型，参考了众多优秀的开源框架，并采用了主流且稳定的技术栈，从而能够从零开始搭建企业级架构。使用零度框架，您可以实现更高效、更灵活的企业应用开发。
+
+## 项目预览
+
+![零度云平台](https://oss.xcode.me/notes/zeroframework/cloud-case-max-4.jpg)
+
+
+![技术架构](https://oss.xcode.me/notes/zeroframework/cloud-case-max-5.jpg)
+
 
 ## 相关技术
 
@@ -12,7 +20,6 @@
 ## 项目演示
 
 演示地址：https://cloud.helloworldnet.com
-
 用户名： admin 
 密码： guest
 
@@ -22,6 +29,9 @@
 
 零度课堂：https://www.xcode.me
 
+## 技术堆栈
+
+![技术堆栈](https://oss.xcode.me/notes/zeroframework/stacks.svg)
 
 ## 项目部署
 
@@ -55,7 +65,9 @@ Remove-Migration -Context ApplicationDbContext -Project ZeroFramework.IdentitySe
 
 Add-Migration InitialCreate -c PersistedGrantDbContext -o Migrations/PersistedGrantMigrations -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API
 Add-Migration InitialCreate -c ConfigurationDbContext -o Migrations/ConfigurationMigrations -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API
-Add-Migration InitialCreate -c ApplicationDbContext -o Migrations/ApplicationMigrations -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API
+Add-Migration InitialCreate -c ApplicationDbContext -o Migrations/ApplicationMigrations -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API![stacks](https://oss.xcode.me/notes/zeroframework/stacks.svg)
+
+
 
 ```
 
@@ -153,3 +165,6 @@ npm run build
 命令运行成功，生成 DIST 目录，将 DIST 目录下的文件部署到服务器即可。
 
 
+## 帮助与反馈
+
+遇到任何技术问题可加 QQ 群：18668853 进行交流。

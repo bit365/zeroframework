@@ -2,10 +2,8 @@
 
 namespace ZeroFramework.DeviceCenter.Application.IntegrationEvents.Events.Ordering
 {
-    public class OrderPaymentFailedIntegrationEvent : IntegrationEvent
+    public class OrderPaymentFailedIntegrationEvent(Guid orderId) : IntegrationEvent
     {
-        public Guid OrderId { get; }
-
-        public OrderPaymentFailedIntegrationEvent(Guid orderId) => OrderId = orderId;
+        public Guid OrderId { get; } = orderId;
     }
 }

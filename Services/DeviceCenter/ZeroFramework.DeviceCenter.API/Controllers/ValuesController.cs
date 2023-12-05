@@ -9,9 +9,9 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class ValuesController : ControllerBase
+    public class ValuesController(IDistributedCache distributedCache) : ControllerBase
     {
-        private readonly IDistributedCache _distributedCache;
+        private readonly IDistributedCache _distributedCache = distributedCache;
 
         const string memberkey = "9VQrbUztIWJGu9IhPPeK";
         const string appkey = "2302600008";
@@ -27,8 +27,6 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
             { "50000002041320029008", "108.5476,30.7365" }, // 龙滩电站
             { "50000002041320029009", "108.4380,30.7713" }, // 高洞子电站
         };
-
-        public ValuesController(IDistributedCache distributedCache) => _distributedCache = distributedCache;
 
         [HttpGet]
         public async Task<IActionResult> GetAsync()
@@ -47,7 +45,7 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
                 return Ok(deviceListData);
             }
 
-            List<object> result = new();
+            List<object> result = [];
 
             foreach (var device in deviceListData.GetProperty("result").EnumerateArray())
             {

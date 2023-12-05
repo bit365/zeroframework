@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ZeroFramework.IdentityServer.API.Migrations.PersistedGrantMigrations
 {
     [DbContext(typeof(PersistedGrantDbContext))]
-    [Migration("20230110022348_InitialCreate")]
+    [Migration("20231205051931_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace ZeroFramework.IdentityServer.API.Migrations.PersistedGrantMigrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.1")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);

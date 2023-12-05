@@ -16,20 +16,13 @@ namespace ZeroFramework.IdentityServer.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthorizeConstants.TenantOwnerPolicyName, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class RolesController : ControllerBase
+    public class RolesController(RoleManager<ApplicationRole> roleManager, IMapper mapper, ICurrentTenant currentTenant) : ControllerBase
     {
-        private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly RoleManager<ApplicationRole> _roleManager = roleManager;
 
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapper = mapper;
 
-        private readonly ICurrentTenant _currentTenant;
-
-        public RolesController(RoleManager<ApplicationRole> roleManager, IMapper mapper, ICurrentTenant currentTenant)
-        {
-            _roleManager = roleManager;
-            _mapper = mapper;
-            _currentTenant = currentTenant;
-        }
+        private readonly ICurrentTenant _currentTenant = currentTenant;
 
         // GET: api/Roles
         [HttpGet]

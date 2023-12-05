@@ -3,14 +3,9 @@ using ZeroFramework.DeviceCenter.Infrastructure.EntityFrameworks;
 
 namespace ZeroFramework.DeviceCenter.Infrastructure.Idempotency
 {
-    public class RequestManager : IRequestManager
+    public class RequestManager(DeviceCenterDbContext dbContext) : IRequestManager
     {
-        private readonly DeviceCenterDbContext _dbContext;
-
-        public RequestManager(DeviceCenterDbContext dbContext)
-        {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-        }
+        private readonly DeviceCenterDbContext _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
 
         public async Task<bool> ExistAsync(string id)
         {

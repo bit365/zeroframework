@@ -13,8 +13,8 @@ namespace ZeroFramework.EventBus
 
         public InMemoryEventBusSubscriptionsManager()
         {
-            _handlers = new Dictionary<string, List<SubscriptionInfo>>();
-            _eventTypes = new List<Type>();
+            _handlers = [];
+            _eventTypes = [];
         }
 
         public bool IsEmpty => !_handlers.Keys.Any();
@@ -42,7 +42,7 @@ namespace ZeroFramework.EventBus
         {
             if (!HasSubscriptionsForEvent(eventName))
             {
-                _handlers.Add(eventName, new List<SubscriptionInfo>());
+                _handlers.Add(eventName, []);
             }
 
             if (_handlers[eventName].Any(s => s.HandlerType == handlerType))

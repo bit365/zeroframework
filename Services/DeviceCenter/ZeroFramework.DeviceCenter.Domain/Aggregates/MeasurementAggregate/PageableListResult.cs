@@ -1,15 +1,9 @@
 ﻿namespace ZeroFramework.DeviceCenter.Domain.Aggregates.MeasurementAggregate
 {
-    public class PageableListResult<T>
+    public class PageableListResult<T>(IReadOnlyList<T> items, int? offset)
     {
-        public PageableListResult(IReadOnlyList<T> items, int? offset)
-        {
-            Items = items;
-            Offset = offset;
-        }
+        public IReadOnlyList<T> Items { get; } = items;
 
-        public IReadOnlyList<T> Items { get; }
-
-        public int? Offset { get; }
+        public int? Offset { get; } = offset;
     }
 }

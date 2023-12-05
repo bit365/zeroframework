@@ -3,14 +3,9 @@ using ZeroFramework.DeviceCenter.Infrastructure.Constants;
 
 namespace ZeroFramework.DeviceCenter.Infrastructure.ConnectionStrings
 {
-    public class DefaultConnectionStringProvider : IConnectionStringProvider
+    public class DefaultConnectionStringProvider(IConfiguration configuration) : IConnectionStringProvider
     {
-        protected readonly IConfiguration _configuration;
-
-        public DefaultConnectionStringProvider(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
+        protected readonly IConfiguration _configuration = configuration;
 
         public virtual Task<string> GetAsync(string? connectionStringName = null)
         {

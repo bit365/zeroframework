@@ -9,20 +9,13 @@ using ZeroFramework.DeviceCenter.Domain.Constants;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Measurements
 {
-    public class DeviceDataApplicationService : IDeviceDataApplicationService
+    public class DeviceDataApplicationService(IMeasurementRepository repository, IMapper mapper, IProductApplicationService productApplicationService) : IDeviceDataApplicationService
     {
-        private readonly IMeasurementRepository _repository;
+        private readonly IMeasurementRepository _repository = repository;
 
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapper = mapper;
 
-        private readonly IProductApplicationService _productApplicationService;
-
-        public DeviceDataApplicationService(IMeasurementRepository repository, IMapper mapper, IProductApplicationService productApplicationService)
-        {
-            _repository = repository;
-            _mapper = mapper;
-            _productApplicationService = productApplicationService;
-        }
+        private readonly IProductApplicationService _productApplicationService = productApplicationService;
 
         public async Task SetDevicePropertyValues(int productId, long deviceId, IDictionary<string, DevicePropertyValue> values)
         {
@@ -50,7 +43,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Measurements
 
                 telemetryValues ??= Enumerable.Empty<TelemetryValue>().ToList();
 
-                List<DevicePropertyLastValue> devicePropertyLastValues = new();
+                List<DevicePropertyLastValue> devicePropertyLastValues = [];
 
                 foreach (var item in telemetryValues)
                 {

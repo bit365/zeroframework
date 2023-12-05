@@ -4,7 +4,7 @@ namespace ZeroFramework.DeviceCenter.Domain.Entities
 {
     public abstract class BaseAggregateRoot : BaseEntity, IAggregateRoot, IDomainEvents
     {
-        private readonly List<INotification> _domainEvents = new();
+        private readonly List<INotification> _domainEvents = [];
 
         public IReadOnlyCollection<INotification> DomainEvents => _domainEvents.AsReadOnly();
 
@@ -17,7 +17,7 @@ namespace ZeroFramework.DeviceCenter.Domain.Entities
 
     public abstract class BaseAggregateRoot<TKey> : BaseEntity<TKey>, IAggregateRoot, IDomainEvents
     {
-        private readonly List<INotification> _domainEvents = new();
+        private readonly List<INotification> _domainEvents = [];
 
         public IReadOnlyCollection<INotification> DomainEvents => _domainEvents.AsReadOnly();
 

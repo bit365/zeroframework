@@ -3,15 +3,13 @@ using ZeroFramework.DeviceCenter.Domain.Events.Buyers;
 
 namespace ZeroFramework.DeviceCenter.Domain.Aggregates.BuyerAggregate
 {
-    public class Buyer : BaseAggregateRoot<Guid>
+    public class Buyer(Guid userId) : BaseAggregateRoot<Guid>
     {
-        public Guid UserId { get; private set; }
+        public Guid UserId { get; private set; } = userId;
 
-        private readonly List<PaymentMethod> _paymentMethods = new List<PaymentMethod>();
+        private readonly List<PaymentMethod> _paymentMethods = [];
 
         public IEnumerable<PaymentMethod> PaymentMethods => _paymentMethods.AsReadOnly();
-
-        public Buyer(Guid userId) => UserId = userId;
 
         public PaymentMethod VerifyOrAddPaymentMethod(string cardNumber, int cardType, DateTimeOffset expiration, Guid orderId)
         {

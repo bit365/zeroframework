@@ -4,11 +4,9 @@ using ZeroFramework.IdentityServer.API.Tenants;
 
 namespace ZeroFramework.IdentityServer.API.IdentityStores
 {
-    public class CustomSaveChangesInterceptor : SaveChangesInterceptor
+    public class CustomSaveChangesInterceptor(ICurrentTenant currentTenant) : SaveChangesInterceptor
     {
-        private readonly ICurrentTenant _currentTenant;
-
-        public CustomSaveChangesInterceptor(ICurrentTenant currentTenant) => _currentTenant = currentTenant;
+        private readonly ICurrentTenant _currentTenant = currentTenant;
 
         public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
         {

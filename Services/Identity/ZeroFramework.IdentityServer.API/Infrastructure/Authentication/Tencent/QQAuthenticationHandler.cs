@@ -16,17 +16,11 @@ using System.Text.Json;
 
 namespace ZeroFramework.IdentityServer.API.Infrastructure.Authentication.QQ;
 
-public partial class QQAuthenticationHandler : OAuthHandler<QQAuthenticationOptions>
+public partial class QQAuthenticationHandler(
+    [NotNull] IOptionsMonitor<QQAuthenticationOptions> options,
+    [NotNull] ILoggerFactory logger,
+    [NotNull] UrlEncoder encoder) : OAuthHandler<QQAuthenticationOptions>(options, logger, encoder)
 {
-    public QQAuthenticationHandler(
-        [NotNull] IOptionsMonitor<QQAuthenticationOptions> options,
-        [NotNull] ILoggerFactory logger,
-        [NotNull] UrlEncoder encoder,
-        [NotNull] ISystemClock clock)
-        : base(options, logger, encoder, clock)
-    {
-    }
-
     protected override async Task<AuthenticationTicket> CreateTicketAsync(
         [NotNull] ClaimsIdentity identity,
         [NotNull] AuthenticationProperties properties,

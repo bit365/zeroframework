@@ -4,10 +4,8 @@ using ZeroFramework.DeviceCenter.Infrastructure.EntityFrameworks;
 
 namespace ZeroFramework.DeviceCenter.Infrastructure.Repositories
 {
-    public class BuyerRepository : EfCoreRepository<DeviceCenterDbContext, Buyer>, IBuyerRepository
+    public class BuyerRepository(DeviceCenterDbContext dbContext) : EfCoreRepository<DeviceCenterDbContext, Buyer>(dbContext), IBuyerRepository
     {
-        public BuyerRepository(DeviceCenterDbContext dbContext) : base(dbContext) { }
-
         public Buyer Add(Buyer buyer)
         {
             return DbSet.Add(buyer).Entity;

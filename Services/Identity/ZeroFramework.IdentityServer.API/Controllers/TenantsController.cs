@@ -17,26 +17,17 @@ namespace ZeroFramework.IdentityServer.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = AuthorizeConstants.TenantOwnerRequireRole, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class TenantsController : ControllerBase
+    public class TenantsController(ApplicationDbContext context, IMapper mapper, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IStringLocalizer<TenantsController> stringLocalizer) : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context = context;
 
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapper = mapper;
 
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
 
-        private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly RoleManager<ApplicationRole> _roleManager = roleManager;
 
-        private readonly IStringLocalizer<TenantsController> _stringLocalizer;
-
-        public TenantsController(ApplicationDbContext context, IMapper mapper, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IStringLocalizer<TenantsController> stringLocalizer)
-        {
-            _context = context;
-            _mapper = mapper;
-            _userManager = userManager;
-            _roleManager = roleManager;
-            _stringLocalizer = stringLocalizer;
-        }
+        private readonly IStringLocalizer<TenantsController> _stringLocalizer = stringLocalizer;
 
         // GET: api/Tenants
         [HttpGet]

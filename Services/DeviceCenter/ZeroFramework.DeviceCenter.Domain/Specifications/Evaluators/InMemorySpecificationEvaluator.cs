@@ -7,7 +7,7 @@ namespace ZeroFramework.DeviceCenter.Domain.Specifications.Evaluators
         // Will use singleton for default configuration. Yet, it can be instantiated if necessary, with default or provided evaluators.
         public static InMemorySpecificationEvaluator Default { get; } = new InMemorySpecificationEvaluator();
 
-        private readonly List<IInMemoryEvaluator> evaluators = new();
+        private readonly List<IInMemoryEvaluator> evaluators = [];
 
         public InMemorySpecificationEvaluator()
         {

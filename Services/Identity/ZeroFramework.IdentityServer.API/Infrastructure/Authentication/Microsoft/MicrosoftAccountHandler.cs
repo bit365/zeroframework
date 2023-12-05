@@ -17,15 +17,12 @@ namespace ZeroFramework.IdentityServer.API.Infrastructure.Authentication.Microso
 /// <summary>
 /// Authentication handler for Microsoft Account based authentication.
 /// </summary>
-public class MicrosoftAccountHandler : OAuthHandler<MicrosoftAccountOptions>
+/// <remarks>
+/// Initializes a new instance of <see cref="MicrosoftAccountHandler"/>.
+/// </remarks>
+/// <inheritdoc />
+public class MicrosoftAccountHandler(IOptionsMonitor<MicrosoftAccountOptions> options, ILoggerFactory logger, UrlEncoder encoder) : OAuthHandler<MicrosoftAccountOptions>(options, logger, encoder)
 {
-    /// <summary>
-    /// Initializes a new instance of <see cref="MicrosoftAccountHandler"/>.
-    /// </summary>
-    /// <inheritdoc />
-    public MicrosoftAccountHandler(IOptionsMonitor<MicrosoftAccountOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
-        : base(options, logger, encoder, clock)
-    { }
 
     /// <inheritdoc />
     protected override async Task<AuthenticationTicket> CreateTicketAsync(ClaimsIdentity identity, AuthenticationProperties properties, OAuthTokenResponse tokens)

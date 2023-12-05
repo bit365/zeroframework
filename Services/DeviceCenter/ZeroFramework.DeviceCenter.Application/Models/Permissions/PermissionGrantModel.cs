@@ -15,6 +15,6 @@ namespace ZeroFramework.DeviceCenter.Application.Models.Permissions
 
         public bool IsGranted { get; set; }
 
-        public List<string> AllowedProviders { get; set; } = new();
+        public List<string> AllowedProviders { get; set; } = [];
     }
 }

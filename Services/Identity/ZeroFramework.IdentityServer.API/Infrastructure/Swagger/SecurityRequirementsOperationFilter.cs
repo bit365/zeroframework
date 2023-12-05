@@ -27,8 +27,7 @@ namespace ZeroFramework.API.Infrastructure.Swagger
 
                 operation.Security = new List<OpenApiSecurityRequirement>
                 {
-                    new OpenApiSecurityRequirement
-                    {
+                    new() {
                         [oAuthScheme] =new []{ "openapi" }
                     }
                 };

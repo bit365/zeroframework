@@ -25,10 +25,6 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
             var configurationDbContext = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
             var applicationDbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-            //await persistedGrantDbContext.Database.EnsureDeletedAsync();
-            //await configurationDbContext.Database.EnsureDeletedAsync();
-            //await applicationDbContext.Database.EnsureDeletedAsync();
-
             await persistedGrantDbContext.Database.MigrateAsync();
             await configurationDbContext.Database.MigrateAsync();
             await applicationDbContext.Database.MigrateAsync();

@@ -3,14 +3,9 @@ using ZeroFramework.DeviceCenter.Domain.Aggregates.OrderAggregate;
 
 namespace ZeroFramework.DeviceCenter.Application.Commands.Ordering
 {
-    public class SetPaidOrderStatusCommandHandler : IRequestHandler<SetPaidOrderStatusCommand, bool>
+    public class SetPaidOrderStatusCommandHandler(IOrderRepository orderRepository) : IRequestHandler<SetPaidOrderStatusCommand, bool>
     {
-        private readonly IOrderRepository _orderRepository;
-
-        public SetPaidOrderStatusCommandHandler(IOrderRepository orderRepository)
-        {
-            _orderRepository = orderRepository;
-        }
+        private readonly IOrderRepository _orderRepository = orderRepository;
 
         /// <summary>
         /// Handler which processes the command when Shipment service confirms the payment

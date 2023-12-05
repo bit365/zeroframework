@@ -6,12 +6,8 @@ using ZeroFramework.DeviceCenter.Domain.Repositories;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Products
 {
-    public class ProductApplicationService : CrudApplicationService<Product, int, ProductGetResponseModel, ProductPagedRequestModel, ProductGetResponseModel, ProductCreateRequestModel, ProductUpdateRequestModel>, IProductApplicationService
+    public class ProductApplicationService(IRepository<Product, int> repository, IMapper mapper) : CrudApplicationService<Product, int, ProductGetResponseModel, ProductPagedRequestModel, ProductGetResponseModel, ProductCreateRequestModel, ProductUpdateRequestModel>(repository, mapper), IProductApplicationService
     {
-        public ProductApplicationService(IRepository<Product, int> repository, IMapper mapper) : base(repository, mapper)
-        {
-        }
-
         protected override IQueryable<Product> CreateFilteredQuery(ProductPagedRequestModel requestModel)
         {
             if (requestModel.Keyword is not null && !string.IsNullOrWhiteSpace(requestModel.Keyword))

@@ -6,17 +6,11 @@ namespace ZeroFramework.IdentityServer.API.Services
     // This class is used by the application to send Email and SMS
     // when you turn on two-factor authentication in ASP.NET Identity.
     // For more details see this link http://go.microsoft.com/fwlink/?LinkID=532713
-    public class AuthMessageSender : IEmailSender, ISmsSender
+    public class AuthMessageSender(IHttpClientFactory clientFactory, ILogger<AuthMessageSender> logger) : IEmailSender, ISmsSender
     {
-        private readonly IHttpClientFactory _clientFactory;
+        private readonly IHttpClientFactory _clientFactory = clientFactory;
 
-        private readonly ILogger<AuthMessageSender> _logger;
-
-        public AuthMessageSender(IHttpClientFactory clientFactory, ILogger<AuthMessageSender> logger)
-        {
-            _clientFactory = clientFactory;
-            _logger = logger;
-        }
+        private readonly ILogger<AuthMessageSender> _logger = logger;
 
         public async Task SendEmailAsync(string email, string subject, string message)
         {

@@ -17,17 +17,11 @@ using System.Text.Json;
 
 namespace ZeroFramework.IdentityServer.API.Infrastructure.Authentication.Weibo;
 
-public partial class WeiboAuthenticationHandler : OAuthHandler<WeiboAuthenticationOptions>
+public partial class WeiboAuthenticationHandler(
+    [NotNull] IOptionsMonitor<WeiboAuthenticationOptions> options,
+    [NotNull] ILoggerFactory logger,
+    [NotNull] UrlEncoder encoder) : OAuthHandler<WeiboAuthenticationOptions>(options, logger, encoder)
 {
-    public WeiboAuthenticationHandler(
-        [NotNull] IOptionsMonitor<WeiboAuthenticationOptions> options,
-        [NotNull] ILoggerFactory logger,
-        [NotNull] UrlEncoder encoder,
-        [NotNull] ISystemClock clock)
-        : base(options, logger, encoder, clock)
-    {
-    }
-
     protected override async Task<AuthenticationTicket> CreateTicketAsync(
         [NotNull] ClaimsIdentity identity,
         [NotNull] AuthenticationProperties properties,

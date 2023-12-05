@@ -4,11 +4,9 @@ using System.Data.SqlClient;
 
 namespace ZeroFramework.DeviceCenter.Application.Queries.Ordering
 {
-    public class OrderQueries : IOrderQueries
+    public class OrderQueries(string connectionString) : IOrderQueries
     {
-        private readonly string _connectionString = string.Empty;
-
-        public OrderQueries(string connectionString) => _connectionString = connectionString;
+        private readonly string _connectionString = connectionString;
 
         public async Task<OrderViewModel> GetOrderAsync(Guid id)
         {

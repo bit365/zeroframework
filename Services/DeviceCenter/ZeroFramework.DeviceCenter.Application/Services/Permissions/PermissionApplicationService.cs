@@ -4,26 +4,19 @@ using ZeroFramework.DeviceCenter.Domain.Aggregates.PermissionAggregate;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
 {
-    public class PermissionApplicationService : IPermissionApplicationService
+    public class PermissionApplicationService(IPermissionDefinitionManager permissionDefinitionManager, IPermissionGrantRepository permissionGrantRepository, IDistributedCache distributedCache) : IPermissionApplicationService
     {
-        private readonly IPermissionDefinitionManager _permissionDefinitionManager;
+        private readonly IPermissionDefinitionManager _permissionDefinitionManager = permissionDefinitionManager;
 
-        private readonly IPermissionGrantRepository _permissionGrantRepository;
+        private readonly IPermissionGrantRepository _permissionGrantRepository = permissionGrantRepository;
 
         private const string CacheKeyFormat = "pn:{0},pk:{1},on:{2},rg:{3}";
 
-        private readonly IDistributedCache _distributedCache;
-
-        public PermissionApplicationService(IPermissionDefinitionManager permissionDefinitionManager, IPermissionGrantRepository permissionGrantRepository, IDistributedCache distributedCache)
-        {
-            _permissionGrantRepository = permissionGrantRepository;
-            _permissionDefinitionManager = permissionDefinitionManager;
-            _distributedCache = distributedCache;
-        }
+        private readonly IDistributedCache _distributedCache = distributedCache;
 
         public async Task<PermissionListResponseModel> GetAsync(string? providerName, string? providerKey, Guid? resourceGroupId)
         {
-            var result = new PermissionListResponseModel { EntityDisplayName = providerKey, Groups = new List<PermissionGroupModel>() };
+            var result = new PermissionListResponseModel { EntityDisplayName = providerKey, Groups = [] };
 
             foreach (var group in _permissionDefinitionManager.GetGroups())
             {
@@ -31,7 +24,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
                 {
                     DisplayName = group.DisplayName,
                     Name = group.Name,
-                    Permissions = new List<PermissionGrantModel>()
+                    Permissions = []
                 };
 
                 foreach (PermissionDefinition? permission in group.GetPermissionsWithChildren())

@@ -4,6 +4,6 @@
     {
         public int DeviceId { get; set; }
 
-        public List<TelemetryValue> Values { get; set; } = new();
+        public List<TelemetryValue> Values { get; set; } = [];
     }
 }

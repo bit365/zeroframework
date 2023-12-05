@@ -7,17 +7,11 @@ using ZeroFramework.IdentityServer.API.Tenants;
 
 namespace ZeroFramework.IdentityServer.API.IdentityStores
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IHttpContextAccessor httpContextAccessor, ICurrentTenant currentTenant) : IdentityDbContext<ApplicationUser, ApplicationRole, int>(options)
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
-        private readonly ICurrentTenant _currentTenant;
-
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IHttpContextAccessor httpContextAccessor, ICurrentTenant currentTenant) : base(options)
-        {
-            _httpContextAccessor = httpContextAccessor;
-            _currentTenant = currentTenant;
-        }
+        private readonly ICurrentTenant _currentTenant = currentTenant;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

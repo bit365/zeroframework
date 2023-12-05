@@ -9,11 +9,9 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MeasurementsController : ControllerBase
+    public class MeasurementsController(IDeviceDataApplicationService deviceDataApplication) : ControllerBase
     {
-        private readonly IDeviceDataApplicationService _deviceDataApplication;
-
-        public MeasurementsController(IDeviceDataApplicationService deviceDataApplication) => _deviceDataApplication = deviceDataApplication;
+        private readonly IDeviceDataApplicationService _deviceDataApplication = deviceDataApplication;
 
         [HttpGet("property-values")]
         [Authorize(MeasurementPermissions.Measurements.DevicePropertyValues)]

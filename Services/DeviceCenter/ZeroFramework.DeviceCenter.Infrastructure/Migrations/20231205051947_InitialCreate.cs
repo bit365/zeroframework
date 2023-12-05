@@ -344,11 +344,11 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddressStreet = table.Column<string>(name: "Address_Street", type: "nvarchar(max)", nullable: false),
-                    AddressCity = table.Column<string>(name: "Address_City", type: "nvarchar(max)", nullable: false),
-                    AddressState = table.Column<string>(name: "Address_State", type: "nvarchar(max)", nullable: false),
-                    AddressCountry = table.Column<string>(name: "Address_Country", type: "nvarchar(max)", nullable: false),
-                    AddressZipCode = table.Column<string>(name: "Address_ZipCode", type: "nvarchar(max)", nullable: false),
+                    Address_Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_State = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreationTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     BuyerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PaymentMethodId = table.Column<int>(type: "int", nullable: true)

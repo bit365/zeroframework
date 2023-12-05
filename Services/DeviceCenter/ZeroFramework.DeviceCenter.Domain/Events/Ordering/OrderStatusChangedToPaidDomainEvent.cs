@@ -6,16 +6,10 @@ namespace ZeroFramework.DeviceCenter.Domain.Events.Ordering
     /// <summary>
     /// Event used when the order is paid
     /// </summary>
-    public class OrderStatusChangedToPaidDomainEvent : INotification
+    public class OrderStatusChangedToPaidDomainEvent(Guid orderId, IEnumerable<OrderItem> orderItems) : INotification
     {
-        public Guid OrderId { get; }
+        public Guid OrderId { get; } = orderId;
 
-        public IEnumerable<OrderItem> OrderItems { get; }
-
-        public OrderStatusChangedToPaidDomainEvent(Guid orderId, IEnumerable<OrderItem> orderItems)
-        {
-            OrderId = orderId;
-            OrderItems = orderItems;
-        }
+        public IEnumerable<OrderItem> OrderItems { get; } = orderItems;
     }
 }

@@ -8,17 +8,11 @@ using ZeroFramework.DeviceCenter.Infrastructure.Idempotency;
 
 namespace ZeroFramework.DeviceCenter.Application.Commands.Products
 {
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ProductGetResponseModel>
+    public class CreateProductCommandHandler(IRepository<Product> productRepository, IMapper mapper) : IRequestHandler<CreateProductCommand, ProductGetResponseModel>
     {
-        private readonly IRepository<Product> _productRepository;
+        private readonly IRepository<Product> _productRepository = productRepository;
 
-        private readonly IMapper _mapper;
-
-        public CreateProductCommandHandler(IRepository<Product> productRepository, IMapper mapper)
-        {
-            _productRepository = productRepository;
-            _mapper = mapper;
-        }
+        private readonly IMapper _mapper = mapper;
 
         public async Task<ProductGetResponseModel> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
@@ -28,12 +22,8 @@ namespace ZeroFramework.DeviceCenter.Application.Commands.Products
         }
     }
 
-    public class CreateProductIdentifiedCommandHandler : IdentifiedCommandHandler<CreateProductCommand, ProductGetResponseModel>
+    public class CreateProductIdentifiedCommandHandler(IMediator mediator, IRequestManager requestManager) : IdentifiedCommandHandler<CreateProductCommand, ProductGetResponseModel>(mediator, requestManager)
     {
-        public CreateProductIdentifiedCommandHandler(IMediator mediator, IRequestManager requestManager) : base(mediator, requestManager)
-        {
-        }
-
         protected override ProductGetResponseModel? CreateResultForDuplicateRequest() => null; // Ignore duplicate requests for processing.
     }
 }

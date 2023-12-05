@@ -17,17 +17,11 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductsController(IProductApplicationService productService, IMediator mediator) : ControllerBase
     {
-        private readonly IProductApplicationService _productService;
+        private readonly IProductApplicationService _productService = productService;
 
-        private readonly IMediator _mediator;
-
-        public ProductsController(IProductApplicationService productService, IMediator mediator)
-        {
-            _productService = productService;
-            _mediator = mediator;
-        }
+        private readonly IMediator _mediator = mediator;
 
         // GET: api/<ProductsController>
         [HttpGet]

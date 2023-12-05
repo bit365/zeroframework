@@ -13,15 +13,13 @@ using ZeroFramework.DeviceCenter.Infrastructure.Specifications.Evaluators;
 
 namespace ZeroFramework.DeviceCenter.Infrastructure.EntityFrameworks
 {
-    public class EfCoreRepository<TDbContext, TEntity> : IRepository<TEntity> where TDbContext : DbContext, IUnitOfWork where TEntity : BaseEntity
+    public class EfCoreRepository<TDbContext, TEntity>(TDbContext dbContext) : IRepository<TEntity> where TDbContext : DbContext, IUnitOfWork where TEntity : BaseEntity
     {
         private readonly ISpecificationEvaluator _specification = new SpecificationEvaluator();
 
         public virtual IAsyncQueryableProvider AsyncExecuter => new EfCoreAsyncQueryableProvider();
 
-        protected readonly TDbContext _dbContext;
-
-        public EfCoreRepository(TDbContext dbContext) => _dbContext = dbContext;
+        protected readonly TDbContext _dbContext = dbContext;
 
         public IUnitOfWork UnitOfWork => _dbContext;
 
@@ -214,10 +212,8 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.EntityFrameworks
         #endregion
     }
 
-    public class EfCoreRepository<TDbContext, TEntity, TKey> : EfCoreRepository<TDbContext, TEntity>, IRepository<TEntity, TKey> where TDbContext : DbContext, IUnitOfWork where TEntity : BaseEntity<TKey>
+    public class EfCoreRepository<TDbContext, TEntity, TKey>(TDbContext dbContext) : EfCoreRepository<TDbContext, TEntity>(dbContext), IRepository<TEntity, TKey> where TDbContext : DbContext, IUnitOfWork where TEntity : BaseEntity<TKey>
     {
-        public EfCoreRepository(TDbContext dbContext) : base(dbContext) { }
-
         public virtual async Task<TEntity> GetAsync(TKey id, bool includeRelated = true, CancellationToken cancellationToken = default)
         {
             var entity = await FindAsync(id, includeRelated, cancellationToken);

@@ -6,17 +6,11 @@ using ZeroFramework.IdentityServer.API.Models.Generics;
 
 namespace ZeroFramework.IdentityServer.API.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(IIdentityServerInteractionService interactionService, IWebHostEnvironment environment) : Controller
     {
-        private readonly IIdentityServerInteractionService _interactionService;
+        private readonly IIdentityServerInteractionService _interactionService = interactionService;
 
-        private readonly IWebHostEnvironment _environment;
-
-        public HomeController(IIdentityServerInteractionService interactionService, IWebHostEnvironment environment)
-        {
-            _interactionService = interactionService;
-            _environment = environment;
-        }
+        private readonly IWebHostEnvironment _environment = environment;
 
         [Authorize]
         public IActionResult Index()
@@ -29,7 +23,7 @@ namespace ZeroFramework.IdentityServer.API.Controllers
             ErrorViewModel errorViewModel = new();
 
             // retrieve error details from identityserver
-            ErrorMessage errorMessage = await _interactionService.GetErrorContextAsync(errorId);
+            ErrorMessage? errorMessage = await _interactionService.GetErrorContextAsync(errorId);
 
             if (errorMessage is not null)
             {

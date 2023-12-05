@@ -9,26 +9,17 @@ using ZeroFramework.DeviceCenter.Domain.Services.Devices;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Devices
 {
-    public class DeviceGroupApplicationService : CrudApplicationService<DeviceGroup, int, DeviceGroupGetResponseModel, DeviceGroupPagedRequestModel, DeviceGroupGetResponseModel, DeviceGroupCreateRequestModel, DeviceGroupUpdateRequestModel>, IDeviceGroupApplicationService
+    public class DeviceGroupApplicationService(IRepository<DeviceGroup, int> deviceGroupRepository, IMapper mapper, IRepository<DeviceGrouping> deviceGroupingRepository, IRepository<Device, long> deviceRepository, IRepository<Product, int> productRepository, IDeviceGroupDomainService deviceGroupDomainService) : CrudApplicationService<DeviceGroup, int, DeviceGroupGetResponseModel, DeviceGroupPagedRequestModel, DeviceGroupGetResponseModel, DeviceGroupCreateRequestModel, DeviceGroupUpdateRequestModel>(deviceGroupRepository, mapper), IDeviceGroupApplicationService
     {
-        private readonly IRepository<DeviceGrouping> _deviceGroupingRepository;
+        private readonly IRepository<DeviceGrouping> _deviceGroupingRepository = deviceGroupingRepository;
 
-        private readonly IRepository<Device, long> _deviceRepository;
+        private readonly IRepository<Device, long> _deviceRepository = deviceRepository;
 
-        private readonly IRepository<Product, int> _productRepository;
+        private readonly IRepository<Product, int> _productRepository = productRepository;
 
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapper = mapper;
 
-        private readonly IDeviceGroupDomainService _deviceGroupDomainService;
-
-        public DeviceGroupApplicationService(IRepository<DeviceGroup, int> deviceGroupRepository, IMapper mapper, IRepository<DeviceGrouping> deviceGroupingRepository, IRepository<Device, long> deviceRepository, IRepository<Product, int> productRepository, IDeviceGroupDomainService deviceGroupDomainService) : base(deviceGroupRepository, mapper)
-        {
-            _deviceGroupingRepository = deviceGroupingRepository;
-            _mapper = mapper;
-            _deviceRepository = deviceRepository;
-            _productRepository = productRepository;
-            _deviceGroupDomainService = deviceGroupDomainService;
-        }
+        private readonly IDeviceGroupDomainService _deviceGroupDomainService = deviceGroupDomainService;
 
         public override async Task<PagedResponseModel<DeviceGroupGetResponseModel>> GetListAsync(DeviceGroupPagedRequestModel requestModel)
         {

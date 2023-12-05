@@ -10,11 +10,9 @@ namespace ZeroFramework.IdentityServer.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthorizeConstants.TenantOwnerPolicyName, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class UserRolesController : ControllerBase
+    public class UserRolesController(UserManager<ApplicationUser> userManager) : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-
-        public UserRolesController(UserManager<ApplicationUser> userManager) => _userManager = userManager;
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
 
         [HttpGet("{userId}")]
         public async Task<IEnumerable<string>> GetUserRoles(string userId)

@@ -5,23 +5,15 @@ using ZeroFramework.DeviceCenter.Domain.Repositories;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
 {
-    public class PermissionDataSeedProvider : IDataSeedProvider
+    public class PermissionDataSeedProvider(IPermissionApplicationService permissionService, IPermissionDefinitionManager permissionDefinitionManager, ICurrentTenant currentTenant, IRepository<ResourceGroup, Guid> resourceGroupRepository) : IDataSeedProvider
     {
-        private readonly IPermissionApplicationService _permissionService;
+        private readonly IPermissionApplicationService _permissionService = permissionService;
 
-        private readonly IPermissionDefinitionManager _permissionDefinitionManager;
+        private readonly IPermissionDefinitionManager _permissionDefinitionManager = permissionDefinitionManager;
 
-        private readonly ICurrentTenant _currentTenant;
+        private readonly ICurrentTenant _currentTenant = currentTenant;
 
-        private readonly IRepository<ResourceGroup, Guid> _resourceGroupRepository;
-
-        public PermissionDataSeedProvider(IPermissionApplicationService permissionService, IPermissionDefinitionManager permissionDefinitionManager, ICurrentTenant currentTenant, IRepository<ResourceGroup, Guid> resourceGroupRepository)
-        {
-            _permissionService = permissionService;
-            _permissionDefinitionManager = permissionDefinitionManager;
-            _currentTenant = currentTenant;
-            _resourceGroupRepository = resourceGroupRepository;
-        }
+        private readonly IRepository<ResourceGroup, Guid> _resourceGroupRepository = resourceGroupRepository;
 
         public async Task SeedAsync(IServiceProvider serviceProvider)
         {
@@ -40,7 +32,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
             {
                 ProviderInfos = new List<PermissionProviderInfoModel>
                 {
-                    new PermissionProviderInfoModel{ProviderName = UserPermissionValueProvider.ProviderName, ProviderKey = "1"}
+                    new() {ProviderName = UserPermissionValueProvider.ProviderName, ProviderKey = "1"}
                 },
 
                 PermissionGrantInfos = Array.ConvertAll(permissionNames, pn => new PermissionGrantInfoModel { Name = pn, IsGranted = true }),
@@ -60,7 +52,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
 
                 updateModel.ProviderInfos = new List<PermissionProviderInfoModel>
                 {
-                    new PermissionProviderInfoModel{ProviderName = RolePermissionValueProvider.ProviderName, ProviderKey = "role1@tenant1"}
+                    new() {ProviderName = RolePermissionValueProvider.ProviderName, ProviderKey = "role1@tenant1"}
                 };
                 updateModel.ResourceGroupId = resourceGroup.Id;
 

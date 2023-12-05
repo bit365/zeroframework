@@ -3,17 +3,11 @@ using ZeroFramework.IdentityServer.API.IdentityStores;
 
 namespace ZeroFramework.IdentityServer.API.Tenants
 {
-    public class TenantProvider : ITenantProvider
+    public class TenantProvider(IHttpContextAccessor httpContextAccessor, ApplicationDbContext dbContext) : ITenantProvider
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
-        private readonly ApplicationDbContext _dbContext;
-
-        public TenantProvider(IHttpContextAccessor httpContextAccessor, ApplicationDbContext dbContext)
-        {
-            _httpContextAccessor = httpContextAccessor;
-            _dbContext = dbContext;
-        }
+        private readonly ApplicationDbContext _dbContext = dbContext;
 
         public virtual async Task<IdentityTenant?> GetTenantAsync()
         {

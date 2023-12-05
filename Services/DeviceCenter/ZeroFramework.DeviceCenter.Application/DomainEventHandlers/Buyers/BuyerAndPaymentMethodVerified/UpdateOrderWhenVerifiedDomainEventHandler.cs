@@ -5,17 +5,11 @@ using ZeroFramework.DeviceCenter.Domain.Events.Buyers;
 
 namespace ZeroFramework.DeviceCenter.Application.DomainEventHandlers.Buyers.BuyerAndPaymentMethodVerified
 {
-    public class UpdateOrderWhenVerifiedDomainEventHandler : INotificationHandler<BuyerAndPaymentMethodVerifiedDomainEvent>
+    public class UpdateOrderWhenVerifiedDomainEventHandler(IOrderRepository orderRepository, ILoggerFactory loggerFactory) : INotificationHandler<BuyerAndPaymentMethodVerifiedDomainEvent>
     {
-        private readonly IOrderRepository _orderRepository;
+        private readonly IOrderRepository _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
 
-        private readonly ILoggerFactory _loggerFactory;
-
-        public UpdateOrderWhenVerifiedDomainEventHandler(IOrderRepository orderRepository, ILoggerFactory loggerFactory)
-        {
-            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
-            _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
-        }
+        private readonly ILoggerFactory _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
 
         /// <summary>
         /// When the Buyer and Buyer's payment method have been created or verified that they existed,

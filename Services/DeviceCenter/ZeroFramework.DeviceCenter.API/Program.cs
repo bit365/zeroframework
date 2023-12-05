@@ -6,7 +6,7 @@ var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentCla
 try
 {
     var builder = WebApplication.CreateBuilder(args);
-    
+
     builder.Host.UseNLog();
 
     // Add services to the container.

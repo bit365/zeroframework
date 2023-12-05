@@ -15,17 +15,11 @@ using System.Text.Json;
 
 namespace ZeroFramework.IdentityServer.API.Infrastructure.Authentication.GitHub;
 
-public partial class GitHubAuthenticationHandler : OAuthHandler<GitHubAuthenticationOptions>
+public partial class GitHubAuthenticationHandler(
+    [NotNull] IOptionsMonitor<GitHubAuthenticationOptions> options,
+    [NotNull] ILoggerFactory logger,
+    [NotNull] UrlEncoder encoder) : OAuthHandler<GitHubAuthenticationOptions>(options, logger, encoder)
 {
-    public GitHubAuthenticationHandler(
-        [NotNull] IOptionsMonitor<GitHubAuthenticationOptions> options,
-        [NotNull] ILoggerFactory logger,
-        [NotNull] UrlEncoder encoder,
-        [NotNull] ISystemClock clock)
-        : base(options, logger, encoder, clock)
-    {
-    }
-
     protected override async Task<AuthenticationTicket> CreateTicketAsync(
         [NotNull] ClaimsIdentity identity,
         [NotNull] AuthenticationProperties properties,

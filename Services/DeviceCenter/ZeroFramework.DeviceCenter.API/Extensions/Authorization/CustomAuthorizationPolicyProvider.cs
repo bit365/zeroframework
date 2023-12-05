@@ -5,14 +5,9 @@ using ZeroFramework.DeviceCenter.Application.Services.Permissions;
 
 namespace ZeroFramework.DeviceCenter.API.Extensions.Authorization
 {
-    public class CustomAuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
+    public class CustomAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options, IPermissionDefinitionManager permissionDefinitionManager) : DefaultAuthorizationPolicyProvider(options)
     {
-        private readonly IPermissionDefinitionManager _permissionDefinitionManager;
-
-        public CustomAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options, IPermissionDefinitionManager permissionDefinitionManager) : base(options)
-        {
-            _permissionDefinitionManager = permissionDefinitionManager;
-        }
+        private readonly IPermissionDefinitionManager _permissionDefinitionManager = permissionDefinitionManager;
 
         public async override Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
         {

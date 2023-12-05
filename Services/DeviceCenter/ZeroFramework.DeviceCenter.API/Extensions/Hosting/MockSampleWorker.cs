@@ -6,23 +6,15 @@ using ZeroFramework.DeviceCenter.Domain.Repositories;
 
 namespace ZeroFramework.DeviceCenter.API.Extensions.Hosting
 {
-    public class MockSampleWorker : BackgroundService
+    public class MockSampleWorker(IRepository<Product, int> productRepository, IRepository<Device, long> deviceRepository, IDeviceDataApplicationService deviceDataApplicationService, ILogger<MockSampleWorker> logger) : BackgroundService
     {
-        private readonly IRepository<Product, int> _productRepository;
+        private readonly IRepository<Product, int> _productRepository = productRepository;
 
-        private readonly IRepository<Device, long> _deviceRepository;
+        private readonly IRepository<Device, long> _deviceRepository = deviceRepository;
 
-        private readonly IDeviceDataApplicationService _deviceApplicationService;
+        private readonly IDeviceDataApplicationService _deviceApplicationService = deviceDataApplicationService;
 
-        private readonly ILogger<MockSampleWorker> _logger;
-
-        public MockSampleWorker(IRepository<Product, int> productRepository, IRepository<Device, long> deviceRepository, IDeviceDataApplicationService deviceDataApplicationService, ILogger<MockSampleWorker> logger)
-        {
-            _productRepository = productRepository;
-            _deviceRepository = deviceRepository;
-            _deviceApplicationService = deviceDataApplicationService;
-            _logger = logger;
-        }
+        private readonly ILogger<MockSampleWorker> _logger = logger;
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {

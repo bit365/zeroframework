@@ -1,13 +1,8 @@
 ﻿namespace ZeroFramework.DeviceCenter.Domain.Exceptions
 {
-    public class EntityNotFoundException : Exception
+    public class EntityNotFoundException(Type entityType) : Exception
     {
-        public Type EntityType { get; set; }
-
-        public EntityNotFoundException(Type entityType)
-        {
-            EntityType = entityType;
-        }
+        public Type EntityType { get; set; } = entityType;
 
         public override string ToString()
         {

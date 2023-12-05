@@ -9,9 +9,9 @@ using ZeroFramework.DeviceCenter.Domain.Constants;
 
 namespace ZeroFramework.DeviceCenter.Infrastructure.Repositories
 {
-    public class MeasurementRepository : IMeasurementRepository
+    public class MeasurementRepository(IConfiguration configuration) : IMeasurementRepository
     {
-        private readonly IMongoClient _mongoClient;
+        private readonly IMongoClient _mongoClient = new MongoClient(configuration.GetConnectionString("MongoConnectionString"));
 
         static MeasurementRepository()
         {
@@ -48,8 +48,6 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.Repositories
             });
         }
 
-        public MeasurementRepository(IConfiguration configuration) => _mongoClient = new MongoClient(configuration.GetConnectionString("MongoConnectionString"));
-
         protected virtual async Task<IMongoDatabase> GetProductDatabase(int productId) => await Task.FromResult(_mongoClient.GetDatabase($"product-{productId}"));
 
         protected virtual async Task<IMongoCollection<MeasurementBucket>> GetDeviceCollection(int productId, long deviceId)
@@ -82,7 +80,7 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.Repositories
                     .SetOnInsert(e => e.StartTime, bucketStartTime).SetOnInsert(e => e.EndTime, bucketEndTime)
                     .PushEach(e => e.Measurements, measurements).Set(e => e.LastUpdated, DateTime.Now);
 
-                List<double> values = new();
+                List<double> values = [];
 
                 if (featureType == FeatureType.Property)
                 {
@@ -187,11 +185,11 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.Repositories
 
             var subFilter = Builders<TelemetryValue>.Filter.StringIn(e => e.Identifier, identifiers);
 
-            List<WriteModel<DeviceTelemetry>> bulkUpdates = new()
-            {
-                new UpdateOneModel<DeviceTelemetry>(filter, Builders<DeviceTelemetry>.Update.PullFilter(e=>e.Values, subFilter)),
-                new UpdateOneModel<DeviceTelemetry>(filter, Builders<DeviceTelemetry>.Update.SetOnInsert(e => e.DeviceId, deviceId).AddToSetEach(e=>e.Values,telemetryValues)){ IsUpsert=true},
-            };
+            List<WriteModel<DeviceTelemetry>> bulkUpdates =
+            [
+                new UpdateOneModel<DeviceTelemetry>(filter, Builders<DeviceTelemetry>.Update.PullFilter(e => e.Values, subFilter)),
+                new UpdateOneModel<DeviceTelemetry>(filter, Builders<DeviceTelemetry>.Update.SetOnInsert(e => e.DeviceId, deviceId).AddToSetEach(e => e.Values, telemetryValues)) { IsUpsert = true },
+            ];
 
             await collection.BulkWriteAsync(bulkUpdates);
         }

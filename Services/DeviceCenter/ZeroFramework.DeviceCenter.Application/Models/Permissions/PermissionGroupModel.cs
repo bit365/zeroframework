@@ -10,6 +10,6 @@ namespace ZeroFramework.DeviceCenter.Application.Models.Permissions
         [AllowNull]
         public string DisplayName { get; set; }
 
-        public List<PermissionGrantModel> Permissions { get; set; } = new();
+        public List<PermissionGrantModel> Permissions { get; set; } = [];
     }
 }

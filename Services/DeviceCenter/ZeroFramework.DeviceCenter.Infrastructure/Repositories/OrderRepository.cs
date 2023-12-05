@@ -5,10 +5,8 @@ using ZeroFramework.DeviceCenter.Infrastructure.EntityFrameworks;
 
 namespace ZeroFramework.DeviceCenter.Infrastructure.Repositories
 {
-    public class OrderRepository : EfCoreRepository<DeviceCenterDbContext, Order>, IOrderRepository
+    public class OrderRepository(DeviceCenterDbContext dbContext) : EfCoreRepository<DeviceCenterDbContext, Order>(dbContext), IOrderRepository
     {
-        public OrderRepository(DeviceCenterDbContext dbContext) : base(dbContext) { }
-
         public Order Add(Order order)
         {
             return DbSet.Add(order).Entity;

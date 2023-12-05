@@ -9,17 +9,11 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MonitoringFactorsController : ControllerBase
+    public class MonitoringFactorsController(IMonitoringFactorQueries monitoringFactorQueries, ICrudApplicationService<int, MonitoringFactorGetResponseModel, MonitoringFactorPagedRequestModel, MonitoringFactorGetResponseModel, MonitoringFactorCreateRequestModel, MonitoringFactorUpdateRequestModel> crudApplicationService) : ControllerBase
     {
-        private readonly ICrudApplicationService<int, MonitoringFactorGetResponseModel, MonitoringFactorPagedRequestModel, MonitoringFactorGetResponseModel, MonitoringFactorCreateRequestModel, MonitoringFactorUpdateRequestModel> _crudApplicationService;
+        private readonly ICrudApplicationService<int, MonitoringFactorGetResponseModel, MonitoringFactorPagedRequestModel, MonitoringFactorGetResponseModel, MonitoringFactorCreateRequestModel, MonitoringFactorUpdateRequestModel> _crudApplicationService = crudApplicationService;
 
-        private readonly IMonitoringFactorQueries _monitoringFactorQueries;
-
-        public MonitoringFactorsController(IMonitoringFactorQueries monitoringFactorQueries, ICrudApplicationService<int, MonitoringFactorGetResponseModel, MonitoringFactorPagedRequestModel, MonitoringFactorGetResponseModel, MonitoringFactorCreateRequestModel, MonitoringFactorUpdateRequestModel> crudApplicationService)
-        {
-            _monitoringFactorQueries = monitoringFactorQueries;
-            _crudApplicationService = crudApplicationService;
-        }
+        private readonly IMonitoringFactorQueries _monitoringFactorQueries = monitoringFactorQueries;
 
         [HttpGet]
         [Authorize(MonitoringFactorPermissions.MonitoringFactors.Default)]

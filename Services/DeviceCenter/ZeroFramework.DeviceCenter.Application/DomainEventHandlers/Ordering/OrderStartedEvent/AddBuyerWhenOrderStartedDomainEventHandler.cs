@@ -7,17 +7,11 @@ using ZeroFramework.DeviceCenter.Domain.Events.Ordering;
 
 namespace ZeroFramework.DeviceCenter.Application.DomainEventHandlers.Ordering.OrderStartedEvent
 {
-    public class AddBuyerWhenOrderStartedDomainEventHandler : INotificationHandler<OrderStartedDomainEvent>
+    public class AddBuyerWhenOrderStartedDomainEventHandler(IBuyerRepository buyerRepository, IIntegrationEventService integrationEventService) : INotificationHandler<OrderStartedDomainEvent>
     {
-        private readonly IBuyerRepository _buyerRepository;
+        private readonly IBuyerRepository _buyerRepository = buyerRepository ?? throw new ArgumentNullException(nameof(buyerRepository));
 
-        private readonly IIntegrationEventService _integrationEventService;
-
-        public AddBuyerWhenOrderStartedDomainEventHandler(IBuyerRepository buyerRepository, IIntegrationEventService integrationEventService)
-        {
-            _buyerRepository = buyerRepository ?? throw new ArgumentNullException(nameof(buyerRepository));
-            _integrationEventService = integrationEventService ?? throw new ArgumentNullException(nameof(integrationEventService));
-        }
+        private readonly IIntegrationEventService _integrationEventService = integrationEventService ?? throw new ArgumentNullException(nameof(integrationEventService));
 
         public async Task Handle(OrderStartedDomainEvent orderStartedEvent, CancellationToken cancellationToken)
         {

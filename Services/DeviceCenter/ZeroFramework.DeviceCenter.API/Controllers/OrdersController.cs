@@ -9,17 +9,11 @@ using ZeroFramework.DeviceCenter.Application.Queries.Ordering;
 namespace ZeroFramework.DeviceCenter.API.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
-    public class OrdersController : Controller
+    public class OrdersController(IOrderQueries orderQueries, IMediator mediator) : Controller
     {
-        private readonly IOrderQueries _orderQueries;
+        private readonly IOrderQueries _orderQueries = orderQueries;
 
-        private readonly IMediator _mediator;
-
-        public OrdersController(IOrderQueries orderQueries, IMediator mediator)
-        {
-            _orderQueries = orderQueries;
-            _mediator = mediator;
-        }
+        private readonly IMediator _mediator = mediator;
 
         [HttpGet]
         [ProducesResponseType(typeof(OrderViewModel), (int)HttpStatusCode.OK)]

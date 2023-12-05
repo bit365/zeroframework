@@ -6,11 +6,7 @@ using ZeroFramework.DeviceCenter.Domain.Repositories;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Projects
 {
-    public class ProjectApplicationService : CrudApplicationService<Project, int, ProjectGetResponseModel, PagedRequestModel, ProjectGetResponseModel, ProjectCreateOrUpdateRequestModel, ProjectCreateOrUpdateRequestModel>, IProjectApplicationService
+    public class ProjectApplicationService(IRepository<Project, int> repository, IMapper mapper) : CrudApplicationService<Project, int, ProjectGetResponseModel, PagedRequestModel, ProjectGetResponseModel, ProjectCreateOrUpdateRequestModel, ProjectCreateOrUpdateRequestModel>(repository, mapper), IProjectApplicationService
     {
-        public ProjectApplicationService(IRepository<Project, int> repository, IMapper mapper) : base(repository, mapper)
-        {
-
-        }
     }
 }

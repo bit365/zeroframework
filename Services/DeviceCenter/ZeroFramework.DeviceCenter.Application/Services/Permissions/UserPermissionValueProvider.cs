@@ -2,18 +2,13 @@
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
 {
-    public class UserPermissionValueProvider : IPermissionValueProvider
+    public class UserPermissionValueProvider(IPermissionStore permissionStore) : IPermissionValueProvider
     {
         public const string ProviderName = "User";
 
-        private readonly IPermissionStore _permissionStore;
+        private readonly IPermissionStore _permissionStore = permissionStore;
 
         public string Name => ProviderName;
-
-        public UserPermissionValueProvider(IPermissionStore permissionStore)
-        {
-            _permissionStore = permissionStore;
-        }
 
         public async Task<PermissionGrantResult> CheckAsync(ClaimsPrincipal principal, PermissionDefinition permission, Guid? resourceGroupId)
         {

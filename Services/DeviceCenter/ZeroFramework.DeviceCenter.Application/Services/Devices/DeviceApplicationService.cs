@@ -8,20 +8,13 @@ using ZeroFramework.DeviceCenter.Domain.Repositories;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Devices
 {
-    public class DeviceApplicationService : CrudApplicationService<Device, long, DeviceGetResponseModel, DevicePagedRequestModel, DeviceGetResponseModel, DeviceCreateRequestModel, DeviceUpdateRequestModel>, IDeviceApplicationService
+    public class DeviceApplicationService(IDeviceRepository deviceRepository, IRepository<Product, int> productRepository, IMapper mapper) : CrudApplicationService<Device, long, DeviceGetResponseModel, DevicePagedRequestModel, DeviceGetResponseModel, DeviceCreateRequestModel, DeviceUpdateRequestModel>(deviceRepository, mapper), IDeviceApplicationService
     {
-        private readonly IRepository<Product, int> _productRepository;
+        private readonly IRepository<Product, int> _productRepository = productRepository;
 
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapper = mapper;
 
-        private readonly IDeviceRepository _deviceRepository;
-
-        public DeviceApplicationService(IDeviceRepository deviceRepository, IRepository<Product, int> productRepository, IMapper mapper) : base(deviceRepository, mapper)
-        {
-            _productRepository = productRepository;
-            _mapper = mapper;
-            _deviceRepository = deviceRepository;
-        }
+        private readonly IDeviceRepository _deviceRepository = deviceRepository;
 
         public override async Task<DeviceGetResponseModel> GetAsync(long id)
         {

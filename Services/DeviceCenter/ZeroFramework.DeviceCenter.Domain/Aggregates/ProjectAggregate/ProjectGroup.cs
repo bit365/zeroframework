@@ -14,7 +14,7 @@ namespace ZeroFramework.DeviceCenter.Domain.Aggregates.ProjectAggregate
 
         public ProjectGroup? Parent { get; set; }
 
-        public List<ProjectGroup> Children { get; set; } = new();
+        public List<ProjectGroup> Children { get; set; } = [];
 
         public int? ParentId { get; set; }
 

@@ -3,22 +3,14 @@ using ZeroFramework.EventBus.Events;
 
 namespace ZeroFramework.DeviceCenter.Application.IntegrationEvents.Events.Ordering
 {
-    public class OrderStatusChangedToPaidIntegrationEvent : IntegrationEvent
+    public class OrderStatusChangedToPaidIntegrationEvent(int orderId, string orderStatus, Guid buyerId, IEnumerable<OrderStockItemModel> orderStockItems) : IntegrationEvent
     {
-        public int OrderId { get; }
+        public int OrderId { get; } = orderId;
 
-        public string OrderStatus { get; }
+        public string OrderStatus { get; } = orderStatus;
 
-        public Guid BuyerId { get; }
+        public Guid BuyerId { get; } = buyerId;
 
-        public IEnumerable<OrderStockItemModel> OrderStockItems { get; }
-
-        public OrderStatusChangedToPaidIntegrationEvent(int orderId, string orderStatus, Guid buyerId, IEnumerable<OrderStockItemModel> orderStockItems)
-        {
-            OrderId = orderId;
-            OrderStockItems = orderStockItems;
-            OrderStatus = orderStatus;
-            BuyerId = buyerId;
-        }
+        public IEnumerable<OrderStockItemModel> OrderStockItems { get; } = orderStockItems;
     }
 }

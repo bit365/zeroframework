@@ -26,7 +26,7 @@ export default {
   'pages.error.notfound': 'Sorry, the page you visited does not exist.',
   'pages.error.back': 'Back Home',
   'pages.welcome.devicecenter': 'Device Center',
-  'pages.welcome.alertMessage': 'Welcome to the zero degree cloud platform, video practical teaching, and guide you to build a modern universal application framework based on the new platform of .NET 7 + React to improve production efficiency.',
+  'pages.welcome.alertMessage': 'Welcome to the zero degree cloud platform, video practical teaching, and guide you to build a modern universal application framework based on the new platform of .NET  + React to improve production efficiency.',
   'pages.welcome.zeroframework':'Zero Framework',
   'pages.welcome.video':'Video Tutorials',
   'pages.welcome.framework':'Framework Introduce',

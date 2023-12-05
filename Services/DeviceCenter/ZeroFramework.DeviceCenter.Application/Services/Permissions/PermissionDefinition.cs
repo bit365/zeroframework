@@ -8,11 +8,11 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
 
         public PermissionDefinition? Parent { get; private set; }
 
-        public List<string> AllowedProviders { get; set; } = new List<string>();
+        public List<string> AllowedProviders { get; set; } = [];
 
         public string? DisplayName { get; set; }
 
-        private readonly List<PermissionDefinition> _children = new();
+        private readonly List<PermissionDefinition> _children = [];
 
         public IReadOnlyList<PermissionDefinition> Children => _children.ToImmutableList();
 

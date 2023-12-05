@@ -8,6 +8,6 @@ namespace ZeroFramework.DeviceCenter.Domain.Aggregates.TenantAggregate
         [AllowNull]
         public string Name { get; set; }
 
-        public List<TenantConnectionString> ConnectionStrings { get; protected set; } = new List<TenantConnectionString>();
+        public List<TenantConnectionString> ConnectionStrings { get; protected set; } = [];
     }
 }

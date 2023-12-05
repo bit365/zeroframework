@@ -8,17 +8,11 @@ using ZeroFramework.DeviceCenter.Domain.Specifications.Builder;
 
 namespace ZeroFramework.DeviceCenter.Domain.Services.Ordering
 {
-    public class OrderDomainService : IOrderDomainService
+    public class OrderDomainService(IRepository<Order, Guid> orderRepository, IMediator mediator) : IOrderDomainService
     {
-        private readonly IRepository<Order, Guid> _orderRepository;
+        private readonly IRepository<Order, Guid> _orderRepository = orderRepository;
 
-        private readonly IMediator _mediator;
-
-        public OrderDomainService(IRepository<Order, Guid> orderRepository, IMediator mediator)
-        {
-            _orderRepository = orderRepository;
-            _mediator = mediator;
-        }
+        private readonly IMediator _mediator = mediator;
 
         public async Task<Order> AddAsync(Order entity, CancellationToken cancellationToken = default)
         {

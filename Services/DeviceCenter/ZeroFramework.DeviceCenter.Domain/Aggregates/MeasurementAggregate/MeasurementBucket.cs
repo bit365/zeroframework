@@ -15,9 +15,9 @@ namespace ZeroFramework.DeviceCenter.Domain.Aggregates.MeasurementAggregate
 
         public DateTime EndTime { get; set; }
 
-        public Dictionary<string, object?> Metadata { get; set; } = new();
+        public Dictionary<string, object?> Metadata { get; set; } = [];
 
-        public List<Measurement> Measurements { get; set; } = new();
+        public List<Measurement> Measurements { get; set; } = [];
 
         public DateTime LastUpdated { get; set; }
 

@@ -5,14 +5,9 @@ using ZeroFramework.EventBus.Abstractions;
 
 namespace ZeroFramework.DeviceCenter.Application.IntegrationEvents.EventHandling.Ordering
 {
-    public class OrderPaymentSucceededIntegrationEventHandler : IIntegrationEventHandler<OrderPaymentSucceededIntegrationEvent>
+    public class OrderPaymentSucceededIntegrationEventHandler(IMediator mediator) : IIntegrationEventHandler<OrderPaymentSucceededIntegrationEvent>
     {
-        private readonly IMediator _mediator;
-
-        public OrderPaymentSucceededIntegrationEventHandler(IMediator mediator)
-        {
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        }
+        private readonly IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
         public async Task HandleAsync(OrderPaymentSucceededIntegrationEvent @event)
         {

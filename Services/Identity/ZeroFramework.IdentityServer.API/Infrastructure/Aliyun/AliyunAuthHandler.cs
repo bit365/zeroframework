@@ -10,14 +10,9 @@ namespace ZeroFramework.IdentityServer.API.Infrastructure.Aliyun
     /// You can access Alibaba Cloud services without the need to handle API related tasks, such as signing and constructing your requests.
     /// https://github.com/aliyun/aliyun-openapi-net-sdk
     /// </summary>
-    public class AliyunAuthHandler : DelegatingHandler
+    public class AliyunAuthHandler(IOptions<AlibabaCloudOptions> alibabaCloudOptionsAccessor) : DelegatingHandler
     {
-        private readonly AlibabaCloudOptions _alibabaCloudOptions;
-
-        public AliyunAuthHandler(IOptions<AlibabaCloudOptions> alibabaCloudOptionsAccessor)
-        {
-            _alibabaCloudOptions = alibabaCloudOptionsAccessor.Value;
-        }
+        private readonly AlibabaCloudOptions _alibabaCloudOptions = alibabaCloudOptionsAccessor.Value;
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {

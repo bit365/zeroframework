@@ -18,34 +18,20 @@ using ZeroFramework.IdentityServer.API.Tenants;
 namespace ZeroFramework.IdentityServer.API.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ISmsSender smsSender, ILoggerFactory loggerFactory, IIdentityServerInteractionService interactionService, IDistributedCache distributedCache, IStringLocalizerFactory localizerFactory, ITenantProvider tenantProvider, ICurrentTenant currentTenant, IAuthenticationHandlerProvider authenticationHandlerProvider) : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ISmsSender _smsSender;
-        private readonly ILogger _logger;
-        private readonly IDistributedCache _distributedCache;
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
+        private readonly ISmsSender _smsSender = smsSender;
+        private readonly ILogger _logger = loggerFactory.CreateLogger<AccountController>();
+        private readonly IDistributedCache _distributedCache = distributedCache;
 
-        private readonly IIdentityServerInteractionService _interactionService;
-        private readonly IStringLocalizerFactory _localizerFactory;
-        private readonly ITenantProvider _tenantProvider;
-        private readonly ICurrentTenant _currentTenant;
+        private readonly IIdentityServerInteractionService _interactionService = interactionService;
+        private readonly IStringLocalizerFactory _localizerFactory = localizerFactory;
+        private readonly ITenantProvider _tenantProvider = tenantProvider;
+        private readonly ICurrentTenant _currentTenant = currentTenant;
 
-        private readonly IAuthenticationHandlerProvider _authenticationHandlerProvider;
-
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ISmsSender smsSender, ILoggerFactory loggerFactory, IIdentityServerInteractionService interactionService, IDistributedCache distributedCache, IStringLocalizerFactory localizerFactory, ITenantProvider tenantProvider, ICurrentTenant currentTenant, IAuthenticationHandlerProvider authenticationHandlerProvider)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _smsSender = smsSender;
-            _logger = loggerFactory.CreateLogger<AccountController>();
-            _interactionService = interactionService;
-            _distributedCache = distributedCache;
-            _localizerFactory = localizerFactory;
-            _tenantProvider = tenantProvider;
-            _currentTenant = currentTenant;
-            _authenticationHandlerProvider = authenticationHandlerProvider;
-        }
+        private readonly IAuthenticationHandlerProvider _authenticationHandlerProvider = authenticationHandlerProvider;
 
         [HttpGet]
         [AllowAnonymous]

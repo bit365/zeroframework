@@ -12,11 +12,9 @@ namespace ZeroFramework.IdentityServer.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthorizeConstants.TenantOwnerPolicyName, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class UserClaimsController : ControllerBase
+    public class UserClaimsController(UserManager<ApplicationUser> userManager) : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-
-        public UserClaimsController(UserManager<ApplicationUser> userManager) => _userManager = userManager;
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
 
         [HttpGet("{userId}")]
         public async Task<ActionResult<IEnumerable<UserClaimModel>>> GetUserClaims(int userId)

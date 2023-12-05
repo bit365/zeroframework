@@ -7,17 +7,11 @@ namespace ZeroFramework.DeviceCenter.Application.Infrastructure
     /// Provides a base implementation for handling duplicate request and ensuring idempotent updates, in the cases where
     /// a requestid sent by client is used to detect duplicate requests.
     /// </summary>
-    public class IdentifiedCommandHandler<TRequest, TResponse> : IRequestHandler<IdentifiedCommand<TRequest, TResponse>, TResponse> where TRequest : IRequest<TResponse>
+    public class IdentifiedCommandHandler<TRequest, TResponse>(IMediator mediator, IRequestManager requestManager) : IRequestHandler<IdentifiedCommand<TRequest, TResponse>, TResponse> where TRequest : IRequest<TResponse>
     {
-        private readonly IMediator _mediator;
+        private readonly IMediator _mediator = mediator;
 
-        private readonly IRequestManager _requestManager;
-
-        public IdentifiedCommandHandler(IMediator mediator, IRequestManager requestManager)
-        {
-            _mediator = mediator;
-            _requestManager = requestManager;
-        }
+        private readonly IRequestManager _requestManager = requestManager;
 
         /// <summary>
         /// Creates the result value to return if a previous request was found

@@ -18,17 +18,11 @@ using System.Text.Json;
 
 namespace ZeroFramework.IdentityServer.API.Infrastructure.Authentication.Weixin;
 
-public partial class WeixinAuthenticationHandler : OAuthHandler<WeixinAuthenticationOptions>
+public partial class WeixinAuthenticationHandler(
+    [NotNull] IOptionsMonitor<WeixinAuthenticationOptions> options,
+    [NotNull] ILoggerFactory logger,
+    [NotNull] UrlEncoder encoder) : OAuthHandler<WeixinAuthenticationOptions>(options, logger, encoder)
 {
-    public WeixinAuthenticationHandler(
-        [NotNull] IOptionsMonitor<WeixinAuthenticationOptions> options,
-        [NotNull] ILoggerFactory logger,
-        [NotNull] UrlEncoder encoder,
-        [NotNull] ISystemClock clock)
-        : base(options, logger, encoder, clock)
-    {
-    }
-
     private const string OauthState = "_oauthstate";
     private const string State = "state";
 

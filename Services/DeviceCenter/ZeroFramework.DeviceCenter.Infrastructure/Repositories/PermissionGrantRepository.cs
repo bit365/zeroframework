@@ -4,10 +4,8 @@ using ZeroFramework.DeviceCenter.Infrastructure.EntityFrameworks;
 
 namespace ZeroFramework.DeviceCenter.Infrastructure.Repositories
 {
-    public class PermissionGrantRepository : EfCoreRepository<DeviceCenterDbContext, PermissionGrant, Guid>, IPermissionGrantRepository
+    public class PermissionGrantRepository(DeviceCenterDbContext dbContext) : EfCoreRepository<DeviceCenterDbContext, PermissionGrant, Guid>(dbContext), IPermissionGrantRepository
     {
-        public PermissionGrantRepository(DeviceCenterDbContext dbContext) : base(dbContext) { }
-
         public async Task<PermissionGrant?> FindAsync(string operationName, string providerName, string providerKey, Guid? resourceGroupId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupId == Guid.Empty)

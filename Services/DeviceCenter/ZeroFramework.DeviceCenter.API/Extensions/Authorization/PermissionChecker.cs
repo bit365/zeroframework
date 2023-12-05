@@ -5,23 +5,15 @@ using ZeroFramework.DeviceCenter.Domain.Repositories;
 
 namespace ZeroFramework.DeviceCenter.API.Extensions.Authorization
 {
-    public class PermissionChecker : IPermissionChecker
+    public class PermissionChecker(IHttpContextAccessor httpContextAccessor, IPermissionDefinitionManager permissionDefinitionManager, IEnumerable<IPermissionValueProvider> permissionValueProviders, IRepository<ResourceGrouping, Guid> resourceGroupingRepository) : IPermissionChecker
     {
-        private readonly IPermissionDefinitionManager _permissionDefinitionManager;
+        private readonly IPermissionDefinitionManager _permissionDefinitionManager = permissionDefinitionManager;
 
-        private readonly IEnumerable<IPermissionValueProvider> _permissionValueProviders;
+        private readonly IEnumerable<IPermissionValueProvider> _permissionValueProviders = permissionValueProviders;
 
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
-        private readonly IRepository<ResourceGrouping, Guid> _resourceGroupingRepository;
-
-        public PermissionChecker(IHttpContextAccessor httpContextAccessor, IPermissionDefinitionManager permissionDefinitionManager, IEnumerable<IPermissionValueProvider> permissionValueProviders, IRepository<ResourceGrouping, Guid> resourceGroupingRepository)
-        {
-            _httpContextAccessor = httpContextAccessor;
-            _permissionDefinitionManager = permissionDefinitionManager;
-            _permissionValueProviders = permissionValueProviders;
-            _resourceGroupingRepository = resourceGroupingRepository;
-        }
+        private readonly IRepository<ResourceGrouping, Guid> _resourceGroupingRepository = resourceGroupingRepository;
 
         public async Task<bool> IsGrantedAsync(string name, Guid? resourceGroupId) => await IsGrantedAsync(_httpContextAccessor.HttpContext?.User ?? new ClaimsPrincipal(), name, resourceGroupId);
 
@@ -71,7 +63,7 @@ namespace ZeroFramework.DeviceCenter.API.Extensions.Authorization
 
             names ??= Array.Empty<string>();
 
-            List<PermissionDefinition> permissionDefinitions = new();
+            List<PermissionDefinition> permissionDefinitions = [];
 
             foreach (string name in names)
             {
@@ -160,7 +152,7 @@ namespace ZeroFramework.DeviceCenter.API.Extensions.Authorization
 
             names ??= Array.Empty<string>();
 
-            List<PermissionDefinition> permissionDefinitions = new();
+            List<PermissionDefinition> permissionDefinitions = [];
 
             foreach (string name in names)
             {

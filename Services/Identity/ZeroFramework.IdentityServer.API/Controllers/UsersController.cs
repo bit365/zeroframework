@@ -16,20 +16,13 @@ namespace ZeroFramework.IdentityServer.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthorizeConstants.TenantOwnerPolicyName, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class UsersController : ControllerBase
+    public class UsersController(UserManager<ApplicationUser> userManager, IMapper mapper, ICurrentTenant currentTenant) : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
 
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapper = mapper;
 
-        private readonly ICurrentTenant _currentTenant;
-
-        public UsersController(UserManager<ApplicationUser> userManager, IMapper mapper, ICurrentTenant currentTenant)
-        {
-            _userManager = userManager;
-            _mapper = mapper;
-            _currentTenant = currentTenant;
-        }
+        private readonly ICurrentTenant _currentTenant = currentTenant;
 
         // GET: api/Users
         [HttpGet]

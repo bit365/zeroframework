@@ -3,14 +3,9 @@ using ZeroFramework.DeviceCenter.Domain.Repositories;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Projects
 {
-    public class ProjectDataSeedProvider : IDataSeedProvider
+    public class ProjectDataSeedProvider(IRepository<Project, int> projectRepository) : IDataSeedProvider
     {
-        private readonly IRepository<Project, int> _projectRepository;
-
-        public ProjectDataSeedProvider(IRepository<Project, int> projectRepository)
-        {
-            _projectRepository = projectRepository;
-        }
+        private readonly IRepository<Project, int> _projectRepository = projectRepository;
 
         public async Task SeedAsync(IServiceProvider serviceProvider)
         {

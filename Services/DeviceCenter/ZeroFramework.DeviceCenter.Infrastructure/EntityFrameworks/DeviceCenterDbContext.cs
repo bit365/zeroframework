@@ -10,10 +10,8 @@ using ZeroFramework.DeviceCenter.Domain.UnitOfWork;
 
 namespace ZeroFramework.DeviceCenter.Infrastructure.EntityFrameworks
 {
-    public class DeviceCenterDbContext : DbContext, IUnitOfWork
+    public class DeviceCenterDbContext(DbContextOptions<DeviceCenterDbContext> options) : DbContext(options), IUnitOfWork
     {
-        public DeviceCenterDbContext(DbContextOptions<DeviceCenterDbContext> options) : base(options) { }
-
         async Task IUnitOfWork.SaveChangesAsync(CancellationToken cancellationToken) => await base.SaveChangesAsync(cancellationToken);
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

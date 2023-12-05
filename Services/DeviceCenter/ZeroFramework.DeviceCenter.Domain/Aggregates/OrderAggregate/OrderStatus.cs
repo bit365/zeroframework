@@ -3,7 +3,7 @@ using ZeroFramework.DeviceCenter.Domain.Exceptions;
 
 namespace ZeroFramework.DeviceCenter.Domain.Aggregates.OrderAggregate
 {
-    public class OrderStatus : Enumeration
+    public class OrderStatus(int id, string name) : Enumeration(id, name)
     {
         public static OrderStatus Submitted { get; } = new OrderStatus(1, nameof(Submitted).ToLowerInvariant());
 
@@ -16,10 +16,6 @@ namespace ZeroFramework.DeviceCenter.Domain.Aggregates.OrderAggregate
         public static OrderStatus Shipped { get; } = new OrderStatus(5, nameof(Shipped).ToLowerInvariant());
 
         public static OrderStatus Cancelled { get; } = new OrderStatus(6, nameof(Cancelled).ToLowerInvariant());
-
-        public OrderStatus(int id, string name) : base(id, name)
-        {
-        }
 
         public static IEnumerable<OrderStatus> List() => new[] { Submitted, AwaitingValidation, StockConfirmed, Paid, Shipped, Cancelled };
 

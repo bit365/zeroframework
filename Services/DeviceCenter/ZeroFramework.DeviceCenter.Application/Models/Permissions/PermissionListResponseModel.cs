@@ -7,6 +7,6 @@ namespace ZeroFramework.DeviceCenter.Application.Models.Permissions
         [AllowNull]
         public string EntityDisplayName { get; set; }
 
-        public List<PermissionGroupModel> Groups { get; set; } = new();
+        public List<PermissionGroupModel> Groups { get; set; } = [];
     }
 }

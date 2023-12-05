@@ -2,16 +2,10 @@
 
 namespace ZeroFramework.IdentityServer.API.Tenants
 {
-    public class TenantMiddleware : IMiddleware
+    public class TenantMiddleware(ICurrentTenant currentTenant, ITenantProvider tenantProvider) : IMiddleware
     {
-        private readonly ICurrentTenant _currentTenant;
-        private readonly ITenantProvider _tenantProvider;
-
-        public TenantMiddleware(ICurrentTenant currentTenant, ITenantProvider tenantProvider)
-        {
-            _currentTenant = currentTenant;
-            _tenantProvider = tenantProvider;
-        }
+        private readonly ICurrentTenant _currentTenant = currentTenant;
+        private readonly ITenantProvider _tenantProvider = tenantProvider;
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {

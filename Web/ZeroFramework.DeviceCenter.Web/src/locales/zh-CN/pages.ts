@@ -25,7 +25,7 @@ export default {
   'pages.error.notfound': '抱歉，您访问的页面暂未对外开放。',
   'pages.error.back': '返回首页',
   'pages.welcome.devicecenter': '设备中心微服务',
-  'pages.welcome.alertMessage': '零度云平台已开源，视频实战教学，带您从零开始搭建基于 .NET 7 + React 的全新平台的现代化通用应用程序框架，前后端分离，完善的权限访问控制，多种主题颜色可选，助力提高生产效率。',
+  'pages.welcome.alertMessage': '零度云平台已开源，视频实战教学，带您从零开始搭建基于 .NET + React 的全新平台的现代化通用微服务应用程序框架，前后端分离，完善的权限访问控制，多种主题颜色可选，通用代码自动生成，助力提高生产效率。',
   'pages.welcome.zeroframework':'零度开源框架',
   'pages.welcome.video':'视频教程',
   'pages.welcome.framework':'框架介绍',

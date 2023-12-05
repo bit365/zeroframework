@@ -8,23 +8,15 @@ using ZeroFramework.EventBus.Abstractions;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Ordering
 {
-    public class OrderApplicationService : IOrderApplicationService
+    public class OrderApplicationService(IOrderDomainService orderDomainService, IRepository<Order> orderRepository, IEventBus eventBus, IMapper mapper) : IOrderApplicationService
     {
-        private readonly IOrderDomainService _orderDomainService;
+        private readonly IOrderDomainService _orderDomainService = orderDomainService;
 
-        private readonly IRepository<Order> _orderRepository;
+        private readonly IRepository<Order> _orderRepository = orderRepository;
 
-        private readonly IEventBus _eventBus;
+        private readonly IEventBus _eventBus = eventBus;
 
-        private readonly IMapper _mapper;
-
-        public OrderApplicationService(IOrderDomainService orderDomainService, IRepository<Order> orderRepository, IEventBus eventBus, IMapper mapper)
-        {
-            _orderDomainService = orderDomainService;
-            _orderRepository = orderRepository;
-            _eventBus = eventBus;
-            _mapper = mapper;
-        }
+        private readonly IMapper _mapper = mapper;
 
         public async Task<bool> CreateAsync(OrderCreateRequestModel model, CancellationToken cancellationToken = default)
         {

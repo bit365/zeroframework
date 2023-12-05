@@ -3,11 +3,9 @@ using ZeroFramework.DeviceCenter.Domain.Aggregates.TenantAggregate;
 
 namespace ZeroFramework.DeviceCenter.API.Extensions.Tenants
 {
-    public class TenantMiddleware : IMiddleware
+    public class TenantMiddleware(ICurrentTenant currentTenant) : IMiddleware
     {
-        private readonly ICurrentTenant _currentTenant;
-
-        public TenantMiddleware(ICurrentTenant currentTenant) => _currentTenant = currentTenant;
+        private readonly ICurrentTenant _currentTenant = currentTenant;
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {

@@ -5,11 +5,9 @@ using ZeroFramework.IdentityServer.API.Tenants;
 
 namespace ZeroFramework.IdentityServer.API.Extensions
 {
-    public class PermissionRequirementHandler : AuthorizationHandler<OperationAuthorizationRequirement>
+    public class PermissionRequirementHandler(ICurrentTenant currentTenant) : AuthorizationHandler<OperationAuthorizationRequirement>
     {
-        private readonly ICurrentTenant _currentTenant;
-
-        public PermissionRequirementHandler(ICurrentTenant currentTenant) => _currentTenant = currentTenant;
+        private readonly ICurrentTenant _currentTenant = currentTenant;
 
         protected async override Task HandleRequirementAsync(AuthorizationHandlerContext context, OperationAuthorizationRequirement requirement)
         {

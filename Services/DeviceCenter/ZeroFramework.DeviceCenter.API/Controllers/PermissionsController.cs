@@ -8,14 +8,9 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PermissionsController : ControllerBase
+    public class PermissionsController(IPermissionApplicationService permissionApplicationService) : ControllerBase
     {
-        private readonly IPermissionApplicationService _permissionApplicationService;
-
-        public PermissionsController(IPermissionApplicationService permissionApplicationService)
-        {
-            _permissionApplicationService = permissionApplicationService;
-        }
+        private readonly IPermissionApplicationService _permissionApplicationService = permissionApplicationService;
 
         [HttpPut]
         [Authorize(PermissionPermissions.Permissions.Edit)]

@@ -6,14 +6,9 @@ using ZeroFramework.IdentityServer.API.IdentityStores;
 
 namespace ZeroFramework.IdentityServer.API.Tenants
 {
-    public class CustomUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<ApplicationUser, ApplicationRole>
+    public class CustomUserClaimsPrincipalFactory(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IOptions<IdentityOptions> options, ApplicationDbContext dbContext) : UserClaimsPrincipalFactory<ApplicationUser, ApplicationRole>(userManager, roleManager, options)
     {
-        private readonly ApplicationDbContext _dbContext;
-
-        public CustomUserClaimsPrincipalFactory(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IOptions<IdentityOptions> options, ApplicationDbContext dbContext) : base(userManager, roleManager, options)
-        {
-            _dbContext = dbContext;
-        }
+        private readonly ApplicationDbContext _dbContext = dbContext;
 
         protected override async Task<ClaimsIdentity> GenerateClaimsAsync(ApplicationUser user)
         {

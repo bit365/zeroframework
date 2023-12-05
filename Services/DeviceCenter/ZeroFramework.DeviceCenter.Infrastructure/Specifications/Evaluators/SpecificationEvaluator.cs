@@ -8,7 +8,7 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.Specifications.Evaluators
         // Will use singleton for default configuration. Yet, it can be instantiated if necessary, with default or provided evaluators.
         public static SpecificationEvaluator Default { get; } = new SpecificationEvaluator();
 
-        private readonly List<IEvaluator> evaluators = new();
+        private readonly List<IEvaluator> evaluators = [];
 
         public SpecificationEvaluator()
         {

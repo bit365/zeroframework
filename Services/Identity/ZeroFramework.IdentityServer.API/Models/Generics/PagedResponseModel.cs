@@ -1,15 +1,9 @@
 ﻿namespace ZeroFramework.IdentityServer.API.Models.Generics
 {
-    public class PagedResponseModel<T>
+    public class PagedResponseModel<T>(IReadOnlyList<T> items, int totalCount)
     {
-        public PagedResponseModel(IReadOnlyList<T> items, int totalCount)
-        {
-            Items = items;
-            TotalCount = totalCount;
-        }
+        public IReadOnlyList<T> Items { get; set; } = items;
 
-        public IReadOnlyList<T> Items { get; set; }
-
-        public int TotalCount { get; set; }
+        public int TotalCount { get; set; } = totalCount;
     }
 }

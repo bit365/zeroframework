@@ -1,15 +1,9 @@
 ﻿namespace ZeroFramework.DeviceCenter.Application.Models.Measurements
 {
-    public class PageableListResposeModel<T>
+    public class PageableListResposeModel<T>(IReadOnlyList<T> items, int? offset)
     {
-        public PageableListResposeModel(IReadOnlyList<T> items, int? offset)
-        {
-            Items = items;
-            Offset = offset;
-        }
+        public IReadOnlyList<T> Items { get; } = items;
 
-        public IReadOnlyList<T> Items { get; }
-
-        public int? Offset { get; }
+        public int? Offset { get; } = offset;
     }
 }

@@ -6,17 +6,11 @@ using ZeroFramework.IdentityServer.API.Models.Consents;
 
 namespace ZeroFramework.IdentityServer.API.Controllers
 {
-    public class ConsentController : Controller
+    public class ConsentController(ILogger<ConsentController> logger, IIdentityServerInteractionService interactionService) : Controller
     {
-        private readonly ILogger<ConsentController> _logger;
+        private readonly ILogger<ConsentController> _logger = logger;
 
-        private readonly IIdentityServerInteractionService _interactionService;
-
-        public ConsentController(ILogger<ConsentController> logger, IIdentityServerInteractionService interactionService)
-        {
-            _logger = logger;
-            _interactionService = interactionService;
-        }
+        private readonly IIdentityServerInteractionService _interactionService = interactionService;
 
         [HttpGet]
         public async Task<IActionResult> Index(string returnUrl)
@@ -48,7 +42,7 @@ namespace ZeroFramework.IdentityServer.API.Controllers
             ProcessConsentResult processConsentResult = new();
 
             // validate return url is still valid
-            AuthorizationRequest authorizationRequest = await _interactionService.GetAuthorizationContextAsync(model.ReturnUrl);
+            AuthorizationRequest? authorizationRequest = await _interactionService.GetAuthorizationContextAsync(model.ReturnUrl);
 
             if (authorizationRequest is null)
             {
@@ -107,7 +101,7 @@ namespace ZeroFramework.IdentityServer.API.Controllers
 
         private async Task<ConsentViewModel?> BuildViewModelAsync(string returnUrl, ConsentInputModel? model = null)
         {
-            AuthorizationRequest authorizationRequest = await _interactionService.GetAuthorizationContextAsync(returnUrl);
+            AuthorizationRequest? authorizationRequest = await _interactionService.GetAuthorizationContextAsync(returnUrl);
 
             if (authorizationRequest is not null)
             {
@@ -139,7 +133,7 @@ namespace ZeroFramework.IdentityServer.API.Controllers
 
             consentViewModel.IdentityScopes = request.ValidatedResources.Resources.IdentityResources.Select(x => CreateScopeViewModel(x, consentViewModel.ScopesConsented.Contains(x.Name) || model == null)).ToArray();
 
-            List<ScopeViewModel> scopeViewModels = new();
+            List<ScopeViewModel> scopeViewModels = [];
 
             foreach (ParsedScopeValue parsedScope in request.ValidatedResources.ParsedScopes)
             {

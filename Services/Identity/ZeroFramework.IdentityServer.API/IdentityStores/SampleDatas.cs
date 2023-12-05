@@ -14,7 +14,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
         {
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
-            new IdentityResource("userinfo", "Your user information", new []
+            new("userinfo", "Your user information", new []
             {
                 JwtClaimTypes.Role,
                 JwtRegisteredClaimNames.UniqueName,
@@ -26,11 +26,11 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
 
         public static IEnumerable<ApiResource> Apis => new List<ApiResource>
         {
-            new ApiResource("devicecenterapi", "Device Center API",new []{ JwtClaimTypes.Email })
+            new("devicecenterapi", "Device Center API",new []{ JwtClaimTypes.Email })
             {
                 Scopes= { "openapi", "devicecenter" }
             },
-            new ApiResource("identityserverapi", "Identity Server API",new []{ JwtClaimTypes.PhoneNumber,JwtClaimTypes.BirthDate})
+            new("identityserverapi", "Identity Server API",new []{ JwtClaimTypes.PhoneNumber,JwtClaimTypes.BirthDate})
             {
                 Scopes= { "openapi", "identityserver" }
             }
@@ -38,15 +38,14 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
 
         public static IEnumerable<ApiScope> ApiScopes => new List<ApiScope>
         {
-            new ApiScope("openapi", "All open web api", new []{ JwtClaimTypes.Role, TenantClaimTypes.TenantId, TenantClaimTypes.TenantName, JwtClaimTypes.Name}),
-            new ApiScope("identityserver", "Identity server api", new []{ JwtClaimTypes.Role, TenantClaimTypes.TenantId, TenantClaimTypes.TenantName, JwtClaimTypes.Name}),
-            new ApiScope("devicecenter", "Device center api", new []{ JwtClaimTypes.Role, TenantClaimTypes.TenantId, TenantClaimTypes.TenantName, JwtClaimTypes.Name})
+            new("openapi", "All open web api", new []{ JwtClaimTypes.Role, TenantClaimTypes.TenantId, TenantClaimTypes.TenantName, JwtClaimTypes.Name}),
+            new("identityserver", "Identity server api", new []{ JwtClaimTypes.Role, TenantClaimTypes.TenantId, TenantClaimTypes.TenantName, JwtClaimTypes.Name}),
+            new("devicecenter", "Device center api", new []{ JwtClaimTypes.Role, TenantClaimTypes.TenantId, TenantClaimTypes.TenantName, JwtClaimTypes.Name})
         };
 
         public static IEnumerable<Client> Clients => new List<Client>
         {
-            new Client
-            {
+            new() {
                 ClientId = "devicecenterswagger",
                 ClientName = "Device Center Swagger",
                 ClientSecrets = { new Secret("secret".Sha256())},
@@ -78,8 +77,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                 },
                 AccessTokenLifetime =3600*24
             },
-            new Client
-            {
+            new() {
                 ClientId = "identityserverswagger",
                 ClientName = "Identity Server Swagger",
                 ClientSecrets = { new Secret("secret".Sha256())},
@@ -111,8 +109,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
                 },
                 AccessTokenLifetime = 3600*24
             },
-            new Client
-            {
+            new() {
                 ClientId = "devicecenterweb",
                 ClientName = "Device Center Web",
                 AllowedGrantTypes = GrantTypes.Code,
@@ -221,7 +218,7 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
             string phoneMock() => $"{random.Next(130, 190)}{random.Next(10000000, 99999999)}";
             DateTimeOffset dateMock() => DateTimeOffset.Now.AddDays(-random.Next(1, 365 * 30));
 
-            Dictionary<ApplicationUser, IEnumerable<Claim>> result = new();
+            Dictionary<ApplicationUser, IEnumerable<Claim>> result = [];
 
             var currentHostRoles = roles.Where(r => r.TenantId == null).ToArray();
             List<Claim> claims = currentHostRoles.Select(r => new Claim(JwtClaimTypes.Role, r.Name!, ClaimValueTypes.String)).ToList();
@@ -269,11 +266,11 @@ namespace ZeroFramework.IdentityServer.API.IdentityStores
 
                 string tenantUserName = $"user{i.ToString().PadLeft(2, '0')}";
 
-                claims = new List<Claim>
-                {
+                claims =
+                [
                     new(JwtClaimTypes.BirthDate, dateMock().ToString("yyyy-MM-dd"), ClaimValueTypes.Date),
-                    new(JwtClaimTypes.Role, currentUserRoles[random.Next(0,currentUserRoles.Length)].Name!, ClaimValueTypes.String),
-                };
+                    new(JwtClaimTypes.Role, currentUserRoles[random.Next(0, currentUserRoles.Length)].Name!, ClaimValueTypes.String),
+                ];
 
                 user = new ApplicationUser
                 {

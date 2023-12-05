@@ -9,14 +9,9 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ResourceGroupsController : ControllerBase
+    public class ResourceGroupsController(IResourceGroupApplicationService resourceGroupApplicationService) : ControllerBase
     {
-        private readonly IResourceGroupApplicationService _resourceGroupApplicationService;
-
-        public ResourceGroupsController(IResourceGroupApplicationService resourceGroupApplicationService)
-        {
-            _resourceGroupApplicationService = resourceGroupApplicationService;
-        }
+        private readonly IResourceGroupApplicationService _resourceGroupApplicationService = resourceGroupApplicationService;
 
         [HttpGet]
         [Authorize(ResourceGroupPermissions.ResourceGroups.Default)]

@@ -4,14 +4,9 @@ using ZeroFramework.DeviceCenter.Application.Services.Permissions;
 
 namespace ZeroFramework.DeviceCenter.Application.PermissionProviders
 {
-    public class ResourceGroupPermissionDefinitionProvider : IPermissionDefinitionProvider
+    public class ResourceGroupPermissionDefinitionProvider(IStringLocalizerFactory factory) : IPermissionDefinitionProvider
     {
-        private readonly IStringLocalizer _localizer;
-
-        public ResourceGroupPermissionDefinitionProvider(IStringLocalizerFactory factory)
-        {
-            _localizer = factory.Create("Permissions.MyPermissions", Assembly.GetExecutingAssembly().FullName ?? string.Empty);
-        }
+        private readonly IStringLocalizer _localizer = factory.Create("Permissions.MyPermissions", Assembly.GetExecutingAssembly().FullName ?? string.Empty);
 
         public void Define(PermissionDefinitionContext context)
         {

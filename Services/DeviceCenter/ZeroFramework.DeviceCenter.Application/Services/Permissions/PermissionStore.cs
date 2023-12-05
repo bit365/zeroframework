@@ -6,25 +6,17 @@ using ZeroFramework.DeviceCenter.Domain.Aggregates.PermissionAggregate;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
 {
-    public class PermissionStore : IPermissionStore
+    public class PermissionStore(IPermissionGrantRepository permissionGrantRepository, IPermissionDefinitionManager permissionDefinitionManager, IDistributedCache distributedCache, ILogger<PermissionStore> logger) : IPermissionStore
     {
-        private readonly IPermissionGrantRepository _permissionGrantRepository;
+        private readonly IPermissionGrantRepository _permissionGrantRepository = permissionGrantRepository;
 
-        private readonly IPermissionDefinitionManager _permissionDefinitionManager;
+        private readonly IPermissionDefinitionManager _permissionDefinitionManager = permissionDefinitionManager;
 
-        private readonly IDistributedCache _distributedCache;
+        private readonly IDistributedCache _distributedCache = distributedCache;
 
-        private readonly ILogger<PermissionStore> _logger;
+        private readonly ILogger<PermissionStore> _logger = logger ?? NullLogger<PermissionStore>.Instance;
 
         private const string CacheKeyFormat = "pn:{0},pk:{1},on:{2},rg:{3}"; //<object-type>:<id>:<field1>.<field2> Or <object-type>:<id>:<field1>-<field2>
-
-        public PermissionStore(IPermissionGrantRepository permissionGrantRepository, IPermissionDefinitionManager permissionDefinitionManager, IDistributedCache distributedCache, ILogger<PermissionStore> logger)
-        {
-            _permissionGrantRepository = permissionGrantRepository;
-            _permissionDefinitionManager = permissionDefinitionManager;
-            _distributedCache = distributedCache;
-            _logger = logger ?? NullLogger<PermissionStore>.Instance;
-        }
 
         public async Task<bool> IsGrantedAsync(string operationName, string providerName, string providerKey, Guid? resourceGroupId)
         {
@@ -104,7 +96,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
                 }
             }
 
-            List<Task> setCacheItemTasks = new();
+            List<Task> setCacheItemTasks = [];
 
             foreach ((string Key, bool IsGranted) in cacheItems)
             {
@@ -124,7 +116,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
 
             _logger.LogDebug("PermissionStore.GetCacheItemAsync: {cacheKeys}", string.Join(",", cacheKeys));
 
-            List<Task<KeyValuePair<string, string>>> getCacheItemTasks = new();
+            List<Task<KeyValuePair<string, string>>> getCacheItemTasks = [];
 
             foreach (string cacheKey in cacheKeys)
             {
@@ -160,7 +152,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
 
             _logger.LogDebug("Setting the cache items. Count: {permissionsCount}", permissions.Count);
 
-            Dictionary<string, bool> cacheItems = new();
+            Dictionary<string, bool> cacheItems = [];
 
             foreach (PermissionDefinition? permission in permissions)
             {
@@ -168,7 +160,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Permissions
                 cacheItems.Add(string.Format(CacheKeyFormat, providerName, providerKey, permission.Name, resourceGroupId), isGranted);
             }
 
-            List<Task> setCacheItemTasks = new();
+            List<Task> setCacheItemTasks = [];
 
             foreach ((string Key, bool IsGranted) in cacheItems)
             {

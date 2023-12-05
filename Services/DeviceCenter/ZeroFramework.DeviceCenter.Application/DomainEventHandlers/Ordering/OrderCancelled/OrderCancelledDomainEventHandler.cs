@@ -8,23 +8,15 @@ using ZeroFramework.DeviceCenter.Domain.Events.Ordering;
 
 namespace ZeroFramework.DeviceCenter.Application.DomainEventHandlers.Ordering.OrderCancelled
 {
-    public class OrderCancelledDomainEventHandler : INotificationHandler<OrderCancelledDomainEvent>
+    public class OrderCancelledDomainEventHandler(IOrderRepository orderRepository, ILoggerFactory loggerFactory, IBuyerRepository buyerRepository, IIntegrationEventService integrationEventService) : INotificationHandler<OrderCancelledDomainEvent>
     {
-        private readonly IOrderRepository _orderRepository;
+        private readonly IOrderRepository _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
 
-        private readonly IBuyerRepository _buyerRepository;
+        private readonly IBuyerRepository _buyerRepository = buyerRepository ?? throw new ArgumentNullException(nameof(buyerRepository));
 
-        private readonly ILoggerFactory _loggerFactory;
+        private readonly ILoggerFactory _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
 
-        private readonly IIntegrationEventService _integrationEventService;
-
-        public OrderCancelledDomainEventHandler(IOrderRepository orderRepository, ILoggerFactory loggerFactory, IBuyerRepository buyerRepository, IIntegrationEventService integrationEventService)
-        {
-            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
-            _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
-            _buyerRepository = buyerRepository ?? throw new ArgumentNullException(nameof(buyerRepository));
-            _integrationEventService = integrationEventService;
-        }
+        private readonly IIntegrationEventService _integrationEventService = integrationEventService;
 
         public async Task Handle(OrderCancelledDomainEvent orderCancelledDomainEvent, CancellationToken cancellationToken)
         {

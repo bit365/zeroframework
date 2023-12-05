@@ -2,19 +2,12 @@
 
 namespace ZeroFramework.IdentityServer.API.Models.Users
 {
-    public class UserClaimModel
+    public class UserClaimModel(string claimType, string claimValue)
     {
         [AllowNull]
-        public string ClaimType { get; set; }
+        public string ClaimType { get; set; } = claimType;
 
         [AllowNull]
-        public string ClaimValue { get; set; }
-
-
-        public UserClaimModel(string claimType, string claimValue)
-        {
-            ClaimType = claimType;
-            ClaimValue = claimValue;
-        }
+        public string ClaimValue { get; set; } = claimValue;
     }
 }

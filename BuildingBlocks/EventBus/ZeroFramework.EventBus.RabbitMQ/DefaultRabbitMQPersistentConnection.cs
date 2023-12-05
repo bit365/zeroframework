@@ -6,24 +6,17 @@ using System.Net.Sockets;
 
 namespace ZeroFramework.EventBus.RabbitMQ
 {
-    public class DefaultRabbitMQPersistentConnection : IRabbitMQPersistentConnection
+    public class DefaultRabbitMQPersistentConnection(IConnectionFactory connectionFactory, ILogger<DefaultRabbitMQPersistentConnection> logger, int retryCount = 5) : IRabbitMQPersistentConnection
     {
-        private readonly IConnectionFactory _connectionFactory;
+        private readonly IConnectionFactory _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
 
-        private readonly ILogger<DefaultRabbitMQPersistentConnection> _logger;
+        private readonly ILogger<DefaultRabbitMQPersistentConnection> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        private readonly int _retryCount;
+        private readonly int _retryCount = retryCount;
 
         private IConnection? _connection = null;
 
         readonly object _syncRoot = new();
-
-        public DefaultRabbitMQPersistentConnection(IConnectionFactory connectionFactory, ILogger<DefaultRabbitMQPersistentConnection> logger, int retryCount = 5)
-        {
-            _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _retryCount = retryCount;
-        }
 
         public bool IsConnected => _connection != null && _connection.IsOpen && !_disposed;
 

@@ -5,17 +5,11 @@ using ZeroFramework.EventBus.Events;
 
 namespace ZeroFramework.EventBus.MemoryQueue
 {
-    public class InMemoryEventBus : IEventBus
+    public class InMemoryEventBus(IEventBusSubscriptionsManager subsManager, IServiceProvider serviceProvider) : IEventBus
     {
-        private readonly IEventBusSubscriptionsManager _subsManager;
+        private readonly IEventBusSubscriptionsManager _subsManager = subsManager;
 
-        private readonly IServiceProvider _serviceProvider;
-
-        public InMemoryEventBus(IEventBusSubscriptionsManager subsManager, IServiceProvider serviceProvider)
-        {
-            _subsManager = subsManager;
-            _serviceProvider = serviceProvider;
-        }
+        private readonly IServiceProvider _serviceProvider = serviceProvider;
 
         public async Task PublishAsync(IntegrationEvent @event, CancellationToken cancellationToken = default)
         {

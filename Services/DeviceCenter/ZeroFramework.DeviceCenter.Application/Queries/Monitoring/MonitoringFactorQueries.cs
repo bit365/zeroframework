@@ -8,11 +8,9 @@ using ZeroFramework.DeviceCenter.Domain.Aggregates.MonitoringAggregate;
 
 namespace ZeroFramework.DeviceCenter.Application.Queries.Monitoring
 {
-    public class MonitoringFactorQueries : IMonitoringFactorQueries
+    public class MonitoringFactorQueries(IDbConnectionFactory dbConnectionFactory) : IMonitoringFactorQueries
     {
-        private readonly IDbConnectionFactory _dbConnectionFactory;
-
-        public MonitoringFactorQueries(IDbConnectionFactory dbConnectionFactory) => _dbConnectionFactory = dbConnectionFactory;
+        private readonly IDbConnectionFactory _dbConnectionFactory = dbConnectionFactory;
 
         public async Task<MonitoringFactorGetResponseModel> GetMonitoringFactorAsync(int id)
         {
@@ -31,7 +29,7 @@ namespace ZeroFramework.DeviceCenter.Application.Queries.Monitoring
 
             if (model.Sorter is null || !model.Sorter.Any())
             {
-                model.Sorter = new List<SortingDescriptor> { new SortingDescriptor { PropertyName = nameof(MonitoringFactor.Id), SortDirection = SortingOrder.Descending } };
+                model.Sorter = new List<SortingDescriptor> { new() { PropertyName = nameof(MonitoringFactor.Id), SortDirection = SortingOrder.Descending } };
             }
 
             StringBuilder orderByStringBuilder = new();

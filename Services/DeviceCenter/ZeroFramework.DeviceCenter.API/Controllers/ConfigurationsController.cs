@@ -13,35 +13,23 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class ConfigurationsController : ControllerBase
+    public class ConfigurationsController(ILogger<ConfigurationsController> logger,
+      IHttpContextAccessor httpContextAccessor,
+      IOptions<AuthorizationOptions> authorizationOptions,
+      IOptions<RequestLocalizationOptions> requestLocalizationOptions,
+      IPermissionDefinitionManager permissionDefinitionManager,
+      IPermissionChecker permissionChecker,
+      IAuthorizationService authorizationService,
+      IStringLocalizerFactory stringLocalizerFactory) : ControllerBase
     {
-        private readonly ILogger<ConfigurationsController> _logger;
-        private readonly AuthorizationOptions _authorizationOptions;
-        private readonly RequestLocalizationOptions _requestLocalizationOptions;
-        private readonly IPermissionDefinitionManager _permissionDefinitionManager;
-        private readonly IPermissionChecker _permissionChecker;
-        private readonly IAuthorizationService _authorizationService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IStringLocalizerFactory _stringLocalizerFactory;
-
-        public ConfigurationsController(ILogger<ConfigurationsController> logger,
-          IHttpContextAccessor httpContextAccessor,
-          IOptions<AuthorizationOptions> authorizationOptions,
-          IOptions<RequestLocalizationOptions> requestLocalizationOptions,
-          IPermissionDefinitionManager permissionDefinitionManager,
-          IPermissionChecker permissionChecker,
-          IAuthorizationService authorizationService,
-          IStringLocalizerFactory stringLocalizerFactory)
-        {
-            _logger = logger ?? NullLogger<ConfigurationsController>.Instance;
-            _httpContextAccessor = httpContextAccessor;
-            _authorizationOptions = authorizationOptions.Value;
-            _requestLocalizationOptions = requestLocalizationOptions.Value;
-            _permissionDefinitionManager = permissionDefinitionManager;
-            _permissionChecker = permissionChecker;
-            _authorizationService = authorizationService;
-            _stringLocalizerFactory = stringLocalizerFactory;
-        }
+        private readonly ILogger<ConfigurationsController> _logger = logger ?? NullLogger<ConfigurationsController>.Instance;
+        private readonly AuthorizationOptions _authorizationOptions = authorizationOptions.Value;
+        private readonly RequestLocalizationOptions _requestLocalizationOptions = requestLocalizationOptions.Value;
+        private readonly IPermissionDefinitionManager _permissionDefinitionManager = permissionDefinitionManager;
+        private readonly IPermissionChecker _permissionChecker = permissionChecker;
+        private readonly IAuthorizationService _authorizationService = authorizationService;
+        private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+        private readonly IStringLocalizerFactory _stringLocalizerFactory = stringLocalizerFactory;
 
         [HttpGet]
         [AllowAnonymous]
@@ -76,8 +64,8 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
 
             public PermissionConfiguration()
             {
-                Policies = new Dictionary<string, bool>();
-                GrantedPolicies = new Dictionary<string, bool>();
+                Policies = [];
+                GrantedPolicies = [];
             }
         }
 
@@ -104,12 +92,12 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
                 object? policyMapPropertyValue = policyMapProperty.GetValue(_authorizationOptions);
                 if (policyMapPropertyValue is not null)
                 {
-                    policyNames = policyNames.Union(((IDictionary<string, AuthorizationPolicy>)policyMapPropertyValue).Keys.ToList());
+                    policyNames = policyNames.Union(((IDictionary<string, Task<AuthorizationPolicy>>)policyMapPropertyValue).Keys.ToList());
                 }
             }
 
-            List<string> permissionPolicyNames = new();
-            List<string> otherPolicyNames = new();
+            List<string> permissionPolicyNames = [];
+            List<string> otherPolicyNames = [];
 
             foreach (var policyName in policyNames)
             {
@@ -155,7 +143,7 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
         private async Task<LocalizationConfiguration> GetLocalizationConfigurationAsync()
 #pragma warning restore IDE0051 // Remove unused private members
         {
-            LocalizationConfiguration localizationConfiguration = new() { Values = new Dictionary<string, Dictionary<string, string>>() };
+            LocalizationConfiguration localizationConfiguration = new() { Values = [] };
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 

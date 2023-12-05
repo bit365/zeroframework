@@ -10,6 +10,6 @@ namespace ZeroFramework.DeviceCenter.Domain.Aggregates.ProjectAggregate
 
         public DateTimeOffset CreationTime { get; set; } = DateTimeOffset.Now;
 
-        public List<ProjectGroup> Groups { get; set; } = new();
+        public List<ProjectGroup> Groups { get; set; } = [];
     }
 }

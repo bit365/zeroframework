@@ -9,23 +9,15 @@ using ZeroFramework.EventBus.Events;
 
 namespace ZeroFramework.DeviceCenter.Application.Infrastructure
 {
-    public class IntegrationEventService : IIntegrationEventService
+    public class IntegrationEventService(IEventBus eventBus, IRepository<IntegrationEventLog> eventLogRepository, ILogger<IntegrationEventService> logger) : IIntegrationEventService
     {
-        private readonly IEventBus _eventBus;
+        private readonly IEventBus _eventBus = eventBus;
 
-        private readonly IRepository<IntegrationEventLog> _eventLogRepository;
+        private readonly IRepository<IntegrationEventLog> _eventLogRepository = eventLogRepository;
 
-        private readonly ILogger<IntegrationEventService> _logger;
+        private readonly ILogger<IntegrationEventService> _logger = logger;
 
-        private readonly List<Type> _eventTypes;
-
-        public IntegrationEventService(IEventBus eventBus, IRepository<IntegrationEventLog> eventLogRepository, ILogger<IntegrationEventService> logger)
-        {
-            _eventBus = eventBus;
-            _eventLogRepository = eventLogRepository;
-            _logger = logger;
-            _eventTypes = Assembly.GetExecutingAssembly().ExportedTypes.Where(t => t.Name.EndsWith(nameof(IntegrationEvent))).ToList();
-        }
+        private readonly List<Type> _eventTypes = Assembly.GetExecutingAssembly().ExportedTypes.Where(t => t.Name.EndsWith(nameof(IntegrationEvent))).ToList();
 
         public async Task PublishEventsThroughEventBusAsync(Guid transactionId)
         {
@@ -33,7 +25,7 @@ namespace ZeroFramework.DeviceCenter.Application.Infrastructure
 
             IEnumerable<IntegrationEventLog> result = await _eventLogRepository.Query.Where(e => e.TransactionId == tid && e.Status == IntegrationEventStatus.NotPublished).ToListAsync();
 
-            List<IntegrationEvent> pendingLogEvents = new();
+            List<IntegrationEvent> pendingLogEvents = [];
 
             if (result != null && result.Any())
             {

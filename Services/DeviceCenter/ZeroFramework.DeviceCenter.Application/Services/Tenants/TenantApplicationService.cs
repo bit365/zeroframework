@@ -7,17 +7,11 @@ using ZeroFramework.DeviceCenter.Infrastructure.Constants;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Tenants
 {
-    public class TenantApplicationService : ITenantApplicationService
+    public class TenantApplicationService(IRepository<Tenant, Guid> tenantRepository, IMapper mapper) : ITenantApplicationService
     {
-        protected readonly IRepository<Tenant, Guid> _tenantRepository;
+        protected readonly IRepository<Tenant, Guid> _tenantRepository = tenantRepository;
 
-        private readonly IMapper _mapper;
-
-        public TenantApplicationService(IRepository<Tenant, Guid> tenantRepository, IMapper mapper)
-        {
-            _tenantRepository = tenantRepository;
-            _mapper = mapper;
-        }
+        private readonly IMapper _mapper = mapper;
 
         public async Task<TenantGetResponseModel> CreateAsync(TenantCreateOrUpdateRequestModel requestModel)
         {

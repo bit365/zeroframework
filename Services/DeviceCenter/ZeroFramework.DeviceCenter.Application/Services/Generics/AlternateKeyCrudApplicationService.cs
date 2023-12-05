@@ -4,17 +4,11 @@ using ZeroFramework.DeviceCenter.Domain.Repositories;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Generics
 {
-    public abstract class AlternateKeyCrudApplicationService<TEntity, TKey, TGetResponseModel, TGetListRequestModel, TGetListResponseModel, TCreateRequestModel, TUpdateRequestModel> : ICrudApplicationService<TKey, TGetResponseModel, TGetListRequestModel, TGetListResponseModel, TCreateRequestModel, TUpdateRequestModel> where TEntity : BaseEntity
+    public abstract class AlternateKeyCrudApplicationService<TEntity, TKey, TGetResponseModel, TGetListRequestModel, TGetListResponseModel, TCreateRequestModel, TUpdateRequestModel>(IRepository<TEntity> repository, IMapper mapper) : ICrudApplicationService<TKey, TGetResponseModel, TGetListRequestModel, TGetListResponseModel, TCreateRequestModel, TUpdateRequestModel> where TEntity : BaseEntity
     {
-        protected IRepository<TEntity> Repository { get; }
+        protected IRepository<TEntity> Repository { get; } = repository;
 
-        private readonly IMapper _mapper;
-
-        public AlternateKeyCrudApplicationService(IRepository<TEntity> repository, IMapper mapper)
-        {
-            Repository = repository;
-            _mapper = mapper;
-        }
+        private readonly IMapper _mapper = mapper;
 
         public virtual async Task<TGetResponseModel> CreateAsync(TCreateRequestModel requestModel)
         {

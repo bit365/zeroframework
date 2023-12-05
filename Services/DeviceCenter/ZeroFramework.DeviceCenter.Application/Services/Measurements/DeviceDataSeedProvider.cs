@@ -1,22 +1,14 @@
-﻿using Microsoft.Extensions.Logging;
-using ZeroFramework.DeviceCenter.Application.Models.Measurements;
-using ZeroFramework.DeviceCenter.Domain.Aggregates.DeviceAggregate;
+﻿using ZeroFramework.DeviceCenter.Domain.Aggregates.DeviceAggregate;
 using ZeroFramework.DeviceCenter.Domain.Aggregates.ProductAggregate;
 using ZeroFramework.DeviceCenter.Domain.Repositories;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Measurements
 {
-    public class DeviceDataSeedProvider : IDataSeedProvider
+    public class DeviceDataSeedProvider(IRepository<Product, int> productRepository, IRepository<Device, long> deviceRepository) : IDataSeedProvider
     {
-        private readonly IRepository<Product, int> _productRepository;
+        private readonly IRepository<Product, int> _productRepository = productRepository;
 
-        private readonly IRepository<Device, long> _deviceRepository;
-
-        public DeviceDataSeedProvider(IRepository<Product, int> productRepository, IRepository<Device, long> deviceRepository, IDeviceDataApplicationService deviceDataApplicationService, ILogger<DeviceDataSeedProvider> logger)
-        {
-            _productRepository = productRepository;
-            _deviceRepository = deviceRepository;
-        }
+        private readonly IRepository<Device, long> _deviceRepository = deviceRepository;
 
         public async Task SeedAsync(IServiceProvider serviceProvider)
         {

@@ -3,11 +3,9 @@ using ZeroFramework.DeviceCenter.Domain.Repositories;
 
 namespace ZeroFramework.DeviceCenter.Domain.Services.Devices
 {
-    public class DeviceGroupDomainService : IDeviceGroupDomainService
+    public class DeviceGroupDomainService(IRepository<DeviceGroup, int> deviceGroupRepository) : IDeviceGroupDomainService
     {
-        private readonly IRepository<DeviceGroup, int> _deviceGroupRepository;
-
-        public DeviceGroupDomainService(IRepository<DeviceGroup, int> deviceGroupRepository) => _deviceGroupRepository = deviceGroupRepository;
+        private readonly IRepository<DeviceGroup, int> _deviceGroupRepository = deviceGroupRepository;
 
         public async Task<(List<DeviceGroup> Items, int TotalCount)> GetDeviceGroupListAsync(int? parentId, string? keyword, int pageNumber, int pageSize)
         {

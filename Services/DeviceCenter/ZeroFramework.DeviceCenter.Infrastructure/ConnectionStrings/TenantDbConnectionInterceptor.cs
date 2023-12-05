@@ -3,11 +3,9 @@ using System.Data.Common;
 
 namespace ZeroFramework.DeviceCenter.Infrastructure.ConnectionStrings
 {
-    public class TenantDbConnectionInterceptor : DbConnectionInterceptor
+    public class TenantDbConnectionInterceptor(IConnectionStringProvider connectionStringProvider) : DbConnectionInterceptor
     {
-        private readonly IConnectionStringProvider _connectionStringProvider;
-
-        public TenantDbConnectionInterceptor(IConnectionStringProvider connectionStringProvider) => _connectionStringProvider = connectionStringProvider;
+        private readonly IConnectionStringProvider _connectionStringProvider = connectionStringProvider;
 
         public override InterceptionResult ConnectionOpening(DbConnection connection, ConnectionEventData eventData, InterceptionResult result)
         {

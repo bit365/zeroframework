@@ -5,17 +5,11 @@ using ZeroFramework.DeviceCenter.Infrastructure.Constants;
 
 namespace ZeroFramework.DeviceCenter.Infrastructure.ConnectionStrings
 {
-    public class TenantConnectionStringProvider : DefaultConnectionStringProvider
+    public class TenantConnectionStringProvider(IOptions<TenantStoreOptions> options, ICurrentTenant currentTenant, IConfiguration configuration) : DefaultConnectionStringProvider(configuration)
     {
-        private readonly ICurrentTenant _currentTenant;
+        private readonly ICurrentTenant _currentTenant = currentTenant;
 
-        private readonly TenantStoreOptions _tenantStoreOptions;
-
-        public TenantConnectionStringProvider(IOptions<TenantStoreOptions> options, ICurrentTenant currentTenant, IConfiguration configuration) : base(configuration)
-        {
-            _currentTenant = currentTenant;
-            _tenantStoreOptions = options.Value;
-        }
+        private readonly TenantStoreOptions _tenantStoreOptions = options.Value;
 
         public override Task<string> GetAsync(string? connectionStringName = null)
         {

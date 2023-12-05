@@ -5,11 +5,9 @@ using ZeroFramework.DeviceCenter.Infrastructure.ConnectionStrings;
 
 namespace ZeroFramework.DeviceCenter.Application.Queries.Factories
 {
-    public class DbConnectionFactory : IDbConnectionFactory
+    public class DbConnectionFactory(IConnectionStringProvider connectionStringProvider) : IDbConnectionFactory
     {
-        private readonly IConnectionStringProvider _connectionStringProvider;
-
-        public DbConnectionFactory(IConnectionStringProvider connectionStringProvider) => _connectionStringProvider = connectionStringProvider;
+        private readonly IConnectionStringProvider _connectionStringProvider = connectionStringProvider;
 
         static DbConnectionFactory() => DbProviderFactories.RegisterFactory("System.Data.SqlClient", SqlClientFactory.Instance);
 

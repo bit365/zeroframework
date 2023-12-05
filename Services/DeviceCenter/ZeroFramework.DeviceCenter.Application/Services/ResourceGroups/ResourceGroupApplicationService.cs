@@ -6,14 +6,9 @@ using ZeroFramework.DeviceCenter.Domain.Repositories;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.ResourceGroups
 {
-    public class ResourceGroupApplicationService : CrudApplicationService<ResourceGroup, Guid, ResourceGroupGetResponseModel, ResourceGroupPagedRequestModel, ResourceGroupGetResponseModel, ResourceGroupCreateRequestModel, ResourceGroupUpdateRequestModel>, IResourceGroupApplicationService
+    public class ResourceGroupApplicationService(IRepository<ResourceGroup, Guid> repository, IMapper mapper) : CrudApplicationService<ResourceGroup, Guid, ResourceGroupGetResponseModel, ResourceGroupPagedRequestModel, ResourceGroupGetResponseModel, ResourceGroupCreateRequestModel, ResourceGroupUpdateRequestModel>(repository, mapper), IResourceGroupApplicationService
     {
-        private readonly IMapper _mapper;
-
-        public ResourceGroupApplicationService(IRepository<ResourceGroup, Guid> repository, IMapper mapper) : base(repository, mapper)
-        {
-            _mapper = mapper;
-        }
+        private readonly IMapper _mapper = mapper;
 
         public async Task<ResourceGroupGetResponseModel> GetOrAddDefaultGroupAsync()
         {

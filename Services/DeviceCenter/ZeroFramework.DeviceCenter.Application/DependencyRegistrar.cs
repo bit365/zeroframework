@@ -49,7 +49,7 @@ namespace ZeroFramework.DeviceCenter.Application
             // Registers handlers and mediator types from the specified assemblies
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
-            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddMediatR(config => config.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
 
             ValidatorOptions.Global.LanguageManager = new Extensions.Validators.CustomLanguageManager();
 

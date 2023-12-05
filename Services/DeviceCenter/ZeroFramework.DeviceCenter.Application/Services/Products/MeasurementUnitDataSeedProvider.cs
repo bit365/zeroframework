@@ -3,21 +3,16 @@ using ZeroFramework.DeviceCenter.Domain.Repositories;
 
 namespace ZeroFramework.DeviceCenter.Application.Services.Products
 {
-    public class MeasurementUnitDataSeedProvider : IDataSeedProvider
+    public class MeasurementUnitDataSeedProvider(IRepository<MeasurementUnit, int> measurementUnitRepository) : IDataSeedProvider
     {
-        private readonly IRepository<MeasurementUnit, int> _measurementUnitRepository;
-
-        public MeasurementUnitDataSeedProvider(IRepository<MeasurementUnit, int> measurementUnitRepository)
-        {
-            _measurementUnitRepository = measurementUnitRepository;
-        }
+        private readonly IRepository<MeasurementUnit, int> _measurementUnitRepository = measurementUnitRepository;
 
         public async Task SeedAsync(IServiceProvider serviceProvider)
         {
             if (await _measurementUnitRepository.GetCountAsync() <= 0)
             {
-                List<MeasurementUnit> measurementUnits = new()
-                {
+                List<MeasurementUnit> measurementUnits =
+                [
                     new MeasurementUnit { UnitName = "无", Unit = string.Empty },
                     new MeasurementUnit { UnitName = "PH值", Unit = "pH" },
                     new MeasurementUnit { UnitName = "土壤EC值", Unit = "dS/m" },
@@ -147,7 +142,7 @@ namespace ZeroFramework.DeviceCenter.Application.Services.Products
                     new MeasurementUnit { UnitName = "分米", Unit = "dm" },
                     new MeasurementUnit { UnitName = "千米", Unit = "km" },
                     new MeasurementUnit { UnitName = "米", Unit = "m" },
-                };
+                ];
 
                 foreach (var item in measurementUnits)
                 {

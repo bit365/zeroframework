@@ -12,14 +12,9 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class MeasurementUnitsController : ControllerBase
+    public class MeasurementUnitsController(IMeasurementUnitApplicationService productService) : ControllerBase
     {
-        private readonly IMeasurementUnitApplicationService _productService;
-
-        public MeasurementUnitsController(IMeasurementUnitApplicationService productService)
-        {
-            _productService = productService;
-        }
+        private readonly IMeasurementUnitApplicationService _productService = productService;
 
         // GET: api/<MeasurementUnitsController>
         [HttpGet]

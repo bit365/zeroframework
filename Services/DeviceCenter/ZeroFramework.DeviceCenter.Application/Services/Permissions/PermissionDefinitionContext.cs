@@ -9,7 +9,7 @@
         internal PermissionDefinitionContext(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
-            Groups = new Dictionary<string, PermissionGroupDefinition>();
+            Groups = [];
         }
 
         public virtual PermissionGroupDefinition AddGroup(string name, string? displayName = null)

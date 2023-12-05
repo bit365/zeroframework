@@ -6,25 +6,16 @@ namespace ZeroFramework.DeviceCenter.Domain.Events.Ordering
     /// <summary>
     /// Event used when an order is created
     /// </summary>
-    public class OrderStartedDomainEvent : INotification
+    public class OrderStartedDomainEvent(Order order, Guid userId, int cardTypeId, string cardNumber, DateTimeOffset cardExpiration) : INotification
     {
-        public Guid UserId { get; }
+        public Guid UserId { get; } = userId;
 
-        public int CardTypeId { get; }
+        public int CardTypeId { get; } = cardTypeId;
 
-        public string CardNumber { get; }
+        public string CardNumber { get; } = cardNumber;
 
-        public DateTimeOffset CardExpiration { get; }
+        public DateTimeOffset CardExpiration { get; } = cardExpiration;
 
-        public Order Order { get; }
-
-        public OrderStartedDomainEvent(Order order, Guid userId, int cardTypeId, string cardNumber, DateTimeOffset cardExpiration)
-        {
-            Order = order;
-            UserId = userId;
-            CardTypeId = cardTypeId;
-            CardNumber = cardNumber;
-            CardExpiration = cardExpiration;
-        }
+        public Order Order { get; } = order;
     }
 }

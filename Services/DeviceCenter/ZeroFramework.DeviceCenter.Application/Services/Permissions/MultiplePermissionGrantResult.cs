@@ -8,7 +8,7 @@
 
         public Dictionary<string, PermissionGrantResult> Result { get; }
 
-        public MultiplePermissionGrantResult() => Result = new Dictionary<string, PermissionGrantResult>();
+        public MultiplePermissionGrantResult() => Result = [];
 
         public MultiplePermissionGrantResult(string[] names, PermissionGrantResult grantResult = PermissionGrantResult.Undefined) : this()
         {

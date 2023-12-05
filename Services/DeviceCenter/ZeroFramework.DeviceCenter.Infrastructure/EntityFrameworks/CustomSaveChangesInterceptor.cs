@@ -7,11 +7,9 @@ using ZeroFramework.DeviceCenter.Domain.Entities;
 
 namespace ZeroFramework.DeviceCenter.Infrastructure.EntityFrameworks
 {
-    public class CustomSaveChangesInterceptor : SaveChangesInterceptor
+    public class CustomSaveChangesInterceptor(IMediator mediator) : SaveChangesInterceptor
     {
-        private readonly IMediator _mediator;
-
-        public CustomSaveChangesInterceptor(IMediator mediator) => _mediator = mediator;
+        private readonly IMediator _mediator = mediator;
 
         public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
         {

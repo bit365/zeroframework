@@ -6,16 +6,10 @@ namespace ZeroFramework.DeviceCenter.Domain.Events.Ordering
     /// <summary>
     /// Event used when the grace period order is confirmed
     /// </summary>
-    public class OrderStatusChangedToAwaitingValidationDomainEvent : INotification
+    public class OrderStatusChangedToAwaitingValidationDomainEvent(Guid orderId, IEnumerable<OrderItem> orderItems) : INotification
     {
-        public Guid OrderId { get; }
+        public Guid OrderId { get; } = orderId;
 
-        public IEnumerable<OrderItem> OrderItems { get; }
-
-        public OrderStatusChangedToAwaitingValidationDomainEvent(Guid orderId, IEnumerable<OrderItem> orderItems)
-        {
-            OrderId = orderId;
-            OrderItems = orderItems;
-        }
+        public IEnumerable<OrderItem> OrderItems { get; } = orderItems;
     }
 }

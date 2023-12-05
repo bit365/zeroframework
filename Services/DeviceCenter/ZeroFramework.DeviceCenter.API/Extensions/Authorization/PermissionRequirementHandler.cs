@@ -5,11 +5,9 @@ using ZeroFramework.DeviceCenter.Domain.Aggregates.ResourceGroupAggregate;
 
 namespace ZeroFramework.DeviceCenter.API.Extensions.Authorization
 {
-    public class PermissionRequirementHandler : AuthorizationHandler<OperationAuthorizationRequirement>
+    public class PermissionRequirementHandler(IPermissionChecker permissionChecker) : AuthorizationHandler<OperationAuthorizationRequirement>
     {
-        private readonly IPermissionChecker _permissionChecker;
-
-        public PermissionRequirementHandler(IPermissionChecker permissionChecker) => _permissionChecker = permissionChecker;
+        private readonly IPermissionChecker _permissionChecker = permissionChecker;
 
         protected async override Task HandleRequirementAsync(AuthorizationHandlerContext context, OperationAuthorizationRequirement requirement)
         {
@@ -20,11 +18,9 @@ namespace ZeroFramework.DeviceCenter.API.Extensions.Authorization
         }
     }
 
-    public class ResourcePermissionRequirementHandler : AuthorizationHandler<OperationAuthorizationRequirement, ResourceDescriptor>
+    public class ResourcePermissionRequirementHandler(IPermissionChecker permissionChecker) : AuthorizationHandler<OperationAuthorizationRequirement, ResourceDescriptor>
     {
-        private readonly IPermissionChecker _permissionChecker;
-
-        public ResourcePermissionRequirementHandler(IPermissionChecker permissionChecker) => _permissionChecker = permissionChecker;
+        private readonly IPermissionChecker _permissionChecker = permissionChecker;
 
         protected async override Task HandleRequirementAsync(AuthorizationHandlerContext context, OperationAuthorizationRequirement requirement, ResourceDescriptor resource)
         {

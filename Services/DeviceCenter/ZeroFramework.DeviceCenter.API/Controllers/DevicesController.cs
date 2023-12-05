@@ -12,14 +12,9 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class DevicesController : ControllerBase
+    public class DevicesController(IDeviceApplicationService deviceService) : ControllerBase
     {
-        private readonly IDeviceApplicationService _deviceService;
-
-        public DevicesController(IDeviceApplicationService deviceService)
-        {
-            _deviceService = deviceService;
-        }
+        private readonly IDeviceApplicationService _deviceService = deviceService;
 
         // GET: api/<DevicesController>
         [HttpGet]

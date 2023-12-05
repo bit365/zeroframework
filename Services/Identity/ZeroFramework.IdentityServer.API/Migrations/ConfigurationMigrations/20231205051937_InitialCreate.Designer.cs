@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ZeroFramework.IdentityServer.API.Migrations.ConfigurationMigrations
 {
     [DbContext(typeof(ConfigurationDbContext))]
-    [Migration("20230110022356_InitialCreate")]
+    [Migration("20231205051937_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace ZeroFramework.IdentityServer.API.Migrations.ConfigurationMigrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.1")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -378,6 +378,12 @@ namespace ZeroFramework.IdentityServer.API.Migrations.ConfigurationMigrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<TimeSpan>("DPoPClockSkew")
+                        .HasColumnType("time");
+
+                    b.Property<int>("DPoPValidationMode")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
@@ -403,6 +409,10 @@ namespace ZeroFramework.IdentityServer.API.Migrations.ConfigurationMigrations
 
                     b.Property<bool>("IncludeJwtId")
                         .HasColumnType("bit");
+
+                    b.Property<string>("InitiateLoginUri")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<DateTime?>("LastAccessed")
                         .HasColumnType("datetime2");
@@ -436,6 +446,9 @@ namespace ZeroFramework.IdentityServer.API.Migrations.ConfigurationMigrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("RequireConsent")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RequireDPoP")
                         .HasColumnType("bit");
 
                     b.Property<bool>("RequirePkce")

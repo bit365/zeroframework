@@ -12,17 +12,11 @@ namespace ZeroFramework.IdentityServer.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = AuthorizeConstants.TenantOwnerRequireRole, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class TenantClaimsController : ControllerBase
+    public class TenantClaimsController(ApplicationDbContext context, IMapper mapper) : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context = context;
 
-        private readonly IMapper _mapper;
-
-        public TenantClaimsController(ApplicationDbContext context, IMapper mapper)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
+        private readonly IMapper _mapper = mapper;
 
         // GET: api/TenantClaims
         [HttpGet]

@@ -4,14 +4,9 @@ using ZeroFramework.EventBus.Abstractions;
 
 namespace ZeroFramework.DeviceCenter.Application.IntegrationEvents.EventHandling.Ordering
 {
-    public class OrderPaymentSucceededDynamicIntegrationEventHandler : IDynamicIntegrationEventHandler
+    public class OrderPaymentSucceededDynamicIntegrationEventHandler(IMediator mediator) : IDynamicIntegrationEventHandler
     {
-        private readonly IMediator _mediator;
-
-        public OrderPaymentSucceededDynamicIntegrationEventHandler(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        private readonly IMediator _mediator = mediator;
 
         public async Task HandleAsync(dynamic eventData)
         {

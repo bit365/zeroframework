@@ -5,10 +5,8 @@ using ZeroFramework.DeviceCenter.Infrastructure.EntityFrameworks;
 
 namespace ZeroFramework.DeviceCenter.Infrastructure.Repositories
 {
-    public class DeviceRepository : EfCoreRepository<DeviceCenterDbContext, Device, long>, IDeviceRepository
+    public class DeviceRepository(DeviceCenterDbContext dbContext) : EfCoreRepository<DeviceCenterDbContext, Device, long>(dbContext), IDeviceRepository
     {
-        public DeviceRepository(DeviceCenterDbContext dbContext) : base(dbContext) { }
-
         public async Task<int> GetCountAsync(int? productId, int? deviceGroupId, DeviceStatus? status, string? deviceName, CancellationToken cancellationToken = default)
         {
             IQueryable<Device> query = DbSet;

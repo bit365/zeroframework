@@ -12,14 +12,9 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController, ApiExplorerSettings(IgnoreApi = true)]
-    public class TenantsController : ControllerBase
+    public class TenantsController(ITenantApplicationService tenantService) : ControllerBase
     {
-        private readonly ITenantApplicationService _tenantService;
-
-        public TenantsController(ITenantApplicationService tenantService)
-        {
-            _tenantService = tenantService;
-        }
+        private readonly ITenantApplicationService _tenantService = tenantService;
 
         // GET: api/<TenantsController>
         [HttpGet]

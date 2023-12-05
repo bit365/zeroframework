@@ -2,19 +2,12 @@
 
 namespace ZeroFramework.DeviceCenter.Application.IntegrationEvents.Events.Ordering
 {
-    public class OrderStatusChangedToCancelledIntegrationEvent : IntegrationEvent
+    public class OrderStatusChangedToCancelledIntegrationEvent(Guid orderId, string orderStatus, Guid buyerId) : IntegrationEvent
     {
-        public Guid OrderId { get; }
+        public Guid OrderId { get; } = orderId;
 
-        public string OrderStatus { get; }
+        public string OrderStatus { get; } = orderStatus;
 
-        public Guid BuyerId { get; }
-
-        public OrderStatusChangedToCancelledIntegrationEvent(Guid orderId, string orderStatus, Guid buyerId)
-        {
-            OrderId = orderId;
-            OrderStatus = orderStatus;
-            BuyerId = buyerId;
-        }
+        public Guid BuyerId { get; } = buyerId;
     }
 }

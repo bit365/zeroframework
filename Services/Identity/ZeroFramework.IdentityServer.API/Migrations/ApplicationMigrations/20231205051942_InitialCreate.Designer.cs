@@ -12,7 +12,7 @@ using ZeroFramework.IdentityServer.API.IdentityStores;
 namespace ZeroFramework.IdentityServer.API.Migrations.ApplicationMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230110022401_InitialCreate")]
+    [Migration("20231205051942_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace ZeroFramework.IdentityServer.API.Migrations.ApplicationMigrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.1")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);

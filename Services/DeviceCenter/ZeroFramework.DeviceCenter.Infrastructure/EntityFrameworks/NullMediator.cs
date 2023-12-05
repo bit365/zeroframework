@@ -16,22 +16,27 @@ namespace ZeroFramework.DeviceCenter.Infrastructure.EntityFrameworks
 
         public Task Publish(object notification, CancellationToken cancellationToken = default)
         {
-            return Task.CompletedTask;
+            throw new NotImplementedException();
         }
 
         public Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken = default) where TNotification : INotification
         {
-            return Task.CompletedTask;
+            throw new NotImplementedException();
         }
 
         public Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken = default)
         {
-            return Task.FromResult(default(TResponse) ?? throw new System.NotImplementedException());
+            throw new NotImplementedException();
+        }
+
+        public Task Send<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : IRequest
+        {
+            throw new NotImplementedException();
         }
 
         public Task<object?> Send(object request, CancellationToken cancellationToken = default)
         {
-            return Task.FromResult<object?>(default);
+            throw new NotImplementedException();
         }
     }
 }

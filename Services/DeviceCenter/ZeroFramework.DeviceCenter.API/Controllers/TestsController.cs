@@ -11,17 +11,11 @@ namespace ZeroFramework.DeviceCenter.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ApiExplorerSettings(IgnoreApi = true)]
-    public class TestsController : ControllerBase
+    public class TestsController(IValidator<ProjectCreateOrUpdateRequestModel> validator, IDeviceDataApplicationService deviceDataApplicationService) : ControllerBase
     {
-        private readonly IValidator<ProjectCreateOrUpdateRequestModel> _validator;
+        private readonly IValidator<ProjectCreateOrUpdateRequestModel> _validator = validator;
 
-        private readonly IDeviceDataApplicationService _deviceDataApplicationService;
-
-        public TestsController(IValidator<ProjectCreateOrUpdateRequestModel> validator, IDeviceDataApplicationService deviceDataApplicationService)
-        {
-            _validator = validator;
-            _deviceDataApplicationService = deviceDataApplicationService;
-        }
+        private readonly IDeviceDataApplicationService _deviceDataApplicationService = deviceDataApplicationService;
 
         [HttpGet]
         public async Task<ActionResult<Measurement>> Get()

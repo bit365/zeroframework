@@ -1,16 +1,14 @@
 ﻿namespace ZeroFramework.DeviceCenter.Domain.Aggregates.TenantAggregate
 {
-    public class CurrentTenant : ICurrentTenant
+    public class CurrentTenant(ICurrentTenantAccessor currentTenantAccessor) : ICurrentTenant
     {
-        private readonly ICurrentTenantAccessor _currentTenantAccessor;
+        private readonly ICurrentTenantAccessor _currentTenantAccessor = currentTenantAccessor;
 
         public virtual bool IsAvailable => Id.HasValue;
 
         public virtual Guid? Id => _currentTenantAccessor.Current?.TenantId;
 
         public string? Name => _currentTenantAccessor.Current?.Name;
-
-        public CurrentTenant(ICurrentTenantAccessor currentTenantAccessor) => _currentTenantAccessor = currentTenantAccessor;
 
         public IDisposable Change(Guid? id, string? name = null)
         {
@@ -23,11 +21,9 @@
             });
         }
 
-        public class DisposeAction : IDisposable
+        public class DisposeAction(Action action) : IDisposable
         {
-            private readonly Action _action;
-
-            public DisposeAction(Action action) => _action = action;
+            private readonly Action _action = action;
 
             void IDisposable.Dispose()
             {

@@ -6,7 +6,7 @@ namespace ZeroFramework.DeviceCenter.Domain.Aggregates.OrderAggregate
 {
     public class Order : BaseAggregateRoot<Guid>
     {
-        private readonly List<OrderItem> _orderItems = new();
+        private readonly List<OrderItem> _orderItems = [];
 
         public OrderStatus OrderStatus { get; private set; } = OrderStatus.Submitted;
 

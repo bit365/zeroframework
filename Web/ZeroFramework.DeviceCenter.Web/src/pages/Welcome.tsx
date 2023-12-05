@@ -37,14 +37,14 @@ export default (): React.ReactNode => {
           <Typography.Text strong>
             <FormattedMessage id="pages.welcome.video" />{' '}
             <a
-              href="https://www.xcode.me/video/list/1000225681"
+              href="https://www.xcode.me/Training/Module/250"
               rel="noopener noreferrer"
               target="__blank"
             >
               <FormattedMessage id="pages.welcome.link" defaultMessage="欢迎使用" />
             </a>
           </Typography.Text>
-          <CodePreview>https://www.xcode.me/video/list/1000225681</CodePreview>
+          <CodePreview>https://www.xcode.me/Training/Module/250</CodePreview>
           <Typography.Text
             strong
             style={{
@@ -53,14 +53,15 @@ export default (): React.ReactNode => {
           >
             <FormattedMessage id="pages.welcome.framework" />{' '}
             <a
-              href="https://www.xcode.me/business/we-framework"
+              href="https://gitee.com/bit365/zeroframework"
               rel="noopener noreferrer"
               target="__blank"
             >
               <FormattedMessage id="pages.welcome.link" defaultMessage="欢迎使用" />
             </a>
           </Typography.Text>
-          <CodePreview>https://www.xcode.me/business/we-framework</CodePreview>
+          <CodePreview>https://gitee.com/bit365/zeroframework</CodePreview>
+          <CodePreview>https://github.com/bit365/zeroframework</CodePreview>
         </Card>
         <Card title={intl.formatMessage({
           id: 'pages.welcome.openapi'

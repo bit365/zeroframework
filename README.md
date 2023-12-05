@@ -13,7 +13,8 @@
 
 演示地址：https://cloud.helloworldnet.com
 
-演示账号：用户名 admin 密码 guest
+用户名： admin 
+密码： guest
 
 ## 学习教程
 
@@ -41,7 +42,6 @@ Drop-Database -Context ApplicationDbContext -Project ZeroFramework.IdentityServe
 2、删除迁移文件
 
 ```shell
-
 
 Remove-Migration -Context PersistedGrantDbContext -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API
 Remove-Migration -Context ConfigurationDbContext -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API
@@ -81,7 +81,6 @@ Update-Database -Context ApplicationDbContext -Project ZeroFramework.IdentitySer
 1、删除已有数据库
 
 ```shell
-
 Drop-Database -Context DeviceCenterDbContext -Project ZeroFramework.DeviceCenter.Infrastructure -StartupProject ZeroFramework.DeviceCenter.Infrastructure -Confirm:$false
 
 ```
@@ -89,7 +88,6 @@ Drop-Database -Context DeviceCenterDbContext -Project ZeroFramework.DeviceCenter
 2、删除迁移文件
 
 ```shell
-
 Remove-Migration -Context DeviceCenterDbContext -Project ZeroFramework.DeviceCenter.Infrastructure -StartupProject ZeroFramework.DeviceCenter.Infrastructure
     
 ```
@@ -97,7 +95,6 @@ Remove-Migration -Context DeviceCenterDbContext -Project ZeroFramework.DeviceCen
 3、添加新的迁移文件
 
 ```shell
-
 Add-Migration InitialCreate -Context DeviceCenterDbContext -Project ZeroFramework.DeviceCenter.Infrastructure -StartupProject ZeroFramework.DeviceCenter.Infrastructure
 ```
 
@@ -105,7 +102,6 @@ Add-Migration InitialCreate -Context DeviceCenterDbContext -Project ZeroFramewor
     
 ```shell
 Update-Database -Context DeviceCenterDbContext -Project ZeroFramework.DeviceCenter.Infrastructure -StartupProject ZeroFramework.DeviceCenter.Infrastructure
-
 ```
 
 5、由于该微服务是物联网数据管理平台，设备数据使用分桶模式存储在 MongoDB 数据库中， 因此需要你安装 MongoDB 数据库，并修改 「appsettings.Development.json」中的 MongoDB 连接字符串。
@@ -135,10 +131,9 @@ npm install --global yarn
 ````
 ### 安装依赖 NPM 包
 在 Visual Studio Code 中打开终端，运行以下命令：
-    
-    ```shell
-    yarn install
-    ```     
+```shell
+yarn install
+```     
 ### 启动并运行项目
 
 在 Visual Studio Code 中打开终端，运行以下命令：
@@ -156,3 +151,5 @@ npm run build
 ```
 
 命令运行成功，生成 DIST 目录，将 DIST 目录下的文件部署到服务器即可。
+
+

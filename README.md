@@ -46,37 +46,28 @@
 1、删除已有数据库
 
 ```shell
-
 Drop-Database -Context ApplicationDbContext -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API -Confirm:$false
-
 ```
 
 2、删除迁移文件
 
 ```shell
-
 Remove-Migration -Context PersistedGrantDbContext -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API
 Remove-Migration -Context ConfigurationDbContext -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API
 Remove-Migration -Context ApplicationDbContext -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API
-
 ```
 
 3、添加新的迁移文件
 
 ```shell
-
 Add-Migration InitialCreate -c PersistedGrantDbContext -o Migrations/PersistedGrantMigrations -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API
 Add-Migration InitialCreate -c ConfigurationDbContext -o Migrations/ConfigurationMigrations -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API
 Add-Migration InitialCreate -c ApplicationDbContext -o Migrations/ApplicationMigrations -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API![stacks](https://oss.xcode.me/notes/zeroframework/stacks.svg)
-
-
-
 ```
 
 3、执行迁移并自动生成数据库
 
 ```shell
-
 Update-Database -Context PersistedGrantDbContext -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API
 Update-Database -Context ConfigurationDbContext -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API
 Update-Database -Context ApplicationDbContext -Project ZeroFramework.IdentityServer.API -StartupProject ZeroFramework.IdentityServer.API
@@ -103,7 +94,6 @@ Drop-Database -Context DeviceCenterDbContext -Project ZeroFramework.DeviceCenter
 
 ```shell
 Remove-Migration -Context DeviceCenterDbContext -Project ZeroFramework.DeviceCenter.Infrastructure -StartupProject ZeroFramework.DeviceCenter.Infrastructure
-    
 ```
 
 3、添加新的迁移文件

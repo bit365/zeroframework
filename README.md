@@ -5,10 +5,10 @@
 
 ## 项目预览
 
-![后台页面](https://oss.xcode.me/notes/zeroframework/cloud-case-max-4.jpg)
+![后台页面](https://oss.xcode.me/notes/zeroframework/zeroframework-ui-01.jpg)
 
 
-![后台页面](https://oss.xcode.me/notes/zeroframework/cloud-case-max-5.jpg)
+![后台页面](https://oss.xcode.me/notes/zeroframework/zeroframework-ui-02.jpg)
 
 
 ## 相关技术
